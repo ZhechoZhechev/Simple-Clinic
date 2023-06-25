@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SimpleClinic.Models;
+using SimpleClinic.Core.Models;
 using System.Diagnostics;
 
 namespace SimpleClinic.Controllers

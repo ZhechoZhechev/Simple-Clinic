@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using static SimpleClinic.Common.DataConstants.GeneralApplicationConstants
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -39,7 +41,11 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - SimpleClinic - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; Clinic @ReleaseYear
+            @if (DateTime.UtcNow.Year != ReleaseYear)
+            {
+                @Html.Raw($" - {DateTime.UtcNow.Year}")
+            }
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
