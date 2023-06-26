@@ -1,8 +1,8 @@
 namespace SimpleClinic;
 
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SimpleClinic.Infrastructure;
+using SimpleClinic.Infrastructure.Entities;
 
 public class Program
 {
@@ -15,7 +15,7 @@ public class Program
             options.UseSqlServer(connectionString));
         builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-        builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+        builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
         {
             options.SignIn.RequireConfirmedAccount =
                 builder.Configuration.GetValue<bool>("Identity:SignIn:RequireConfirmedAccount");

@@ -1,4 +1,4 @@
-﻿namespace SimpleClinic.Common.DataConstants;
+﻿namespace SimpleClinic.Common.Constants;
 
 /// <summary>
 /// General constants

@@ -3,10 +3,12 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
+using SimpleClinic.Infrastructure.Entities;
+
 /// <summary>
 /// Aplication database context
 /// </summary>
-public class SimpleClinicDbContext : IdentityDbContext
+public class SimpleClinicDbContext : IdentityDbContext<ApplicationUser>
 {
     /// <summary>
     /// Context constructor
