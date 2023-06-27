@@ -2,18 +2,19 @@
 
 using System.ComponentModel.DataAnnotations;
 
+using static Common.Constants.DataConstants.MedicamentConstants;
+
 /// <summary>
-/// Schedule for service and doctor appoitment
+/// Medicaments
 /// </summary>
-public class Schedule
+public class Medicament
 {
     /// <summary>
     /// Constructor
     /// </summary>
-    public Schedule()
+    public Medicament()
     {
         this.Id = new Guid().ToString();
-        this.TimeSlots = new HashSet<TimeSlot>();
     }
 
     /// <summary>
@@ -23,13 +24,15 @@ public class Schedule
     public string Id { get; set; }
 
     /// <summary>
-    /// Day
+    /// Medicament name
     /// </summary>
     [Required]
-    public DateTime Day { get; set; }
+    [StringLength(NameMaxLength)]
+    public string Name { get; set; } = null!;
 
     /// <summary>
-    /// Timeslots
+    /// Quantity per day in milligrams
     /// </summary>
-    public ICollection<TimeSlot> TimeSlots { get; set; }
+    [Required]
+    public int QuantityPerDayMilligrams { get; set; }
 }

@@ -1,6 +1,7 @@
 ﻿namespace SimpleClinic.Infrastructure.Entities;
 
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 
 
@@ -34,14 +35,14 @@ public class Patient : ApplicationUser
     /// <summary>
     /// Patients medical history
     /// </summary>
-    [Required]
+    [ForeignKey(nameof(MedicalHistory))]
     public int MedicalHistoryId { get; set; }
     public virtual MedicalHistory MedicalHistory { get; set; } = null!;
 
     /// <summary>
     /// Patients next of kind details
     /// </summary>
-    [Required]
+    [ForeignKey(nameof(NextOfKin))]
     public int NextOfKinId { get; set; }
     public virtual NextOfKin NextOfKin { get; set; } = null!;
 

@@ -3,7 +3,7 @@
 /// <summary>
 /// General constants
 /// </summary>
-public class GeneralApplicationConstants
+public static class GeneralApplicationConstants
 {
     /// <summary>
     /// Year of releasing the app

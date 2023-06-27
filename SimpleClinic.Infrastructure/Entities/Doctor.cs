@@ -17,7 +17,7 @@ public class Doctor : ApplicationUser
         this.Prescriptions = new HashSet<Prescription>();
         this.Schedules = new HashSet<Schedule>();
         this.Appointments = new HashSet<DoctorAppointment>();
-        this.DoctorSpecialties = new HashSet<DoctorSpecialty>();
+        this.DoctorSpecialties = new HashSet<DoctorSpeciality>();
     }
 
     /// <summary>
@@ -65,6 +65,6 @@ public class Doctor : ApplicationUser
     /// <summary>
     /// Doctors one or many specialities
     /// </summary>
-    public ICollection<DoctorSpecialty> DoctorSpecialties { get; set; }
+    public ICollection<DoctorSpeciality> DoctorSpecialties { get; set; }
 }
 
