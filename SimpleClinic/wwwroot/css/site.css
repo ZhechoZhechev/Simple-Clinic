@@ -87,6 +87,8 @@ main {
 
 /* Login */
 
+
+
 .login-container {
     height: 100vh;
     display: flex;
@@ -160,7 +162,7 @@ main {
         margin-bottom: 0.5rem;
     }
 
-.form-input-container input {
+.form-input-container input  {
     width: 20rem;
     height: 3rem;
     border-radius: 1rem;

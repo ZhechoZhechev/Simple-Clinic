@@ -1,19 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿namespace SimpleClinic.Core.Models;
 
-namespace SimpleClinic.Core.Models;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 public class LoginViewModel
 {
     [Required]
     [EmailAddress]
+    [DisplayName("Email")]
     public string Email { get; set; } = null!;
 
     [Required]
+    [DisplayName("Password")]
     [DataType(DataType.Password)]
-    public string Password { get; set; } = null!;
+    public string Password { get; set; }
 
-
-
-    [UIHint("hidden")]
-    public string? ReturnUrl { get; set; }
+    public bool RegisterSuccess { get; set; }
 }
