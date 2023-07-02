@@ -1,0 +1,51 @@
+﻿.main-container {
+    height: 100vh;
+    min-height: 750px;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    min-width: 340px;
+    display: flex;
+    flex-direction: column;
+}
+
+.options-box {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.prescription-box {
+    width: 100%;
+    min-width: 1050px;
+    height: fit-content;
+    background-color: white;
+    margin-top: 7.5rem;
+    padding: 5rem;
+}
+
+#dataTable_wrapper {
+    width: 100%;
+    min-width: 435px;
+}
+
+    #dataTable_wrapper table th {
+        background-color: #0d6efd;
+        color: white;
+    }
+
+
+.write-prescription-box {
+    width: 100%;
+    min-width: 750px;
+    height: fit-content;
+    background-color: white;
+    margin-top: 7.5rem;
+    padding: 5rem;
+}
+
+.form-group {
+    width: 50%;
+    text-align: center;
+    margin: auto;
+}

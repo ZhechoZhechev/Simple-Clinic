@@ -1,5 +1,6 @@
 namespace SimpleClinic;
 
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SimpleClinic.Infrastructure;
 using SimpleClinic.Infrastructure.Entities;
@@ -28,8 +29,14 @@ public class Program
             options.Password.RequiredLength =
                 builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
         })
+            .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<SimpleClinicDbContext>();
         builder.Services.AddControllersWithViews();
+
+        builder.Services.ConfigureApplicationCookie(options =>
+        {
+            options.LoginPath = "/Account/Login";
+        });
 
         var app = builder.Build();
 

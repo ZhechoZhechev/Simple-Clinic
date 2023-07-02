@@ -1,0 +1,59 @@
+﻿@model RegisterViewModel
+
+<div class="login-container">
+    <div class="login-box-container">
+        <div class="box-right"></div>
+        <div class="box-left">
+            <div class="form-title">
+                <h2>Welcome to the clinic!</h2>
+                <h4>Please log in to your account</h4>
+            </div>
+
+            <form asp-action="Register" asp-controller="Account" method="post">
+                <div class="form-input-container">
+                    <label asp-for="FirstName"></label>
+                    <input asp-for="FirstName" class="text-center" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+
+                <div class="form-input-container">
+                    <label asp-for="LastName"></label>
+                    <input asp-for="LastName" class="text-center" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+
+                <div class="form-input-container">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" class="text-center" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-input-container">
+                    <label asp-for="Address"></label>
+                    <textarea asp-for="Address" class="text-center"></textarea>
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+
+                <div class="form-input-container">
+                    <label asp-for="Password"></label>
+                    <input asp-for="Password" class="text-center" type="password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-input-container">
+                    <label asp-for="PasswordRepeat"></label>
+                    <input asp-for="PasswordRepeat" class="text-center" type="password" />
+                    <span asp-validation-for="PasswordRepeat" class="text-danger"></span>
+                </div>
+
+                <div class="form-input-container">
+                    <button type="submit" class="btn btn-primary col-3">Register</button>
+                </div>
+
+                <div class="form-outline text-center text-danger">
+                    <span asp-validation-summary="All"></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

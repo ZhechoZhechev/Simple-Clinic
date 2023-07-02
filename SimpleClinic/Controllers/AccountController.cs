@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿namespace SimpleClinic.Controllers;
+
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+
 using SimpleClinic.Common;
+using SimpleClinic.Core.Models;
 using SimpleClinic.Infrastructure.Entities;
 
 
-namespace SimpleClinic.Controllers;
 
 public class AccountController : Controller
 {
@@ -14,13 +17,13 @@ public class AccountController : Controller
     private readonly RoleManager<IdentityRole> roleManager;
 
     public AccountController(
-        UserManager<ApplicationUser> _userManager,
-        SignInManager<ApplicationUser> _signInManager,
-        RoleManager<IdentityRole> _roleManager)
+        UserManager<ApplicationUser> userManager,
+        SignInManager<ApplicationUser> signInManager,
+        RoleManager<IdentityRole> roleManager)
     {
-        userManager = _userManager;
-        signInManager = _signInManager;
-        roleManager = _roleManager;
+        this.userManager = userManager;
+        this.signInManager = signInManager;
+        this.roleManager = roleManager;
     }
 
     [HttpGet]
@@ -51,8 +54,8 @@ public class AccountController : Controller
         };
 
         var result = await userManager.CreateAsync(user, model.Password);
-        await userManager
-                .AddClaimAsync(user, new System.Security.Claims.Claim(ClaimTypeConstants.FirsName, user.FirstName ?? user.Email));
+        //await userManager
+        //        .AddClaimAsync(user, new System.Security.Claims.Claim(ClaimTypeConstants.FirsName, user.FirstName ?? user.Email));
 
 
         if (result.Succeeded)

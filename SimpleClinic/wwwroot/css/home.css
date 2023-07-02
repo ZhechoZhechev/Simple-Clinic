@@ -1,0 +1,9 @@
+﻿.main-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    min-width: 340px;
+}

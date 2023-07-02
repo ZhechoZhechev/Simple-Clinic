@@ -1,0 +1,23 @@
+﻿.main-container {
+    height: 100vh;
+    min-height: 750px;
+    display: flex;
+    justify-content: center;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    min-width: 340px;
+}
+
+.table-box {
+    width: 100%;
+    min-width: 650px;
+    margin-top: 10rem;
+    height: fit-content;
+    background-color: white;
+    padding: 5rem;
+}
+
+.edit-box {
+    width: 50%;
+    margin: auto;
+}
