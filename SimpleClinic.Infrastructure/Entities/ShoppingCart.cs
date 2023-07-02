@@ -20,7 +20,7 @@ public class ShoppingCart
     /// Patients identifier
     /// </summary>
     [Required]
-    [ForeignKey(nameof(Patient)]
+    [ForeignKey(nameof(Patient))]
     public string PatientId { get; set; }
     public Patient Patient { get; set; }
 
