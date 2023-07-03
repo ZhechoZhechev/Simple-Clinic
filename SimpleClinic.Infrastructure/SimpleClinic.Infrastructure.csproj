@@ -24,6 +24,7 @@
   <ItemGroup>
     <Folder Include="Configuration\" />
     <Folder Include="Migrations\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
 
 </Project>

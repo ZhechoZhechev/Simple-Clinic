@@ -2,7 +2,9 @@ namespace SimpleClinic;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+
 using SimpleClinic.Infrastructure;
+using SimpleClinic.Infrastructure.CustomMiddleWares;
 using SimpleClinic.Infrastructure.Entities;
 
 public class Program
@@ -31,6 +33,7 @@ public class Program
         })
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<SimpleClinicDbContext>();
+         
         builder.Services.AddControllersWithViews();
 
         builder.Services.ConfigureApplicationCookie(options =>
@@ -51,10 +54,14 @@ public class Program
             app.UseHsts();
         }
 
+
         app.UseHttpsRedirection();
         app.UseStaticFiles();
 
         app.UseRouting();
+
+        //TODO: Uncomment it when database is done and running
+        //app.UseMiddleware<RoleCreationMiddleware>();
 
         app.UseAuthentication();
         app.UseAuthorization();
