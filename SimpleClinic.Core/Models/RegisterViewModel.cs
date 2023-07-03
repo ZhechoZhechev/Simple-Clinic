@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace SimpleClinic.Core.Models;
 
@@ -29,12 +30,14 @@ public class RegisterViewModel
     /// </summary>
     [Required]
     [DataType(DataType.Password)]
+    [DisplayName("Repeat Password")]
     public string PasswordRepeat { get; set; } = null!;
 
     /// <summary>
     /// User first name
     /// </summary>
     [Required]
+    [DisplayName("Firist Name")]
     [StringLength(FirstAndLastNameMaxLength, MinimumLength = FirstAndLastNameMinLength)]
     public string FirstName { get; set; } = null!;
 
@@ -42,6 +45,7 @@ public class RegisterViewModel
     /// User last name
     /// </summary>
     [Required]
+    [DisplayName("Last Name")]
     [StringLength(FirstAndLastNameMaxLength, MinimumLength = FirstAndLastNameMinLength)]
     public string LastName { get; set; } = null!;
 
