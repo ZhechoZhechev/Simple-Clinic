@@ -8,6 +8,9 @@ using SimpleClinic.Common;
 using System;
 using System.Threading.Tasks;
 
+/// <summary>
+/// Custom middle ware for creating roles once when app is started
+/// </summary>
 public class RoleCreationMiddleware
 {
     private readonly RequestDelegate _next;

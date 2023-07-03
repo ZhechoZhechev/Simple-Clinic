@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using SimpleClinic.Infrastructure;
 using SimpleClinic.Infrastructure.CustomMiddleWares;
 using SimpleClinic.Infrastructure.Entities;
+using SimpleClinic.Infrastructure.Extensions;
 
 public class Program
 {
@@ -33,7 +34,10 @@ public class Program
         })
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<SimpleClinicDbContext>();
-         
+
+        //TODO: uncoment it and add your first service
+        //builder.Services.AddApplicationServices(typeof(ISomeService));
+
         builder.Services.AddControllersWithViews();
 
         builder.Services.ConfigureApplicationCookie(options =>
