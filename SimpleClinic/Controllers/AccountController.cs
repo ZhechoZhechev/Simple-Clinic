@@ -3,7 +3,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-
+using SimpleClinic.Common;
 using SimpleClinic.Core.Models;
 using SimpleClinic.Infrastructure.Entities;
 
@@ -24,50 +24,9 @@ public class AccountController : Controller
     }
 
     [HttpGet]
-    public IActionResult Index()
-    {
-        return View();
-    }
-
-    [HttpGet]
-    [AllowAnonymous]
-    public IActionResult Login()
-    {
-        if (!User?.Identity?.IsAuthenticated == false)
-            return RedirectToAction("Index", "Home");
-
-        var model = new LoginViewModel();
-
-        if (TempData.ContainsKey("RegisterSuccess"))
-            model.RegisterSuccess = Convert.ToBoolean(TempData["RegisterSuccess"]);
-
-        return View(model);
-    }
-
-    [HttpPost]
-    [AllowAnonymous]
-    public async Task<IActionResult> Login(LoginViewModel user)
-    {
-        if (ModelState.IsValid)
-        {
-            var result = await signInManager.PasswordSignInAsync(user.Email, user.Password, false, false);
-
-            if (result.Succeeded)
-                return RedirectToAction("Index", "Home");
-
-            ModelState.AddModelError("LoginError", "Invalid login attempt");
-
-        }
-        return View(user);
-    }
-
-    [HttpGet]
     [AllowAnonymous]
     public IActionResult Register()
     {
-        if (!User?.Identity?.IsAuthenticated == false)
-            return RedirectToAction("Index", "Home");
-
         var model = new RegisterViewModel();
 
         return View(model);
@@ -77,44 +36,112 @@ public class AccountController : Controller
     [AllowAnonymous]
     public async Task<IActionResult> Register(RegisterViewModel model)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            var user = new ApplicationUser()
-            {
-                Email = model.Email,
-                UserName = model.Email,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                EmailConfirmed = true,
-                Address = model.Address
-            };
-
-            var result = await userManager.CreateAsync(user, model.Password);
-
-            if (!result.Succeeded)
-            {
-                foreach (var error in result.Errors)
-                    ModelState.AddModelError(string.Empty, error.Description);
-
-                return View(model);
-            }
-
-
-            TempData["registerSuccess"] = true;
-
-            return RedirectToAction("Login", "Account");
+            return View(model);
         }
+
+        var user = new ApplicationUser()
+        {
+            Email = model.Email,
+            FirstName = model.FirstName,
+            EmailConfirmed = true,
+            LastName = model.LastName,
+            UserName = model.Email
+        };
+
+        var result = await userManager.CreateAsync(user, model.Password);
+
+
+        if (result.Succeeded)
+        {
+            await signInManager.SignInAsync(user, isPersistent: false);
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        foreach (var item in result.Errors)
+        {
+            ModelState.AddModelError("", item.Description);
+        }
+
 
         return View(model);
     }
 
     [HttpGet]
+    [AllowAnonymous]
+    public IActionResult Login(string? returnUrl = null)
+    {
+        var model = new LoginViewModel()
+        {
+            ReturnUrl = returnUrl
+        };
+
+        return View(model);
+    }
+
+    [HttpPost]
+    [AllowAnonymous]
+    public async Task<IActionResult> Login(LoginViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        var user = await userManager.FindByEmailAsync(model.Email);
+
+        if (user != null)
+        {
+
+            var result = await signInManager.PasswordSignInAsync(user, model.Password, false, false);
+
+            if (result.Succeeded)
+            {
+                if (model.ReturnUrl != null)
+                {
+                    return Redirect(model.ReturnUrl);
+                }
+
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        ModelState.AddModelError("", "Invalid login");
+
+        return View(model);
+    }
+
     public async Task<IActionResult> Logout()
     {
         await signInManager.SignOutAsync();
 
-        return RedirectToAction("Login", "Account");
+        return RedirectToAction("Index", "Home");
     }
+
+    public async Task<IActionResult> CreateRoles()
+    {
+        await roleManager.CreateAsync(new IdentityRole(RoleNames.AdminRoleName));
+        await roleManager.CreateAsync(new IdentityRole(RoleNames.DoctorRoleName));
+        await roleManager.CreateAsync(new IdentityRole(RoleNames.PatientRoleName));
+
+        return RedirectToAction("Index", "Home");
+    }
+
+    //public async Task<IActionResult> AddUsersToRoles()
+    //{
+    //    string email1 = "stamo.petkov@gmail.com";
+    //    string email2 = "pesho@abv.bg";
+
+    //    var user = await userManager.FindByEmailAsync(email1);
+    //    var user2 = await userManager.FindByEmailAsync(email2);
+
+    //    await userManager.AddToRoleAsync(user, RoleConstants.Manager);
+    //    await userManager.AddToRolesAsync(user2, new string[] { RoleConstants.Supervisor, RoleConstants.Manager });
+
+    //    return RedirectToAction("Index", "Home");
+    //}
 }
 
 

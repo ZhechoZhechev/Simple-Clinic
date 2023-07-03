@@ -15,5 +15,6 @@ public class LoginViewModel
     [DataType(DataType.Password)]
     public string Password { get; set; }
 
-    public bool RegisterSuccess { get; set; }
+    [UIHint("hidden")]
+    public string? ReturnUrl { get; set; }
 }

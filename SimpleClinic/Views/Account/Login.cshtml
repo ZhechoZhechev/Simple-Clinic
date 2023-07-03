@@ -10,13 +10,7 @@
             </div>
 
             <form asp-action="Login" asp-controller="Account" method="post">
-                @if (Model.RegisterSuccess)
-                {
-                    <div class="form-input-container">
-                        <span class="text-success">You have been successfully registered!</span>
-                    </div>
-                }
-
+                <input type="hidden" asp-for="ReturnUrl" />
                 <div class="form-input-container">
                     <label asp-for="Email"></label>
                     <input asp-for="Email" class="text-center" />
