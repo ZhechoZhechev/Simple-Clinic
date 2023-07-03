@@ -7,7 +7,9 @@ using SimpleClinic.Common;
 using SimpleClinic.Core.Models;
 using SimpleClinic.Infrastructure.Entities;
 
-
+/// <summary>
+/// Account controller
+/// </summary>
 [Authorize]
 public class AccountController : Controller
 {
@@ -23,6 +25,10 @@ public class AccountController : Controller
         this.roleManager = roleManager;
     }
 
+    /// <summary>
+    /// Register initial form
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     [AllowAnonymous]
     public IActionResult Register()
@@ -32,6 +38,11 @@ public class AccountController : Controller
         return View(model);
     }
 
+    /// <summary>
+    /// Submits the form
+    /// </summary>
+    /// <param name="model">The form itself</param>
+    /// <returns></returns>
     [HttpPost]
     [AllowAnonymous]
     public async Task<IActionResult> Register(RegisterViewModel model)
@@ -47,7 +58,9 @@ public class AccountController : Controller
             FirstName = model.FirstName,
             EmailConfirmed = true,
             LastName = model.LastName,
-            UserName = model.Email
+            UserName = model.Email,
+            Address = model.Address
+            
         };
 
         var result = await userManager.CreateAsync(user, model.Password);
@@ -68,7 +81,11 @@ public class AccountController : Controller
 
         return View(model);
     }
-
+    /// <summary>
+    /// Submits the form
+    /// </summary>
+    /// <param name="returnUrl">The return path you are sent when you authenticate</param>
+    /// <returns></returns>
     [HttpGet]
     [AllowAnonymous]
     public IActionResult Login(string? returnUrl = null)
@@ -81,6 +98,11 @@ public class AccountController : Controller
         return View(model);
     }
 
+    /// <summary>
+    /// Submits the login form
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
     [HttpPost]
     [AllowAnonymous]
     public async Task<IActionResult> Login(LoginViewModel model)
@@ -113,6 +135,10 @@ public class AccountController : Controller
         return View(model);
     }
 
+    /// <summary>
+    /// Log outs the user
+    /// </summary>
+    /// <returns></returns>
     public async Task<IActionResult> Logout()
     {
         await signInManager.SignOutAsync();
@@ -120,6 +146,10 @@ public class AccountController : Controller
         return RedirectToAction("Index", "Home");
     }
 
+    /// <summary>
+    /// Created roles
+    /// </summary>
+    /// <returns></returns>
     public async Task<IActionResult> CreateRoles()
     {
         await roleManager.CreateAsync(new IdentityRole(RoleNames.AdminRoleName));
