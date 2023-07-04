@@ -13,8 +13,15 @@ public class ShoppingCart
     /// </summary>
     public ShoppingCart()
     {
+        this.Id = new Guid().ToString();
         this.ShoppingCartItems = new HashSet<ShoppingCartItem>();
     }
+
+    /// <summary>
+    /// Identifier
+    /// </summary>
+    [Key]
+    public string Id { get; set; }
 
     /// <summary>
     /// Patients identifier

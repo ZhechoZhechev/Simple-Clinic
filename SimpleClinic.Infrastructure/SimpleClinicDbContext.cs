@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 using SimpleClinic.Infrastructure.Entities;
+using System.Reflection;
 
 /// <summary>
 /// Aplication database context
@@ -41,6 +42,11 @@ public class SimpleClinicDbContext : IdentityDbContext<ApplicationUser>
     /// <param name="builder"></param>
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        Assembly configAssembly = Assembly.GetAssembly(typeof(SimpleClinicDbContext)) ??
+            Assembly.GetExecutingAssembly();
+
+        builder.ApplyConfigurationsFromAssembly(configAssembly);
+
         base.OnModelCreating(builder);
     }
 }

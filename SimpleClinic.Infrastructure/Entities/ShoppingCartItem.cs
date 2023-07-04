@@ -9,6 +9,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 /// </summary>
 public class ShoppingCartItem
 {
+    public ShoppingCartItem()
+    {
+        this.Id = new Guid().ToString();
+    }
+
+    /// <summary>
+    /// Identifier
+    /// </summary>
+    [Key]
+    public string Id { get; set; }
+
     /// <summary>
     /// Service identifier
     /// </summary>
