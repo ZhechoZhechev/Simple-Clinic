@@ -23,17 +23,17 @@ public class Service
     /// <summary>
     /// Name of the service
     /// </summary>
-    public string Name { get; set; } //- a string with min length 3 and max length 20 (required)
+    public string Name { get; set; }
 
     /// <summary>
     /// Equipment picture
     /// </summary>
-    public string EquipmentPicture { get; set; } //- a string with min length 5 and max length 500
+    public string EquipmentPicture { get; set; }
 
     /// <summary>
     /// How much it costs
     /// </summary>
-    public decimal Price { get; set; } //- number from 1 to 99 999(required)
+    public decimal Price { get; set; }
 
     /// <summary>
     /// Schedule for the service
