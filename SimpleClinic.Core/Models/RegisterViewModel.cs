@@ -61,20 +61,9 @@ public class RegisterViewModel
     [StringLength(AddressMaxLength, MinimumLength = AddressMinLength)]
     public string Address { get; set; } = null!;
 
+    /// <summary>
+    /// Role selecting property
+    /// </summary>
     [Required]
     public string SelectedRole { get; set; } = null!;
-
-    [Required]
-    public SelectList AvailableRoles => GetAvailableRoles();
-
-    private SelectList GetAvailableRoles()
-    {
-        var roles = typeof(RoleNames).GetFields(BindingFlags.Public | BindingFlags.Static)
-            .Where(f => f.FieldType == typeof(string))
-            .Select(f => f.GetValue(null) as string)
-            .Where(r => r != RoleNames.AdminRoleName)
-            .ToList();
-
-        return new SelectList(roles, SelectedRole);
-    }
 }
