@@ -2,7 +2,7 @@
 /// <summary>
 /// Defining role names
 /// </summary>
-public class RoleNames
+public static class RoleNames
 {
     /// <summary>
     /// Administrator

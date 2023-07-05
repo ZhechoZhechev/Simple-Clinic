@@ -1,7 +1,12 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿namespace SimpleClinic.Core.Models;
 
-namespace SimpleClinic.Core.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
+
+using SimpleClinic.Common;
 
 using static Common.Constants.DataConstants.ApplicationUserConstants;
 
@@ -55,4 +60,21 @@ public class RegisterViewModel
     [Required]
     [StringLength(AddressMaxLength, MinimumLength = AddressMinLength)]
     public string Address { get; set; } = null!;
+
+    [Required]
+    public string SelectedRole { get; set; } = null!;
+
+    [Required]
+    public SelectList AvailableRoles => GetAvailableRoles();
+
+    private SelectList GetAvailableRoles()
+    {
+        var roles = typeof(RoleNames).GetFields(BindingFlags.Public | BindingFlags.Static)
+            .Where(f => f.FieldType == typeof(string))
+            .Select(f => f.GetValue(null) as string)
+            .Where(r => r != RoleNames.AdminRoleName)
+            .ToList();
+
+        return new SelectList(roles, SelectedRole);
+    }
 }

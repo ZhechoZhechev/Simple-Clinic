@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using SimpleClinic.Infrastructure;
 using SimpleClinic.Infrastructure.CustomMiddleWares;
 using SimpleClinic.Infrastructure.Entities;
-using SimpleClinic.Infrastructure.Extensions;
 
 public class Program
 {
@@ -64,8 +63,8 @@ public class Program
 
         app.UseRouting();
 
-        //TODO: Uncomment it when database is done and running
-        //app.UseMiddleware<RoleCreationMiddleware>();
+        
+        app.UseMiddleware<RoleCreationMiddleware>();
 
         app.UseAuthentication();
         app.UseAuthorization();

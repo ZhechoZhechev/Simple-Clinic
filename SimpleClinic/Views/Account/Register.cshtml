@@ -1,4 +1,5 @@
 ﻿@model RegisterViewModel
+@using SimpleClinic.Common
 
 <div class="login-container">
     <div class="login-box-container">
@@ -44,6 +45,15 @@
                     <label asp-for="PasswordRepeat"></label>
                     <input asp-for="PasswordRepeat" class="text-center" type="password" />
                     <span asp-validation-for="PasswordRepeat" class="text-danger"></span>
+                </div>
+
+                <div style="width: 20rem; margin: 0 auto" class="form-floating">
+                    <select asp-for="SelectedRole" class="form-select" id="floatingSelect">
+                        <option value="" selected>Please register as</option>
+                        <option value="@RoleNames.DoctorRoleName">Doctor</option>
+                        <option value="@RoleNames.PatientRoleName">Patient</option>
+                    </select>
+                    <label asp-for="SelectedRole">Role</label>
                 </div>
 
                 <div class="form-input-container">
