@@ -69,7 +69,7 @@ public static class DataConstants
         /// <summary>
         /// Doctor appoitment price min value
         /// </summary>
-        public const string PricePerAppointmentMinValue = "1";
+        public const string PricePerAppointmentMinValue = "0";
     }
 
     /// <summary>
@@ -121,7 +121,7 @@ public static class DataConstants
         /// <summary>
         /// Service appoitment price min value
         /// </summary>
-        public const string PriceMinValue = "1";
+        public const string PriceMinValue = "0";
     }
 
     /// <summary>

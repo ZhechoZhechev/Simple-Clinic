@@ -31,8 +31,6 @@ public class SimpleClinicDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Schedule> Schedules { get; set; } = null!;
     public DbSet<Service> Services { get; set; } = null!;
     public DbSet<ServiceAppointment> ServiceAppointments { get; set; } = null!;
-    public DbSet<ShoppingCart> ShoppingCarts { get; set; } = null!;
-    public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; } = null!;
     public DbSet<Speciality> Specialities { get; set; } = null!;
     public DbSet<TimeSlot> TimeSlots { get; set; } = null!;
 

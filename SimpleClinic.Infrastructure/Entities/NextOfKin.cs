@@ -47,6 +47,6 @@ public class NextOfKin
     /// </summary>
     [Required]
     [ForeignKey(nameof(Patient))]
-    public int PatientId { get; set; }
+    public string PatientId { get; set; }
     public Patient Patient { get; set; }
 }

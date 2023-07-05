@@ -36,14 +36,14 @@ public class Patient : ApplicationUser
     /// Patients medical history
     /// </summary>
     [ForeignKey(nameof(MedicalHistory))]
-    public int MedicalHistoryId { get; set; }
+    public string MedicalHistoryId { get; set; }
     public virtual MedicalHistory MedicalHistory { get; set; } = null!;
 
     /// <summary>
     /// Patients next of kind details
     /// </summary>
     [ForeignKey(nameof(NextOfKin))]
-    public int NextOfKinId { get; set; }
+    public string NextOfKinId { get; set; }
     public virtual NextOfKin NextOfKin { get; set; } = null!;
 
     /// <summary>

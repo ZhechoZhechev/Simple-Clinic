@@ -35,7 +35,7 @@ public class DoctorAppointment
     /// </summary>
     [Required]
     [ForeignKey(nameof(TimeSlot))]
-    public int TimeSlotId { get; set; }
+    public string TimeSlotId { get; set; }
     public TimeSlot TimeSlot { get; set; }
 
     /// <summary>

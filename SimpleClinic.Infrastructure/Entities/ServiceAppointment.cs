@@ -27,7 +27,7 @@ namespace SimpleClinic.Infrastructure.Entities
         /// </summary>
         [Required]
         [ForeignKey(nameof(Service))]
-        public int ServiceId { get; set; }
+        public string ServiceId { get; set; }
         public Service Service { get; set; }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace SimpleClinic.Infrastructure.Entities
         /// </summary>
         [Required]
         [ForeignKey(nameof(TimeSlot))]
-        public int TimeSlotId { get; set; }
+        public string TimeSlotId { get; set; }
         public TimeSlot TimeSlot { get; set; }
 
         /// <summary>

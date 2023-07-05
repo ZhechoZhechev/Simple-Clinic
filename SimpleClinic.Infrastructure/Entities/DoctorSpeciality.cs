@@ -13,7 +13,7 @@ public class DoctorSpeciality
     /// </summary>
     [Required]
     [ForeignKey(nameof(Doctor))]
-    public int DoctorId { get; set; }
+    public string DoctorId { get; set; }
     public Doctor Doctor { get; set; }
 
     /// <summary>
