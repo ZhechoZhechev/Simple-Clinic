@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using SimpleClinic.Infrastructure;
 using SimpleClinic.Infrastructure.CustomMiddleWares;
 using SimpleClinic.Infrastructure.Entities;
+using SimpleClinic.Infrastructure.ModelBinders;
 
 public class Program
 {
@@ -37,7 +38,11 @@ public class Program
         //TODO: uncoment it and add your first service
         //builder.Services.AddApplicationServices(typeof(ISomeService));
 
-        builder.Services.AddControllersWithViews();
+        builder.Services.AddControllersWithViews()
+            .AddMvcOptions(options => 
+            {
+                options.ModelBinderProviders.Insert(0, new DecimaModelBinderProvider());
+            });
 
         builder.Services.ConfigureApplicationCookie(options =>
         {

@@ -1,4 +1,4 @@
-﻿namespace SimpleClinic.Infrastructure.Configuration;
+﻿namespace SimpleClinic.Infrastructure.Configurations;
 
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
