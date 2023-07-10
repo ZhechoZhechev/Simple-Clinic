@@ -1,5 +1,7 @@
 ﻿namespace SimpleClinic.Infrastructure.Entities;
 
+using Microsoft.AspNetCore.Http;
+
 using System.ComponentModel.DataAnnotations;
 
 using static Common.Constants.DataConstants.DoctorConstants;
@@ -19,6 +21,12 @@ public class Doctor : ApplicationUser
         this.Appointments = new HashSet<DoctorAppointment>();
         this.DoctorSpecialties = new HashSet<DoctorSpeciality>();
     }
+
+    /// <summary>
+    /// Doctors picture
+    /// </summary>
+    [Required]
+    public IFormFile ProfilePicture { get; set; }
 
     /// <summary>
     /// Doctors license number
