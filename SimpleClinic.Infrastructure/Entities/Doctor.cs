@@ -3,6 +3,7 @@
 using Microsoft.AspNetCore.Http;
 
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 using static Common.Constants.DataConstants.DoctorConstants;
 
@@ -25,7 +26,7 @@ public class Doctor : ApplicationUser
     /// <summary>
     /// Doctors picture
     /// </summary>
-    [Required]
+    [NotMapped]
     public IFormFile ProfilePicture { get; set; }
 
     /// <summary>

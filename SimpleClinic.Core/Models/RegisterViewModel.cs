@@ -1,12 +1,7 @@
 ﻿namespace SimpleClinic.Core.Models;
 
-using Microsoft.AspNetCore.Mvc.Rendering;
-
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Reflection;
-
-using SimpleClinic.Common;
 
 using static Common.Constants.DataConstants.ApplicationUserConstants;
 

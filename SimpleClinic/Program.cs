@@ -70,7 +70,6 @@ public class Program
 
         
         app.UseMiddleware<RoleCreationMiddleware>();
-
         app.UseAuthentication();
         app.UseAuthorization();
 

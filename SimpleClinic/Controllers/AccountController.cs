@@ -52,25 +52,130 @@ public class AccountController : Controller
             return View(model);
         }
 
-        var user = new ApplicationUser()
+        if (model.SelectedRole == RoleNames.DoctorRoleName)
         {
-            Email = model.Email,
+            var doctorRegistrationModel = new RegisterViewModel
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email,
+                Address = model.Address,
+                Password = model.Password,
+                PasswordRepeat = model.PasswordRepeat,
+                SelectedRole = model.SelectedRole
+            };
+
+            return RedirectToAction("RegisterDoctor", "Account", doctorRegistrationModel);
+        }
+        else if (model.SelectedRole == RoleNames.PatientRoleName)
+        {
+            var patientRegistrationModel = new RegisterViewModel
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email,
+                Address = model.Address,
+                Password = model.Password,
+                PasswordRepeat = model.PasswordRepeat,
+                SelectedRole = model.SelectedRole
+            };
+
+            return RedirectToAction("RegisterPatient", "Account", patientRegistrationModel);
+        }
+
+        //var result = await userManager.CreateAsync(user, model.Password);
+
+
+        //if (result.Succeeded)
+        //{
+        //    await signInManager.SignInAsync(user, isPersistent: false);
+
+        //    return RedirectToAction("Index", "Home");
+        //}
+
+        //foreach (var item in result.Errors)
+        //{
+        //    ModelState.AddModelError("", item.Description);
+        //}
+
+
+        return View(model);
+    }
+
+    //[HttpPost]
+    //public IActionResult RegisterPatient(PatientRegistrationViewModel model)
+    //{
+    //    if (ModelState.IsValid)
+    //    {
+    //        // Create a new Patient object and map the properties from the registration model
+    //        var patient = new Patient
+    //        {
+    //            FirstName = model.FirstName,
+    //            LastName = model.LastName,
+    //            Email = model.Email,
+    //            Address = model.Address,
+    //            Password = model.Password,
+    //            HasInsurance = model.HasInsurance,
+    //            DateOfBirth = model.DateOfBirth
+    //        };
+
+    //        // Save the patient to the database or perform other necessary operations
+
+    //        return RedirectToAction("Login");
+    //    }
+
+    //    // If the model is not valid, return the patient registration view with the model
+    //    return View("RegisterPatient", model);
+    //}
+
+    [HttpGet]
+    [AllowAnonymous]
+    public IActionResult RegisterDoctor(RegisterViewModel model)
+    {
+        var doctorModel = new DoctorRegistrationViewModel() 
+        {
             FirstName = model.FirstName,
-            EmailConfirmed = true,
             LastName = model.LastName,
-            UserName = model.Email,
-            Address = model.Address
+            Email = model.Email,
+            Address = model.Address,
+            Password = model.Password, 
+            PasswordRepeat = model.PasswordRepeat,
+            SelectedRole = model.SelectedRole,
             
         };
+        return View(doctorModel);
+    }
 
-        var result = await userManager.CreateAsync(user, model.Password);
+    [HttpPost]
+    [AllowAnonymous]
+    public async Task<IActionResult> RegisterDoctor(DoctorRegistrationViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View("RegisterDoctor", model);
+        }
+        // Create a new Doctor object and map the properties from the registration model
+        var doctor = new Doctor
+        {
+            FirstName = model.FirstName,
+            LastName = model.LastName,
+            Email = model.Email,
+            UserName = model.Email,
+            Address = model.Address,
+            LicenseNumber = model.LicenseNumber,
+            Biography = model.Biography,
+            OfficePhoneNumber = model.OfficePhoneNumber,
+            PricePerAppointment = model.PricePerAppointment
+        };
 
-
+        var result = await userManager.CreateAsync(doctor, model.Password);
+        // Save the doctor to the database or perform other necessary operations
         if (result.Succeeded)
         {
-            await signInManager.SignInAsync(user, isPersistent: false);
+            // Assign the "Doctor" role to the newly created doctor user
+            await userManager.AddToRoleAsync(doctor, RoleNames.DoctorRoleName);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login");
         }
 
         foreach (var item in result.Errors)
@@ -78,9 +183,10 @@ public class AccountController : Controller
             ModelState.AddModelError("", item.Description);
         }
 
-
-        return View(model);
+        return View("RegisterDoctor", model);
     }
+
+
     /// <summary>
     /// Submits the form
     /// </summary>

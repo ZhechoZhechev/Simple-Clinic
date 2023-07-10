@@ -1,0 +1,61 @@
+﻿@model DoctorRegistrationViewModel
+@using SimpleClinic.Common
+
+<div class="login-container">
+    <div class="login-box-container">
+        <div class="box-right"></div>
+        <div class="box-left">
+            <div class="form-title">
+                <h2>Welcome to the clinic!</h2>
+                <h4>Please log in to your account</h4>
+            </div>
+
+            <form asp-action="RegisterDoctor" asp-controller="Account" method="post">
+                <input type="hidden" asp-for="FirstName" />
+                <input type="hidden" asp-for="LastName" />
+                <input type="hidden" asp-for="Email" />
+                <input type="hidden" asp-for="Address" />
+                <input type="hidden" asp-for="Password" />
+                <input type="hidden" asp-for="PasswordRepeat" />
+                <input type="hidden" asp-for="SelectedRole" />
+
+                <div class="form-input-container">
+                    <label asp-for="LicenseNumber"></label>
+                    <input asp-for="LicenseNumber" class="text-center" />
+                    <span asp-validation-for="LicenseNumber" class="text-danger"></span>
+                </div>
+
+                <div class="form-input-container">
+                    <label asp-for="Biography"></label>
+                    <textarea style="width: 20rem" asp-for="Biography" class="text-center"></textarea>
+                    <span asp-validation-for="Biography" class="text-danger"></span>
+                </div>
+
+                <div class="form-input-container">
+                    <label asp-for="OfficePhoneNumber"></label>
+                    <input asp-for="OfficePhoneNumber" class="text-center" type="password" />
+                    <span asp-validation-for="OfficePhoneNumber" class="text-danger"></span>
+                </div>
+
+                <div class="form-input-container">
+                    <label asp-for="PricePerAppointment"></label>
+                    <input asp-for="PricePerAppointment" class="text-center" type="number" step="0.01" />
+                    <span asp-validation-for="PricePerAppointment" class="text-danger"></span>
+                </div>>
+
+                <div class="form-input-container">
+                    <button type="submit" class="btn btn-primary col-3">Register</button>
+                </div>
+
+                <div class="form-outline text-center text-danger">
+                    <span asp-validation-summary="All"></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+    {
+    <partial name="_ValidationScriptsPartial" />
+}
