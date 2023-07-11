@@ -17,16 +17,19 @@ public class AccountController : Controller
     private readonly SignInManager<ApplicationUser> signInManager;
     private readonly RoleManager<IdentityRole> roleManager;
     private readonly string directoryPath;
+    private readonly IWebHostEnvironment webHostEnvironment;
 
     public AccountController(UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
         RoleManager<IdentityRole> roleManager,
-        IConfiguration configuration)
+        IConfiguration configuration,
+        IWebHostEnvironment webHostEnvironment)
     {
         this.userManager = userManager;
         this.signInManager = signInManager;
         this.roleManager = roleManager;
         this.directoryPath = configuration["UpploadSettings:ImageDir"];
+        this.webHostEnvironment = webHostEnvironment;
     }
 
     /// <summary>
@@ -87,22 +90,6 @@ public class AccountController : Controller
             return RedirectToAction("RegisterPatient", "Account", patientRegistrationModel);
         }
 
-        //var result = await userManager.CreateAsync(user, model.Password);
-
-
-        //if (result.Succeeded)
-        //{
-        //    await signInManager.SignInAsync(user, isPersistent: false);
-
-        //    return RedirectToAction("Index", "Home");
-        //}
-
-        //foreach (var item in result.Errors)
-        //{
-        //    ModelState.AddModelError("", item.Description);
-        //}
-
-
         return View(model);
     }
 
@@ -145,7 +132,6 @@ public class AccountController : Controller
             Password = model.Password, 
             PasswordRepeat = model.PasswordRepeat,
             SelectedRole = model.SelectedRole,
-            
         };
         return View(doctorModel);
     }
@@ -158,7 +144,6 @@ public class AccountController : Controller
         {
             return View("RegisterDoctor", model);
         }
-        // Create a new Doctor object and map the properties from the registration model
         var doctor = new Doctor
         {
             FirstName = model.FirstName,
@@ -169,18 +154,17 @@ public class AccountController : Controller
             LicenseNumber = model.LicenseNumber,
             Biography = model.Biography,
             OfficePhoneNumber = model.OfficePhoneNumber,
-            PricePerAppointment = model.PricePerAppointment
+            PricePerAppointment = model.PricePerAppointment,
+            ProfilePictureFilename = model.ProfilePicture.FileName
         };
 
         var result = await userManager.CreateAsync(doctor, model.Password);
-        // Save the doctor to the database or perform other necessary operations
         if (result.Succeeded)
         {
-            // Assign the "Doctor" role to the newly created doctor user
             await userManager.AddToRoleAsync(doctor, RoleNames.DoctorRoleName);
 
             await ProcessFileUploadsAsync(files);
-
+            
             return RedirectToAction("Login");
         }
 
@@ -262,28 +246,6 @@ public class AccountController : Controller
     /// Created roles
     /// </summary>
     /// <returns></returns>
-    public async Task<IActionResult> CreateRoles()
-    {
-        await roleManager.CreateAsync(new IdentityRole(RoleNames.AdminRoleName));
-        await roleManager.CreateAsync(new IdentityRole(RoleNames.DoctorRoleName));
-        await roleManager.CreateAsync(new IdentityRole(RoleNames.PatientRoleName));
-
-        return RedirectToAction("Index", "Home");
-    }
-
-    //public async Task<IActionResult> AddUsersToRoles()
-    //{
-    //    string email1 = "stamo.petkov@gmail.com";
-    //    string email2 = "pesho@abv.bg";
-
-    //    var user = await userManager.FindByEmailAsync(email1);
-    //    var user2 = await userManager.FindByEmailAsync(email2);
-
-    //    await userManager.AddToRoleAsync(user, RoleConstants.Manager);
-    //    await userManager.AddToRolesAsync(user2, new string[] { RoleConstants.Supervisor, RoleConstants.Manager });
-
-    //    return RedirectToAction("Index", "Home");
-    //}
 
     private async Task ProcessFileUploadsAsync(List<IFormFile> files)
     {
@@ -292,7 +254,9 @@ public class AccountController : Controller
             if (file != null && file.Length > 0)
             {
                 string uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
-                string filePath = Path.Combine(directoryPath, uniqueFileName);
+                //TempData["ProfPictureName"] = uniqueFileName;
+
+                string filePath = Path.Combine(webHostEnvironment.WebRootPath, directoryPath, uniqueFileName);
 
                 using var stream = System.IO.File.Create(filePath);
                 await file.CopyToAsync(stream);

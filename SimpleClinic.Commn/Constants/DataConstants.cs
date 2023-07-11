@@ -63,6 +63,16 @@ public static class DataConstants
         public const int OfficePhoneNumberMinLength = 3;
 
         /// <summary>
+        /// Doctors profile pictrure name max letters count
+        /// </summary>
+        public const int ProfilePicStringMaxLength = 150;
+
+        /// <summary>
+        /// Doctors profile pictrure name min letters count
+        /// </summary>
+        public const int ProfilePicStringMinLength = 3;
+
+        /// <summary>
         /// Doctor appoitment price max value
         /// </summary>
         public const string PricePerAppointmentMaxValue = "99999";

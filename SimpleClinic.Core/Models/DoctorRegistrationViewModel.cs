@@ -1,10 +1,15 @@
 ﻿namespace SimpleClinic.Core.Models;
 
-using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 using static Common.Constants.DataConstants.DoctorConstants;
 
+/// <summary>
+/// Doctor registration view model
+/// </summary>
 public class DoctorRegistrationViewModel : RegisterViewModel
 {
   
@@ -20,6 +25,7 @@ public class DoctorRegistrationViewModel : RegisterViewModel
     /// Doctors biography
     /// </summary>
     [Required]
+    [DisplayName("Short Bio")]
     [StringLength(BiographyMaxLength, MinimumLength = BiographyMinLength)]
     public string Biography { get; set; } = null!;
 
@@ -36,6 +42,14 @@ public class DoctorRegistrationViewModel : RegisterViewModel
     /// Doctors price per appointment
     /// </summary>
     [Required]
+    [DisplayName("Price Per Appointment")]
     [Range(typeof(decimal), PricePerAppointmentMinValue, PricePerAppointmentMaxValue)]
     public decimal PricePerAppointment { get; set; }
+
+    /// <summary>
+    /// Doctors picture
+    /// </summary>
+    [FromForm]
+    public IFormFile ProfilePicture { get; set; }
+
 }

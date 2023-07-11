@@ -24,12 +24,6 @@ public class Doctor : ApplicationUser
     }
 
     /// <summary>
-    /// Doctors picture
-    /// </summary>
-    [NotMapped]
-    public IFormFile ProfilePicture { get; set; }
-
-    /// <summary>
     /// Doctors license number
     /// </summary>
     [Required]
@@ -55,6 +49,13 @@ public class Doctor : ApplicationUser
     /// </summary>
     [Required]
     public decimal PricePerAppointment { get; set; }
+
+    /// <summary>
+    /// Doctors profile picture file name
+    /// </summary>
+    [Required]
+    [StringLength(ProfilePicStringMaxLength)]
+    public string ProfilePictureFilename { get; set; } = null!;
 
     /// <summary>
     /// Prescription issued by the doctor
