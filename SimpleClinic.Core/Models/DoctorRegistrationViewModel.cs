@@ -50,6 +50,6 @@ public class DoctorRegistrationViewModel : RegisterViewModel
     /// Doctors picture
     /// </summary>
     [FromForm]
-    public IFormFile ProfilePicture { get; set; }
+    public IFormFile Files { get; set; }
 
 }

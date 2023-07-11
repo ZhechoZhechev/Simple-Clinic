@@ -155,7 +155,7 @@ public class AccountController : Controller
             Biography = model.Biography,
             OfficePhoneNumber = model.OfficePhoneNumber,
             PricePerAppointment = model.PricePerAppointment,
-            ProfilePictureFilename = model.ProfilePicture.FileName
+            ProfilePictureFilename = model.Files.FileName
         };
 
         var result = await userManager.CreateAsync(doctor, model.Password);
@@ -253,10 +253,7 @@ public class AccountController : Controller
         {
             if (file != null && file.Length > 0)
             {
-                string uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
-                //TempData["ProfPictureName"] = uniqueFileName;
-
-                string filePath = Path.Combine(webHostEnvironment.WebRootPath, directoryPath, uniqueFileName);
+                string filePath = Path.Combine(webHostEnvironment.WebRootPath, directoryPath, file.FileName);
 
                 using var stream = System.IO.File.Create(filePath);
                 await file.CopyToAsync(stream);
