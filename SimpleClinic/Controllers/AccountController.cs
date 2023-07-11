@@ -16,13 +16,17 @@ public class AccountController : Controller
     private readonly UserManager<ApplicationUser> userManager;
     private readonly SignInManager<ApplicationUser> signInManager;
     private readonly RoleManager<IdentityRole> roleManager;
+    private readonly string directoryPath;
+
     public AccountController(UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
-        RoleManager<IdentityRole> roleManager)
+        RoleManager<IdentityRole> roleManager,
+        IConfiguration configuration)
     {
         this.userManager = userManager;
         this.signInManager = signInManager;
         this.roleManager = roleManager;
+        this.directoryPath = configuration["UpploadSettings:ImageDir"];
     }
 
     /// <summary>
@@ -148,7 +152,7 @@ public class AccountController : Controller
 
     [HttpPost]
     [AllowAnonymous]
-    public async Task<IActionResult> RegisterDoctor(DoctorRegistrationViewModel model)
+    public async Task<IActionResult> RegisterDoctor(DoctorRegistrationViewModel model, List<IFormFile> files)
     {
         if (!ModelState.IsValid)
         {
@@ -174,6 +178,8 @@ public class AccountController : Controller
         {
             // Assign the "Doctor" role to the newly created doctor user
             await userManager.AddToRoleAsync(doctor, RoleNames.DoctorRoleName);
+
+            await ProcessFileUploadsAsync(files);
 
             return RedirectToAction("Login");
         }
@@ -278,6 +284,21 @@ public class AccountController : Controller
 
     //    return RedirectToAction("Index", "Home");
     //}
+
+    private async Task ProcessFileUploadsAsync(List<IFormFile> files)
+    {
+        foreach (var file in files)
+        {
+            if (file != null && file.Length > 0)
+            {
+                string uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+                string filePath = Path.Combine(directoryPath, uniqueFileName);
+
+                using var stream = System.IO.File.Create(filePath);
+                await file.CopyToAsync(stream);
+            }
+        }
+    }
 }
 
 
