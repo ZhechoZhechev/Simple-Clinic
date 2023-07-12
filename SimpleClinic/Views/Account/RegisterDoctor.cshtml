@@ -26,12 +26,6 @@
                 </div>
 
                 <div class="form-input-container">
-                    <label asp-for="Biography"></label>
-                    <textarea style="width: 20rem" asp-for="Biography" class="text-center"></textarea>
-                    <span asp-validation-for="Biography" class="text-danger"></span>
-                </div>
-
-                <div class="form-input-container">
                     <label asp-for="OfficePhoneNumber"></label>
                     <input asp-for="OfficePhoneNumber" class="text-center" type="password" />
                     <span asp-validation-for="OfficePhoneNumber" class="text-danger"></span>
@@ -42,9 +36,19 @@
                     <input asp-for="PricePerAppointment" class="text-center" type="number" step="0.01" />
                     <span asp-validation-for="PricePerAppointment" class="text-danger"></span>
                 </div>
-                <div class="form-input-container">
+@*                <div class="form-input-container">
                     <label asp-for="Files">Profile Picture</label>
                     <input asp-for="Files" type="file" name="files" accept="image/*" />
+                </div>*@
+                <div class="form-input-container">
+                    <label asp-for="Biography"></label>
+                    <textarea style="width: 20rem" asp-for="Biography" class="text-center"></textarea>
+                    <span asp-validation-for="Biography" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3 form-input-container">
+                    <label asp-for="Files" class="form-label">Profile Picture</label>
+                    <input style="width: 20rem; height:fit-content" asp-for="Files" class="form-control" type="file" name="files" accept="image/*">
                 </div>
 
                 <div class="form-input-container">
