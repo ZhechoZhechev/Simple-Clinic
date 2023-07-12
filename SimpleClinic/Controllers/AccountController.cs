@@ -109,7 +109,7 @@ public class AccountController : Controller
             SelectedRole = model.SelectedRole
         };
 
-        return View("~/Views/Account/RegisterPatient.cshtml", patientModel);
+        return View(patientModel);
     }
 
     [HttpPost]
