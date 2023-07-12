@@ -116,7 +116,7 @@ public class AccountController : Controller
     [AllowAnonymous]
     public async Task<IActionResult> RegisterPatient(PatientRegistrationViewModel model)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
             return View("RegisterPatient", model);
         }
@@ -125,6 +125,7 @@ public class AccountController : Controller
             FirstName = model.FirstName,
             LastName = model.LastName,
             Email = model.Email,
+            UserName = model.Email,
             Address = model.Address,
             HasInsurance = model.HasInsurance,
             DateOfBirth = model.DateOfBirth

@@ -9,11 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Account\RegisterPatient.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Views\Account\RegisterPatient.cshtml" />
     <None Include="wwwroot\js\site.js" />
   </ItemGroup>
 

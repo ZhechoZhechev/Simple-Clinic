@@ -10,7 +10,6 @@
                 <h2>Welcome to the clinic!</h2>
                 <h4>Please log in to your account</h4>
             </div>
-
             <form asp-action="RegisterPatient" asp-controller="Account" method="post">
                 <input type="hidden" asp-for="FirstName" />
                 <input type="hidden" asp-for="LastName" />
@@ -20,31 +19,32 @@
                 <input type="hidden" asp-for="PasswordRepeat" />
                 <input type="hidden" asp-for="SelectedRole" />
 
-                <div class="form-check form-check-inline">
-                    <input asp-for="HasInsurance" class="form-check-input" type="checkbox" id="inlineCheckbox1" name="HasInsurance" value="true">
-                    <label class="form-check-label" for="inlineCheckbox1">Yes</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input asp-for="HasInsurance" class="form-check-input" type="checkbox" id="inlineCheckbox2" name="HasInsurance" value="false">
-                    <label class="form-check-label" for="inlineCheckbox2">No</label>
-                </div>
-
-                <div class="container">
-                    <h1>Date of Birth</h1>
-                    <div class="mb-3">
-                        <label for="dobInput" class="form-label">Date of Birth</label>
-                        <input asp-for="DateOfBirth" type="text" class="form-control" id="dobInput" name="DateOfBirth" placeholder="Select date">
+                <div class="form-group" style="margin-bottom: 2rem">
+                    <label class="mb-2">Do you have insurance?</label>
+                    <div class="form-check form-check-inline">
+                        <input asp-for="HasInsurance" class="form-check-input" type="checkbox" id="inlineCheckbox1" name="HasInsurance" value="true">
+                        <label class="form-check-label" for="inlineCheckbox1">Yes</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input asp-for="HasInsurance" class="form-check-input" type="checkbox" id="inlineCheckbox2" name="HasInsurance" value="false">
+                        <label class="form-check-label" for="inlineCheckbox2">No</label>
                     </div>
                 </div>
 
-                <div class="form-input-container">
-                    <button type="submit" class="btn btn-primary col-3">Register</button>
+                <div class="form-group" style="width: 20rem">
+                    <label class="mb-2" for="dobInput">Date of Birth</label>
+                    <input asp-for="DateOfBirth" type="text" class="form-control" id="dobInput" placeholder="Select date">
                 </div>
 
-                <div class="form-outline text-center text-danger">
+                <div class="form-group text-center mt-4">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+
+                <div class="text-center text-danger">
                     <span asp-validation-summary="All"></span>
                 </div>
             </form>
+
         </div>
     </div>
 </div>
