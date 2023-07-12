@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using SimpleClinic.Common;
 using SimpleClinic.Core.Models;
 using SimpleClinic.Infrastructure.Entities;
+using System.Numerics;
 
 /// <summary>
 /// Account controller
@@ -93,31 +94,57 @@ public class AccountController : Controller
         return View(model);
     }
 
-    //[HttpPost]
-    //public IActionResult RegisterPatient(PatientRegistrationViewModel model)
-    //{
-    //    if (ModelState.IsValid)
-    //    {
-    //        // Create a new Patient object and map the properties from the registration model
-    //        var patient = new Patient
-    //        {
-    //            FirstName = model.FirstName,
-    //            LastName = model.LastName,
-    //            Email = model.Email,
-    //            Address = model.Address,
-    //            Password = model.Password,
-    //            HasInsurance = model.HasInsurance,
-    //            DateOfBirth = model.DateOfBirth
-    //        };
+    [HttpGet]
+    [AllowAnonymous]
+    public IActionResult RegisterPatient(RegisterViewModel model)
+    {
+        var patientModel = new PatientRegistrationViewModel()
+        {
+            FirstName = model.FirstName,
+            LastName = model.LastName,
+            Email = model.Email,
+            Address = model.Address,
+            Password = model.Password,
+            PasswordRepeat = model.PasswordRepeat,
+            SelectedRole = model.SelectedRole
+        };
 
-    //        // Save the patient to the database or perform other necessary operations
+        return View("~/Views/Account/RegisterPatient.cshtml", patientModel);
+    }
 
-    //        return RedirectToAction("Login");
-    //    }
+    [HttpPost]
+    [AllowAnonymous]
+    public async Task<IActionResult> RegisterPatient(PatientRegistrationViewModel model)
+    {
+        if (ModelState.IsValid)
+        {
+            return View("RegisterPatient", model);
+        }
+        var patient = new Patient
+        {
+            FirstName = model.FirstName,
+            LastName = model.LastName,
+            Email = model.Email,
+            Address = model.Address,
+            HasInsurance = model.HasInsurance,
+            DateOfBirth = model.DateOfBirth
+        };
 
-    //    // If the model is not valid, return the patient registration view with the model
-    //    return View("RegisterPatient", model);
-    //}
+        var result = await userManager.CreateAsync(patient, model.Password);
+        if (result.Succeeded)
+        {
+            await userManager.AddToRoleAsync(patient, RoleNames.DoctorRoleName);
+
+            return RedirectToAction("Login");
+        }
+
+        foreach (var item in result.Errors)
+        {
+            ModelState.AddModelError("", item.Description);
+        }
+
+        return View("RegisterPatient", model);
+    }
 
     [HttpGet]
     [AllowAnonymous]
@@ -131,7 +158,7 @@ public class AccountController : Controller
             Address = model.Address,
             Password = model.Password, 
             PasswordRepeat = model.PasswordRepeat,
-            SelectedRole = model.SelectedRole,
+            SelectedRole = model.SelectedRole
         };
         return View(doctorModel);
     }
@@ -246,7 +273,6 @@ public class AccountController : Controller
     /// Created roles
     /// </summary>
     /// <returns></returns>
-
     private async Task ProcessFileUploadsAsync(List<IFormFile> files)
     {
         foreach (var file in files)

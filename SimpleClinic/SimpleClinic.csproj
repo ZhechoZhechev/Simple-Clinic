@@ -9,6 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Account\RegisterPatient.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Account\RegisterPatient.cshtml" />
     <None Include="wwwroot\js\site.js" />
   </ItemGroup>
 
@@ -23,6 +28,14 @@
   <ItemGroup>
     <ProjectReference Include="..\SimpleClinic.Core\SimpleClinic.Core.csproj" />
     <ProjectReference Include="..\SimpleClinic.Infrastructure\SimpleClinic.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Account\RegisterPatient.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Account\RegisterPatient.cshtml" />
   </ItemGroup>
 
 </Project>
