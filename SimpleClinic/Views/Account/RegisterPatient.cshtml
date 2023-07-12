@@ -31,7 +31,7 @@
                     </div>
                 </div>
 
-                <div class="form-group" style="width: 20rem">
+                <div class="form-group" style="width: 20rem; margin: 0 auto">
                     <label class="mb-2" for="dobInput">Date of Birth</label>
                     <input asp-for="DateOfBirth" type="text" class="form-control" id="dobInput" placeholder="Select date">
                 </div>
@@ -54,6 +54,17 @@
             format: 'yyyy-mm-dd',
             autoclose: true,
             endDate: '-18y' 
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#inlineCheckbox1').click(function () {
+            $('#inlineCheckbox2').prop('checked', !$(this).prop('checked'));
+        });
+
+        $('#inlineCheckbox2').click(function () {
+            $('#inlineCheckbox1').prop('checked', !$(this).prop('checked'));
         });
     });
 </script>
