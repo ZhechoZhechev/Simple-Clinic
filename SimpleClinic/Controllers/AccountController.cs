@@ -3,6 +3,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using SimpleClinic.Common;
 using SimpleClinic.Core.Models;
 using SimpleClinic.Infrastructure.Entities;
@@ -16,19 +17,23 @@ public class AccountController : Controller
 {
     private readonly UserManager<ApplicationUser> userManager;
     private readonly SignInManager<ApplicationUser> signInManager;
-    private readonly RoleManager<IdentityRole> roleManager;
     private readonly string directoryPath;
     private readonly IWebHostEnvironment webHostEnvironment;
 
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="userManager">dependancy</param>
+    /// <param name="signInManager">dependancy</param>
+    /// <param name="configuration">dependancy</param>
+    /// <param name="webHostEnvironment">dependancy</param>
     public AccountController(UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
-        RoleManager<IdentityRole> roleManager,
         IConfiguration configuration,
         IWebHostEnvironment webHostEnvironment)
     {
         this.userManager = userManager;
         this.signInManager = signInManager;
-        this.roleManager = roleManager;
         this.directoryPath = configuration["UpploadSettings:ImageDir"];
         this.webHostEnvironment = webHostEnvironment;
     }
@@ -53,7 +58,7 @@ public class AccountController : Controller
     /// <returns></returns>
     [HttpPost]
     [AllowAnonymous]
-    public async Task<IActionResult> Register(RegisterViewModel model)
+    public IActionResult Register(RegisterViewModel model)
     {
         if (!ModelState.IsValid)
         {
@@ -62,56 +67,52 @@ public class AccountController : Controller
 
         if (model.SelectedRole == RoleNames.DoctorRoleName)
         {
-            var doctorRegistrationModel = new RegisterViewModel
-            {
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                Email = model.Email,
-                Address = model.Address,
-                Password = model.Password,
-                PasswordRepeat = model.PasswordRepeat,
-                SelectedRole = model.SelectedRole
-            };
-
-            return RedirectToAction("RegisterDoctor", "Account", doctorRegistrationModel);
+            TempData["RegisterViewModel"] = JsonConvert.SerializeObject(model);
+            return RedirectToAction("RegisterDoctor", "Account");
         }
         else if (model.SelectedRole == RoleNames.PatientRoleName)
         {
-            var patientRegistrationModel = new RegisterViewModel
-            {
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                Email = model.Email,
-                Address = model.Address,
-                Password = model.Password,
-                PasswordRepeat = model.PasswordRepeat,
-                SelectedRole = model.SelectedRole
-            };
-
-            return RedirectToAction("RegisterPatient", "Account", patientRegistrationModel);
+            TempData["RegisterViewModel"] = JsonConvert.SerializeObject(model);
+            return RedirectToAction("RegisterPatient", "Account");
         }
 
         return View(model);
     }
 
+    /// <summary>
+    ///  Get endpoint for registration of a patient
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     [AllowAnonymous]
-    public IActionResult RegisterPatient(RegisterViewModel model)
+    public IActionResult RegisterPatient()
     {
-        var patientModel = new PatientRegistrationViewModel()
+        if (TempData["RegisterViewModel"] is string serializedModel) 
         {
-            FirstName = model.FirstName,
-            LastName = model.LastName,
-            Email = model.Email,
-            Address = model.Address,
-            Password = model.Password,
-            PasswordRepeat = model.PasswordRepeat,
-            SelectedRole = model.SelectedRole
-        };
+            var model = JsonConvert.DeserializeObject<RegisterViewModel>(serializedModel);
 
-        return View(patientModel);
+            var patientModel = new PatientRegistrationViewModel()
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email,
+                Address = model.Address,
+                Password = model.Password,
+                PasswordRepeat = model.PasswordRepeat,
+                SelectedRole = model.SelectedRole
+            };
+
+            return View(patientModel);
+        }
+
+        return RedirectToAction("Register");
     }
 
+    /// <summary>
+    /// Post endpoint for registration of a patient
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
     [HttpPost]
     [AllowAnonymous]
     public async Task<IActionResult> RegisterPatient(PatientRegistrationViewModel model)
@@ -147,23 +148,37 @@ public class AccountController : Controller
         return View("RegisterPatient", model);
     }
 
+    /// <summary>
+    ///  Get endpoint for registration of a doctor
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     [AllowAnonymous]
-    public IActionResult RegisterDoctor(RegisterViewModel model)
+    public IActionResult RegisterDoctor()
     {
-        var doctorModel = new DoctorRegistrationViewModel() 
+        if (TempData["RegisterViewModel"] is string serializedModel) 
         {
-            FirstName = model.FirstName,
-            LastName = model.LastName,
-            Email = model.Email,
-            Address = model.Address,
-            Password = model.Password, 
-            PasswordRepeat = model.PasswordRepeat,
-            SelectedRole = model.SelectedRole
-        };
-        return View(doctorModel);
+            var model = JsonConvert.DeserializeObject<RegisterViewModel>(serializedModel);
+
+            var doctorModel = new DoctorRegistrationViewModel()
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email,
+                Address = model.Address,
+                Password = model.Password,
+                PasswordRepeat = model.PasswordRepeat,
+                SelectedRole = model.SelectedRole
+            };
+            return View(doctorModel);
+        }
+        return RedirectToAction("Register");
     }
 
+    /// <summary>
+    ///  Post endpoint for registration of a doctor
+    /// </summary>
+    /// <returns></returns>
     [HttpPost]
     [AllowAnonymous]
     public async Task<IActionResult> RegisterDoctor(DoctorRegistrationViewModel model, List<IFormFile> files)
