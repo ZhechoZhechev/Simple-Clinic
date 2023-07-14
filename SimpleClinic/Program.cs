@@ -1,8 +1,9 @@
 namespace SimpleClinic;
 
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
+using SimpleClinic.Controllers;
 using SimpleClinic.Infrastructure;
 using SimpleClinic.Infrastructure.CustomMiddleWares;
 using SimpleClinic.Infrastructure.Entities;
@@ -42,6 +43,7 @@ public class Program
             .AddMvcOptions(options => 
             {
                 options.ModelBinderProviders.Insert(0, new DecimaModelBinderProvider());
+                options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
             });
 
         builder.Services.ConfigureApplicationCookie(options =>
@@ -58,11 +60,13 @@ public class Program
         }
         else
         {
-            app.UseExceptionHandler("/Home/Error");
+            app.UseExceptionHandler("/Home/Error/500");
+            app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
+
             app.UseHsts();
         }
 
-
+         
         app.UseHttpsRedirection();
         app.UseStaticFiles();
 

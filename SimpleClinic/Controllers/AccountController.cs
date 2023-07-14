@@ -3,11 +3,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+
 using Newtonsoft.Json;
+
 using SimpleClinic.Common;
 using SimpleClinic.Core.Models;
 using SimpleClinic.Infrastructure.Entities;
-using System.Numerics;
 
 /// <summary>
 /// Account controller

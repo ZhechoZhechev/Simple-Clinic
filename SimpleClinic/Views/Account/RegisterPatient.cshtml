@@ -48,28 +48,29 @@
         </div>
     </div>
 </div>
-<script>
-    $(document).ready(function () {
-        $('#dobInput').datepicker({
-            format: 'yyyy-mm-dd',
-            autoclose: true,
-            endDate: '-18y' 
-        });
-    });
-</script>
-<script>
-    $(document).ready(function () {
-        $('#inlineCheckbox1').click(function () {
-            $('#inlineCheckbox2').prop('checked', !$(this).prop('checked'));
-        });
-
-        $('#inlineCheckbox2').click(function () {
-            $('#inlineCheckbox1').prop('checked', !$(this).prop('checked'));
-        });
-    });
-</script>
 
 @section Scripts
     {
+    <script>
+        $(document).ready(function () {
+            $('#dobInput').datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                endDate: '-18y'
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#inlineCheckbox1').click(function () {
+                $('#inlineCheckbox2').prop('checked', !$(this).prop('checked'));
+            });
+
+            $('#inlineCheckbox2').click(function () {
+                $('#inlineCheckbox1').prop('checked', !$(this).prop('checked'));
+            });
+        });
+    </script>
+
     <partial name="_ValidationScriptsPartial" />
 }
