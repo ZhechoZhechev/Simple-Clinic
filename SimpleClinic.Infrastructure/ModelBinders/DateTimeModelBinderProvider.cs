@@ -1,10 +1,11 @@
 ﻿namespace SimpleClinic.Infrastructure.ModelBinders;
 
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+
 /// <summary>
-/// Provider for the decimal model binder
+/// Provider for the date time model binder
 /// </summary>
-public class DecimaModelBinderProvider : IModelBinderProvider
+public class DateTimeModelBinderProvider : IModelBinderProvider
 {
     /// <summary>
     /// ImodelbinderProvider interface implementation method
@@ -14,15 +15,15 @@ public class DecimaModelBinderProvider : IModelBinderProvider
     /// <exception cref="ArgumentNullException"></exception>
     public IModelBinder? GetBinder(ModelBinderProviderContext context)
     {
-        if (context == null) 
+        if (context == null)
         {
             throw new ArgumentNullException(nameof(context));
-        } 
+        }
 
-        if (context.Metadata.ModelType == typeof(decimal) ||
-            context.Metadata.ModelType == typeof(decimal?)) 
+        if (context.Metadata.ModelType == typeof(DateTime) ||
+            context.Metadata.ModelType == typeof(DateTime?))
         {
-            return new DecimaModelBinder();
+            return new DateTimeModelBinder();
         }
 
         return null;
