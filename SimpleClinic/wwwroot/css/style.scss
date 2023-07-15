@@ -655,7 +655,7 @@ a:focus {
 .footer_section {
   background: darken($color: $primary2, $amount: 10);
   color: $white;
-  padding: 60px 0 15px 0;
+  padding: 20px 0 5px 0;
   position: relative;
 
   h4 {
@@ -664,7 +664,7 @@ a:focus {
   }
 
   .footer_col {
-    margin-bottom: 30px;
+    margin-bottom: 10px;
   }
 
   .footer_contact {
@@ -689,7 +689,7 @@ a:focus {
 
   .footer_social {
     display: flex;
-    margin-top: 20px;
+    margin-top: 15px;
     margin-bottom: 10px;
 
     a {
@@ -714,8 +714,8 @@ a:focus {
     a {
       display: flex;
       align-items: center;
-      margin-right: 15px;
-      margin-bottom: 15px;
+      margin-right: 10px;
+      margin-bottom: 10px;
       color: $white;
 
       &:hover {
