@@ -1,0 +1,12 @@
+﻿#reg,
+#log {
+    border: 2px solid;
+    margin: 0 5px 0 5px;
+}
+
+#reg:hover,
+#log:hover {
+    border: 2px solid black;
+    margin: 0 5px 0 5px;
+    color:black;
+}
