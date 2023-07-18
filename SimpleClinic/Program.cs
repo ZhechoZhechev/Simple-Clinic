@@ -43,7 +43,7 @@ public class Program
             .AddMvcOptions(options => 
             {
                 options.ModelBinderProviders.Insert(0, new DecimaModelBinderProvider());
-                options.ModelBinderProviders.Insert(1, new DateTimeModelBinderProvider());
+                //options.ModelBinderProviders.Insert(1, new DateTimeModelBinderProvider());
                 options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
             });
 
@@ -74,7 +74,6 @@ public class Program
         app.UseRouting();
 
         
-        app.UseMiddleware<RoleCreationMiddleware>();
         app.UseAuthentication();
         app.UseAuthorization();
 
@@ -84,6 +83,8 @@ public class Program
 
         app.MapDefaultControllerRoute();
         app.MapRazorPages();
+
+        app.UseMiddleware<RoleCreationMiddleware>();
 
         app.Run();
     }

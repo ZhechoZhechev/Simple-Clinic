@@ -136,7 +136,7 @@ public class AccountController : Controller
         var result = await userManager.CreateAsync(patient, model.Password);
         if (result.Succeeded)
         {
-            await userManager.AddToRoleAsync(patient, RoleNames.DoctorRoleName);
+            await userManager.AddToRoleAsync(patient, RoleNames.PatientRoleName);
 
             return RedirectToAction("Login");
         }
@@ -306,6 +306,7 @@ public class AccountController : Controller
 
     private IActionResult RedirectToRoleSpecificArea()
     {
+        
         if (User.IsInRole(RoleNames.PatientRoleName))
         {
             return RedirectToAction("Index", "Home", new {area = RoleNames.PatientRoleName});
