@@ -266,7 +266,7 @@ public class AccountController : Controller
                     return Redirect(model.ReturnUrl);
                 }
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToRoleSpecificArea();
             }
         }
 
@@ -301,6 +301,22 @@ public class AccountController : Controller
                 using var stream = System.IO.File.Create(filePath);
                 await file.CopyToAsync(stream);
             }
+        }
+    }
+
+    private IActionResult RedirectToRoleSpecificArea()
+    {
+        if (User.IsInRole(RoleNames.PatientRoleName))
+        {
+            return RedirectToAction("Index", "Home", new {area = RoleNames.PatientRoleName});
+        }
+        else if (User.IsInRole(RoleNames.DoctorRoleName))
+        {
+            return RedirectToAction("Index", "Home", new { area = RoleNames.DoctorRoleName });
+        }
+        else
+        {
+            return RedirectToAction("Index", "Home");
         }
     }
 }

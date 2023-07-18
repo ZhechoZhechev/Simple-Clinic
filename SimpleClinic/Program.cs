@@ -78,6 +78,10 @@ public class Program
         app.UseAuthentication();
         app.UseAuthorization();
 
+        app.MapControllerRoute(
+            name: "Area",
+            pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
         app.MapDefaultControllerRoute();
         app.MapRazorPages();
 
