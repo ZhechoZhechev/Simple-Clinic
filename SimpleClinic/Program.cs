@@ -43,7 +43,7 @@ public class Program
             .AddMvcOptions(options => 
             {
                 options.ModelBinderProviders.Insert(0, new DecimaModelBinderProvider());
-                //options.ModelBinderProviders.Insert(1, new DateTimeModelBinderProvider());
+                options.ModelBinderProviders.Insert(1, new DateTimeModelBinderProvider());
                 options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
             });
 

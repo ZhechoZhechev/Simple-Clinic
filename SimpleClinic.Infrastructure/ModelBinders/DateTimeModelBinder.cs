@@ -4,7 +4,7 @@ using System.Globalization;
 namespace SimpleClinic.Infrastructure.ModelBinders;
 
 /// <summary>
-/// DateTime custom model binder
+/// Ensures that the date supplied  is parsed to become an Kind.Utc instance
 /// </summary>
 public class DateTimeModelBinder : IModelBinder
 {
@@ -15,23 +15,35 @@ public class DateTimeModelBinder : IModelBinder
             throw new ArgumentNullException(nameof(bindingContext));
         }
 
-        ValueProviderResult result = bindingContext.ValueProvider.GetValue(bindingContext.ModelName);
+        ValueProviderResult valueProviderResult = bindingContext.ValueProvider.GetValue(bindingContext.ModelName);
 
-        if (result != ValueProviderResult.None && !string.IsNullOrWhiteSpace(result.FirstValue))
+        if (valueProviderResult != ValueProviderResult.None && !string.IsNullOrEmpty(valueProviderResult.FirstValue))
         {
-            DateTime dateTime;
-            var value = result.FirstValue;
+            bool binederSucceeded = false;
+            DateTime parsedValue = default;
+            try
+            {
+                string dateStr = valueProviderResult.FirstValue;
+                parsedValue = Convert.ToDateTime(dateStr);
+                parsedValue = parsedValue.ToUniversalTime();
 
-            if (DateTime.TryParseExact(value, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime))
-            {
-                bindingContext.Result = ModelBindingResult.Success(dateTime);
+                binederSucceeded = true;
             }
-            else
+            catch (Exception ex)
             {
-                bindingContext.ModelState.AddModelError(bindingContext.ModelName, "Invalid date format");
+
+                bindingContext.ModelState.AddModelError(bindingContext.ModelName, ex, bindingContext.ModelMetadata);
+            }
+
+            if (binederSucceeded)
+            {
+                bindingContext.Result = ModelBindingResult.Success(parsedValue);
             }
         }
 
+        bindingContext.ModelState.SetModelValue(bindingContext.ModelName, valueProviderResult);
+
         return Task.CompletedTask;
     }
+    
 }
