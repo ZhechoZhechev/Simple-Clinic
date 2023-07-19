@@ -41,7 +41,6 @@ public class DateTimeModelBinder : IModelBinder
             }
         }
 
-        bindingContext.ModelState.SetModelValue(bindingContext.ModelName, valueProviderResult);
 
         return Task.CompletedTask;
     }

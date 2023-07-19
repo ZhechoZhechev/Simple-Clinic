@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 using SimpleClinic.Common;
+using SimpleClinic.Core.Contracts;
 using SimpleClinic.Core.Models;
 using SimpleClinic.Infrastructure.Entities;
 
@@ -18,8 +19,10 @@ public class AccountController : Controller
 {
     private readonly UserManager<ApplicationUser> userManager;
     private readonly SignInManager<ApplicationUser> signInManager;
+    private readonly RoleManager<IdentityRole> roleManager;
     private readonly string directoryPath;
     private readonly IWebHostEnvironment webHostEnvironment;
+    private readonly IAccountService accountService;
 
     /// <summary>
     /// Constructor
@@ -30,13 +33,17 @@ public class AccountController : Controller
     /// <param name="webHostEnvironment">dependancy</param>
     public AccountController(UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
+        RoleManager<IdentityRole> roleManager,
         IConfiguration configuration,
-        IWebHostEnvironment webHostEnvironment)
+        IWebHostEnvironment webHostEnvironment,
+        IAccountService accountService)
     {
         this.userManager = userManager;
         this.signInManager = signInManager;
+        this.roleManager = roleManager;
         this.directoryPath = configuration["UpploadSettings:ImageDir"];
         this.webHostEnvironment = webHostEnvironment;
+        this.accountService = accountService;
     }
 
     /// <summary>
@@ -258,6 +265,7 @@ public class AccountController : Controller
         {
 
             var result = await signInManager.PasswordSignInAsync(user, model.Password, false, false);
+            TempData["CurrentUserId"] = user.Id;
 
             if (result.Succeeded)
             {
@@ -266,7 +274,7 @@ public class AccountController : Controller
                     return Redirect(model.ReturnUrl);
                 }
 
-                return RedirectToRoleSpecificArea();
+                return await RedirectToRoleSpecificArea();
             }
         }
 
@@ -304,14 +312,19 @@ public class AccountController : Controller
         }
     }
 
-    private IActionResult RedirectToRoleSpecificArea()
+    private async Task<IActionResult> RedirectToRoleSpecificArea()
     {
+        var userId = TempData["CurrentUserId"].ToString();
+        var roleId = await accountService.GetRoleId(userId);
+        var role = await roleManager.FindByIdAsync(roleId);
+
+        string roleName = role.Name;
         
-        if (User.IsInRole(RoleNames.PatientRoleName))
+        if (roleName == RoleNames.PatientRoleName)
         {
             return RedirectToAction("Index", "Home", new {area = RoleNames.PatientRoleName});
         }
-        else if (User.IsInRole(RoleNames.DoctorRoleName))
+        else if (roleName == RoleNames.DoctorRoleName)
         {
             return RedirectToAction("Index", "Home", new { area = RoleNames.DoctorRoleName });
         }

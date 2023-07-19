@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SimpleClinic.Controllers;
+using SimpleClinic.Core.Contracts;
+using SimpleClinic.Core.Services;
 using SimpleClinic.Infrastructure;
 using SimpleClinic.Infrastructure.CustomMiddleWares;
 using SimpleClinic.Infrastructure.Entities;
+using SimpleClinic.Infrastructure.Extensions;
 using SimpleClinic.Infrastructure.ModelBinders;
 
 public class Program
@@ -37,7 +40,7 @@ public class Program
             .AddEntityFrameworkStores<SimpleClinicDbContext>();
 
         //TODO: uncoment it and add your first service
-        //builder.Services.AddApplicationServices(typeof(ISomeService));
+        builder.Services.AddApplicationServices(typeof(IAccountService));
 
         builder.Services.AddControllersWithViews()
             .AddMvcOptions(options => 

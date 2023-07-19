@@ -13,27 +13,26 @@ public static class WebApplicationBuilderExtensions
     /// <param name="services">collection of service</param>
     /// <param name="serviceType">type service to add</param>
     /// <exception cref="InvalidOperationException"></exception>
-    public static void AddApplicationServices(this IServiceCollection services, Type serviceType) 
+    public static void AddApplicationServices(this IServiceCollection services, Type serviceType)
     {
-        Assembly? sericeAssembly = Assembly.GetAssembly(serviceType);
-        if (sericeAssembly == null)
+        Assembly? serviceAssembly = Assembly.GetAssembly(serviceType);
+        if (serviceAssembly == null)
         {
-            throw new InvalidOperationException("Invalid service type provided");
+            throw new InvalidOperationException("Invalid service type provided!");
         }
 
-        Type[] serviceTypes = sericeAssembly
+        Type[] implementationTypes = serviceAssembly
             .GetTypes()
             .Where(t => t.Name.EndsWith("Service") && !t.IsInterface)
             .ToArray();
-
-        foreach (var implementationType in serviceTypes)
+        foreach (Type implementationType in implementationTypes)
         {
             Type? interfaceType = implementationType
-                .GetInterface($"!{implementationType.Name}");
-
+                .GetInterface($"I{implementationType.Name}");
             if (interfaceType == null)
             {
-                throw new InvalidOperationException($"No interface is provided with service with name {implementationType.Name}");
+                throw new InvalidOperationException(
+                    $"No interface is provided for the service with name: {implementationType.Name}");
             }
 
             services.AddScoped(interfaceType, implementationType);
