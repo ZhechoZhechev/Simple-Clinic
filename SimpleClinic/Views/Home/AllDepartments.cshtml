@@ -1,0 +1,28 @@
+﻿@model IEnumerable<SpecialityViewModel> 
+
+
+<div style="margin-top: 3rem" class="container">
+    <h1 style="text-align:center">Specialities List</h1>
+    <div class="table-sm table-success table-striped table-hover">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Speciality Name</th>
+                    <th>Doctors</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var speciality in Model)
+                {
+                    <tr>
+                        <td>
+                            <i class="bi bi-clipboard-plus-fill"></i> <!-- Replace with your desired icon class -->
+                            @speciality.Name
+                        </td>
+                        <td>@speciality.DoctorsCount</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

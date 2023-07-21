@@ -338,10 +338,13 @@ public class AccountController : Controller
             }
         }
     }
-
+    /// <summary>
+    /// Redirects user to designated area
+    /// </summary>
+    /// <returns></returns>
     private async Task<IActionResult> RedirectToRoleSpecificArea()
     {
-        var userId = TempData["CurrentUserId"].ToString();
+        var userId = TempData["CurrentUserId"]!.ToString();
         var roleId = await accountService.GetRoleId(userId);
         var role = await roleManager.FindByIdAsync(roleId);
 

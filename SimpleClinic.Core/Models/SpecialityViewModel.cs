@@ -15,7 +15,11 @@ namespace SimpleClinic.Core.Models
         /// <summary>
         /// Name
         /// </summary>
-
         public string Name { get; set; } = null!;
+
+        /// <summary>
+        /// Count of doctors in each speciality
+        /// </summary>
+        public int DoctorsCount { get; set; }
     }
 }

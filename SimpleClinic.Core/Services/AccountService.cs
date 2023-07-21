@@ -1,12 +1,15 @@
 ﻿namespace SimpleClinic.Core.Services;
 
 using Microsoft.EntityFrameworkCore;
+
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 using SimpleClinic.Core.Contracts;
 using SimpleClinic.Core.Models;
 using SimpleClinic.Infrastructure;
 using SimpleClinic.Infrastructure.Entities;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+
 
 public class AccountService : IAccountService
 {
