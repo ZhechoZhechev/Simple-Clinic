@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SimpleClinic.Infrastructure;
 
@@ -11,9 +12,10 @@ using SimpleClinic.Infrastructure;
 namespace SimpleClinic.Infrastructure.Migrations
 {
     [DbContext(typeof(SimpleClinicDbContext))]
-    partial class SimpleClinicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230721081927_DoctorSpecialityRelationChanged")]
+    partial class DoctorSpecialityRelationChanged
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

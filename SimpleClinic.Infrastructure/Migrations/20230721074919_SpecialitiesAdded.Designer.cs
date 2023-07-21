@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SimpleClinic.Infrastructure;
 
@@ -11,9 +12,10 @@ using SimpleClinic.Infrastructure;
 namespace SimpleClinic.Infrastructure.Migrations
 {
     [DbContext(typeof(SimpleClinicDbContext))]
-    partial class SimpleClinicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230721074919_SpecialitiesAdded")]
+    partial class SpecialitiesAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -273,6 +275,21 @@ namespace SimpleClinic.Infrastructure.Migrations
                     b.HasIndex("TimeSlotId");
 
                     b.ToTable("DoctorAppointments");
+                });
+
+            modelBuilder.Entity("SimpleClinic.Infrastructure.Entities.DoctorSpeciality", b =>
+                {
+                    b.Property<string>("DoctorId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("SpecialityId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DoctorId", "SpecialityId");
+
+                    b.HasIndex("SpecialityId");
+
+                    b.ToTable("DoctorsSpecialities");
                 });
 
             modelBuilder.Entity("SimpleClinic.Infrastructure.Entities.MedicalHistory", b =>
@@ -607,11 +624,6 @@ namespace SimpleClinic.Infrastructure.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<int>("SpecialityId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("SpecialityId");
-
                     b.HasDiscriminator().HasValue("Doctor");
                 });
 
@@ -712,6 +724,25 @@ namespace SimpleClinic.Infrastructure.Migrations
                     b.Navigation("TimeSlot");
                 });
 
+            modelBuilder.Entity("SimpleClinic.Infrastructure.Entities.DoctorSpeciality", b =>
+                {
+                    b.HasOne("SimpleClinic.Infrastructure.Entities.Doctor", "Doctor")
+                        .WithMany("DoctorSpecialties")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SimpleClinic.Infrastructure.Entities.Speciality", "Speciality")
+                        .WithMany("DoctorSpecialties")
+                        .HasForeignKey("SpecialityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Speciality");
+                });
+
             modelBuilder.Entity("SimpleClinic.Infrastructure.Entities.MedicalHistory", b =>
                 {
                     b.HasOne("SimpleClinic.Infrastructure.Entities.Patient", "Patient")
@@ -809,17 +840,6 @@ namespace SimpleClinic.Infrastructure.Migrations
                         .HasForeignKey("ScheduleId");
                 });
 
-            modelBuilder.Entity("SimpleClinic.Infrastructure.Entities.Doctor", b =>
-                {
-                    b.HasOne("SimpleClinic.Infrastructure.Entities.Speciality", "Speciality")
-                        .WithMany("Doctors")
-                        .HasForeignKey("SpecialityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Speciality");
-                });
-
             modelBuilder.Entity("SimpleClinic.Infrastructure.Entities.Patient", b =>
                 {
                     b.HasOne("SimpleClinic.Infrastructure.Entities.NextOfKin", "NextOfKin")
@@ -850,12 +870,14 @@ namespace SimpleClinic.Infrastructure.Migrations
 
             modelBuilder.Entity("SimpleClinic.Infrastructure.Entities.Speciality", b =>
                 {
-                    b.Navigation("Doctors");
+                    b.Navigation("DoctorSpecialties");
                 });
 
             modelBuilder.Entity("SimpleClinic.Infrastructure.Entities.Doctor", b =>
                 {
                     b.Navigation("Appointments");
+
+                    b.Navigation("DoctorSpecialties");
 
                     b.Navigation("Prescriptions");
 

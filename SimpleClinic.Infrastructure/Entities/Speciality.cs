@@ -14,7 +14,7 @@ public class Speciality
     /// </summary>
     public Speciality()
     {
-        this.DoctorSpecialties = new HashSet<DoctorSpeciality>();
+        this.Doctors = new HashSet<Doctor>();
     }
 
     /// <summary>
@@ -33,5 +33,5 @@ public class Speciality
     /// <summary>
     /// Collection of doctors having this speciality
     /// </summary>
-    public ICollection<DoctorSpeciality> DoctorSpecialties { get; set; }
+    public ICollection<Doctor> Doctors { get; set; }
 }

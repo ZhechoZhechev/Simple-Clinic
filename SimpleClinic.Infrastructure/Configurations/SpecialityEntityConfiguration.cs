@@ -18,7 +18,7 @@ public class SpecialityEntityConfiguration : IEntityTypeConfiguration<Speciality
     {
         builder.HasData(CreateSpecialities());
 
-        
+
     }
 
     private Speciality[] CreateSpecialities()
@@ -53,6 +53,36 @@ public class SpecialityEntityConfiguration : IEntityTypeConfiguration<Speciality
             {
                 Id = 5,
                 Name = "Gynaecology"
+            },
+
+            new Speciality
+            {
+                Id = 6,
+                Name = "Dermatology"
+            },
+
+            new Speciality 
+            {
+                Id = 7,
+                Name = "Phycology"
+            },
+
+            new Speciality
+            {
+                Id = 8,
+                Name = "Neurology"
+            },
+
+            new Speciality 
+            {
+                Id = 9,
+                Name = "Ophthalmology"
+            },
+
+            new Speciality 
+            { 
+                Id = 10,
+                Name = "Pathology"
             }
         };
 

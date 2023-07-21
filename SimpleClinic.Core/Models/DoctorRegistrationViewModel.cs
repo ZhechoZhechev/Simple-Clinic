@@ -12,7 +12,14 @@ using static Common.Constants.DataConstants.DoctorConstants;
 /// </summary>
 public class DoctorRegistrationViewModel : RegisterViewModel
 {
-  
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    public DoctorRegistrationViewModel()
+    {
+        this.Specialities = new HashSet<SpecialityViewModel>();
+    }
+
     /// <summary>
     /// Doctor license number
     /// </summary>
@@ -52,4 +59,11 @@ public class DoctorRegistrationViewModel : RegisterViewModel
     [FromForm]
     public IFormFile Files { get; set; }
 
+    /// <summary>
+    /// SpecialityId
+    /// </summary>
+    [Required]
+    public int SpecialityId { get; set; }
+
+    public IEnumerable<SpecialityViewModel> Specialities { get; set; }
 }

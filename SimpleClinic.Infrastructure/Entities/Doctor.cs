@@ -20,7 +20,6 @@ public class Doctor : ApplicationUser
         this.Prescriptions = new HashSet<Prescription>();
         this.Schedules = new HashSet<Schedule>();
         this.Appointments = new HashSet<DoctorAppointment>();
-        this.DoctorSpecialties = new HashSet<DoctorSpeciality>();
     }
 
     /// <summary>
@@ -58,6 +57,15 @@ public class Doctor : ApplicationUser
     public string ProfilePictureFilename { get; set; } = null!;
 
     /// <summary>
+    /// 
+    /// Doctors speciality
+    /// </summary>
+    [Required]
+    [ForeignKey(nameof(Speciality))]
+    public int SpecialityId { get; set; }
+    public Speciality Speciality { get; set; }
+
+    /// <summary>
     /// Prescription issued by the doctor
     /// </summary>
     public ICollection<Prescription> Prescriptions { get; set; }
@@ -71,10 +79,5 @@ public class Doctor : ApplicationUser
     /// Doctors appointments with patients
     /// </summary>
     public ICollection<DoctorAppointment> Appointments { get; set; }
-
-    /// <summary>
-    /// Doctors one or many specialities
-    /// </summary>
-    public ICollection<DoctorSpeciality> DoctorSpecialties { get; set; }
 }
 

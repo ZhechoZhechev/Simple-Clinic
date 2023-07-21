@@ -22,7 +22,6 @@ public class SimpleClinicDbContext : IdentityDbContext<ApplicationUser>
 
     public DbSet<Doctor> Doctors { get; set; } = null!;
     public DbSet<DoctorAppointment> DoctorAppointments { get; set; } = null!;
-    public DbSet<DoctorSpeciality> DoctorsSpecialities { get; set; } = null!;
     public DbSet<MedicalHistory> MedicalHistories { get; set; } = null!;
     public DbSet<Medicament> Medicaments { get; set; } = null!;
     public DbSet<NextOfKin> NextOfKins { get; set; } = null!;
