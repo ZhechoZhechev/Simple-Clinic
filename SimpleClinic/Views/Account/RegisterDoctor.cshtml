@@ -10,7 +10,6 @@
         <div class="box-left">
             <div class="form-title">
                 <h2>Welcome to the clinic!</h2>
-                <h4>Please log in to your account</h4>
             </div>
 
             <form asp-action="RegisterDoctor" asp-controller="Account" method="post" enctype="multipart/form-data">
@@ -21,6 +20,7 @@
                 <input type="hidden" asp-for="Password" />
                 <input type="hidden" asp-for="PasswordRepeat" />
                 <input type="hidden" asp-for="SelectedRole" />
+                <input type="hidden" asp-for="CustomSpeciality" id="hiddenCustomSpeciality" />
 
                 <div class="form-input-container">
                     <label asp-for="LicenseNumber"></label>
@@ -44,14 +44,27 @@
                     <textarea style="width: 20rem" asp-for="Biography" class="text-center"></textarea>
                     <span asp-validation-for="Biography" class="text-danger"></span>
                 </div>
-@*                <div class="form-input-container">
-                    <label asp-for="Files">Profile Picture</label>
-                    <input asp-for="Files" type="file" name="files" accept="image/*" />
-                </div>*@
-
                 <div class="mb-3 form-input-container">
                     <label asp-for="Files" class="form-label">Profile Picture</label>
                     <input style="width: 20rem; height:fit-content" asp-for="Files" class="form-control" type="file" name="files" accept="image/*">
+                </div>
+                <div class="form-group form-input-container">
+                    <label asp-for="SpecialityId" class="form-label-add-edit">Speciality</label>
+                    <select style="width:20rem" asp-for="SpecialityId" id="specialitySelect" class="form-control" aria-required="true">
+                        <option value="" disabled selected>Select Speciality</option>
+                        @foreach (var type in Model.Specialities)
+                        {
+                            <option value="@type.Id">@type.Name</option>
+                        }
+                        <option value="-1">Other</option>
+                    </select>
+                    <span asp-validation-for="SpecialityId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group form-input-container" id="customSpecialityContainer" style="display: none;">
+                    <label style="margin: 0 auto">Enter Custom Speciality:</label>
+                    <input style="width: 20rem" id="customSpecialityInput" class="form-control" />
+                    <span asp-validation-for="CustomSpeciality" class="text-danger"></span>
                 </div>
 
                 <div class="form-input-container">
@@ -68,5 +81,25 @@
 
 @section Scripts
     {
+    <script>
+        document.getElementById("specialitySelect").addEventListener("change", function () {
+            const customSpecialityContainer = document.getElementById("customSpecialityContainer");
+            const selectedSpeciality = this.value;
+
+            if (selectedSpeciality === "-1") {
+                customSpecialityContainer.style.display = "flex";
+                document.getElementById("customSpecialityInput").setAttribute("required", "required");
+            } else {
+                customSpecialityContainer.style.display = "none";
+                document.getElementById("customSpecialityInput").removeAttribute("required");
+                document.getElementById("hiddenCustomSpeciality").value = "";
+            }
+        });
+
+        document.getElementById("customSpecialityInput").addEventListener("input", function () {
+            const customSpecialityValue = this.value;
+            document.getElementById("hiddenCustomSpeciality").value = customSpecialityValue;
+        });
+    </script>
     <partial name="_ValidationScriptsPartial" />
 }

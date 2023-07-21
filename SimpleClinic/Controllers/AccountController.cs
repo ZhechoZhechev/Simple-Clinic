@@ -95,7 +95,7 @@ public class AccountController : Controller
     [AllowAnonymous]
     public IActionResult RegisterPatient()
     {
-        if (TempData["RegisterViewModel"] is string serializedModel) 
+        if (TempData["RegisterViewModel"] is string serializedModel)
         {
             var model = JsonConvert.DeserializeObject<RegisterViewModel>(serializedModel);
 
@@ -162,9 +162,9 @@ public class AccountController : Controller
     /// <returns></returns>
     [HttpGet]
     [AllowAnonymous]
-    public IActionResult RegisterDoctor()
+    public async Task <IActionResult> RegisterDoctor()
     {
-        if (TempData["RegisterViewModel"] is string serializedModel) 
+        if (TempData["RegisterViewModel"] is string serializedModel)
         {
             var model = JsonConvert.DeserializeObject<RegisterViewModel>(serializedModel);
 
@@ -176,7 +176,8 @@ public class AccountController : Controller
                 Address = model.Address,
                 Password = model.Password,
                 PasswordRepeat = model.PasswordRepeat,
-                SelectedRole = model.SelectedRole
+                SelectedRole = model.SelectedRole,
+                Specialities = await accountService.GetAllSpecialities(),
             };
             return View(doctorModel);
         }
@@ -195,19 +196,45 @@ public class AccountController : Controller
         {
             return View("RegisterDoctor", model);
         }
-        var doctor = new Doctor
+
+        var doctor = new Doctor();
+        if (!string.IsNullOrEmpty(model.CustomSpeciality))
         {
-            FirstName = model.FirstName,
-            LastName = model.LastName,
-            Email = model.Email,
-            UserName = model.Email,
-            Address = model.Address,
-            LicenseNumber = model.LicenseNumber,
-            Biography = model.Biography,
-            OfficePhoneNumber = model.OfficePhoneNumber,
-            PricePerAppointment = model.PricePerAppointment,
-            ProfilePictureFilename = model.Files.FileName
-        };
+            var speciality = await accountService.AddCustomSpeciality(model.CustomSpeciality);
+
+            doctor = new Doctor
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email,
+                UserName = model.Email,
+                Address = model.Address,
+                LicenseNumber = model.LicenseNumber,
+                Biography = model.Biography,
+                OfficePhoneNumber = model.OfficePhoneNumber,
+                PricePerAppointment = model.PricePerAppointment,
+                ProfilePictureFilename = model.Files.FileName,
+                SpecialityId = speciality.Id
+            };
+        }
+        else
+        {
+            doctor = new Doctor
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email,
+                UserName = model.Email,
+                Address = model.Address,
+                LicenseNumber = model.LicenseNumber,
+                Biography = model.Biography,
+                OfficePhoneNumber = model.OfficePhoneNumber,
+                PricePerAppointment = model.PricePerAppointment,
+                ProfilePictureFilename = model.Files.FileName,
+                SpecialityId = model.SpecialityId
+            };
+        }
+
 
         var result = await userManager.CreateAsync(doctor, model.Password);
         if (result.Succeeded)
@@ -215,7 +242,7 @@ public class AccountController : Controller
             await userManager.AddToRoleAsync(doctor, RoleNames.DoctorRoleName);
 
             await ProcessFileUploadsAsync(files);
-            
+
             return RedirectToAction("Login");
         }
 
@@ -319,10 +346,10 @@ public class AccountController : Controller
         var role = await roleManager.FindByIdAsync(roleId);
 
         string roleName = role.Name;
-        
+
         if (roleName == RoleNames.PatientRoleName)
         {
-            return RedirectToAction("Index", "Home", new {area = RoleNames.PatientRoleName});
+            return RedirectToAction("Index", "Home", new { area = RoleNames.PatientRoleName });
         }
         else if (roleName == RoleNames.DoctorRoleName)
         {

@@ -5,7 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
+using SimpleClinic.Core.CustomValidationAttributes;
 using static Common.Constants.DataConstants.DoctorConstants;
+using static Common.Constants.DataConstants.SpecialityConstants;
+using SimpleClinic.Core.Contracts;
+using SimpleClinic.Core.Services;
 
 /// <summary>
 /// Doctor registration view model
@@ -65,5 +69,11 @@ public class DoctorRegistrationViewModel : RegisterViewModel
     [Required]
     public int SpecialityId { get; set; }
 
+    [UniqueCustomSpeciality(ErrorMessage = "Custom speciality already exists in the list.")]
+    [StringLength(NameMaxLength, MinimumLength = NameMinLength)]
+    public string? CustomSpeciality { get; set; }
+
     public IEnumerable<SpecialityViewModel> Specialities { get; set; }
+
 }
+

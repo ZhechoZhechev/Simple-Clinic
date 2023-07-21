@@ -4,7 +4,7 @@
 .login-container {
     height: 100vh;
     display: flex;
-    padding-top: 4rem;
+    padding-top: 2rem;
     justify-content: center;
     align-items: center;
 }
@@ -34,7 +34,7 @@
 
 .box-right {
     width: 50%;
-    padding-bottom: 3rem;
+    padding-bottom: 1rem;
     background-image: url("../img/images/login-main.jpg");
     background-size: cover;
     background-position: center;
@@ -43,13 +43,13 @@
 
 .box-left {
     width: 50%;
-    padding-bottom: 3rem;
+    padding-bottom: 1rem;
     background-color: white;
     border-radius: 0 1rem 1rem 0;
 }
 
     .box-left .form-title {
-        padding-top: 6rem;
+        padding-top: 2rem;
         text-align: center;
     }
 
@@ -76,7 +76,7 @@
 
     .form-input-container input {
         width: 20rem;
-        height: 3rem;
+        height: 2rem;
         border-radius: 1rem;
         text-align: center;
     }
@@ -87,7 +87,7 @@
 
     .form-input-container button {
         width: 15rem;
-        height: 3rem;
+        height: 2rem;
         margin-top: 2rem;
     }
 
@@ -100,11 +100,11 @@
 @media (max-width: 1400px) {
     .login-box-container {
         width: 60rem;
-        margin-top: 12rem;
+        margin-top: 1rem;
     }
 
     .box-left .form-title {
-        padding-top: 3rem;
+        padding-top: 2rem;
     }
 
         .box-left .form-title h4 {
@@ -118,12 +118,12 @@
 
     .form-input-container input {
         width: 20rem;
-        height: 3rem;
+        height: 2rem;
     }
 
     .form-input-container button {
         width: 15rem;
-        height: 3rem;
+        height: 2rem;
         margin-top: 2rem;
     }
 }
@@ -132,7 +132,7 @@
 @media (max-width: 900px) {
     .login-box-container {
         width: 40rem;
-        margin-top: 12rem;
+        margin-top: 6rem;
     }
 
     .box-left .form-title {
