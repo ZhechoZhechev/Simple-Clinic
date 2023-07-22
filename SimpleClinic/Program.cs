@@ -41,6 +41,7 @@ public class Program
 
         //TODO: uncoment it and add your first service
         builder.Services.AddApplicationServices(typeof(IAccountService));
+        builder.Services.AddScoped(typeof(DoctorService));
 
         builder.Services.AddControllersWithViews()
             .AddMvcOptions(options => 

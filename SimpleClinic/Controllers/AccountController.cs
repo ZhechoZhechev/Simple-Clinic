@@ -20,10 +20,10 @@ public class AccountController : Controller
     private readonly UserManager<ApplicationUser> userManager;
     private readonly SignInManager<ApplicationUser> signInManager;
     private readonly RoleManager<IdentityRole> roleManager;
-    private readonly string directoryPath;
     private readonly IWebHostEnvironment webHostEnvironment;
     private readonly IAccountService accountService;
     private readonly ISpecialityService specialityService;
+    private readonly string directoryPath;
 
     /// <summary>
     /// Constructor

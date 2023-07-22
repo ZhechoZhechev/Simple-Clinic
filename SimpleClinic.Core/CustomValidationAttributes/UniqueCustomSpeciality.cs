@@ -6,7 +6,7 @@ using SimpleClinic.Core.Contracts;
 using SimpleClinic.Core.Models;
 
 /// <summary>
-/// Attribute that check is speciality already exists
+/// Attribute that check if speciality already exists
 /// </summary>
 public class UniqueCustomSpeciality : ValidationAttribute
 {

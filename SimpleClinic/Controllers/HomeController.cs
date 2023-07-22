@@ -9,21 +9,32 @@ namespace SimpleClinic.Controllers
     {
         private readonly ILogger<HomeController> logger;
         private readonly ISpecialityService specialityService;
+        private readonly IDoctorService doctorService;
 
         public HomeController(ILogger<HomeController> logger,
-            ISpecialityService specialityService)
+            ISpecialityService specialityService,
+            IDoctorService doctorService)
         {
             this.logger = logger;
             this.specialityService = specialityService;
+            this.doctorService = doctorService;
         }
 
         public IActionResult Index()
         {
             return View();
         }
+
         public IActionResult Departments()
         {
             return View();
+        }
+
+        public async Task<IActionResult> Doctors()
+        {
+            var model = await doctorService.GetFirstThreeDoctors();
+
+            return View(model);
         }
 
         public async Task<IActionResult> AllDepartments() 
