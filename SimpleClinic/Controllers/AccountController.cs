@@ -23,6 +23,7 @@ public class AccountController : Controller
     private readonly string directoryPath;
     private readonly IWebHostEnvironment webHostEnvironment;
     private readonly IAccountService accountService;
+    private readonly ISpecialityService specialityService;
 
     /// <summary>
     /// Constructor
@@ -36,7 +37,8 @@ public class AccountController : Controller
         RoleManager<IdentityRole> roleManager,
         IConfiguration configuration,
         IWebHostEnvironment webHostEnvironment,
-        IAccountService accountService)
+        IAccountService accountService,
+        ISpecialityService specialityService)
     {
         this.userManager = userManager;
         this.signInManager = signInManager;
@@ -44,6 +46,7 @@ public class AccountController : Controller
         this.directoryPath = configuration["UpploadSettings:ImageDir"];
         this.webHostEnvironment = webHostEnvironment;
         this.accountService = accountService;
+        this.specialityService = specialityService; 
     }
 
     /// <summary>
@@ -177,7 +180,7 @@ public class AccountController : Controller
                 Password = model.Password,
                 PasswordRepeat = model.PasswordRepeat,
                 SelectedRole = model.SelectedRole,
-                Specialities = await accountService.GetAllSpecialities(),
+                Specialities = await specialityService.GetAllSpecialities(),
             };
             return View(doctorModel);
         }
@@ -200,7 +203,7 @@ public class AccountController : Controller
         var doctor = new Doctor();
         if (!string.IsNullOrEmpty(model.CustomSpeciality))
         {
-            var speciality = await accountService.AddCustomSpeciality(model.CustomSpeciality);
+            var speciality = await specialityService.AddCustomSpeciality(model.CustomSpeciality);
 
             doctor = new Doctor
             {

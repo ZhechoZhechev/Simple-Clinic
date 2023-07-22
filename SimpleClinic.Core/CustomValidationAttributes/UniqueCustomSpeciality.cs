@@ -16,9 +16,9 @@ public class UniqueCustomSpeciality : ValidationAttribute
         var customSpeciality = value as string;
 
         var serviceProvider = validationContext.GetService(typeof(IServiceProvider)) as IServiceProvider;
-        var accountService = serviceProvider.GetService(typeof(IAccountService)) as IAccountService;
+        var specialityService = serviceProvider.GetService(typeof(ISpecialityService)) as ISpecialityService;
 
-        viewModel.Specialities = accountService.GetAllSpecialities().Result;
+        viewModel.Specialities = specialityService.GetAllSpecialities().Result;
 
         var isDuplicate = viewModel.Specialities.Any(s => s.Name == customSpeciality);
 

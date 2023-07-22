@@ -8,13 +8,13 @@ namespace SimpleClinic.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> logger;
-        private readonly IHomeService homeService;
+        private readonly ISpecialityService specialityService;
 
         public HomeController(ILogger<HomeController> logger,
-            IHomeService homeService)
+            ISpecialityService specialityService)
         {
             this.logger = logger;
-            this.homeService = homeService;
+            this.specialityService = specialityService;
         }
 
         public IActionResult Index()
@@ -28,7 +28,7 @@ namespace SimpleClinic.Controllers
 
         public async Task<IActionResult> AllDepartments() 
         {
-            var model = await homeService.GetAllSpecialitiesWithDoctorsCount();
+            var model = await specialityService.GetAllSpecialitiesWithDoctorsCount();
 
             return View(model);
         }
