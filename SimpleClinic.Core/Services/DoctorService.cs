@@ -24,6 +24,27 @@ public class DoctorService : IDoctorService
         this.directoryPath = configuration["UpploadSettings:ImageDir"];
         this.webHostEnvironment = webHostEnvironment;
     }
+
+    public async Task<DoctorDetailsViewModel> DoctorDetails(string id)
+    {
+        var doctor = await context.Doctors
+            .Include(s => s.Speciality)
+            .FirstOrDefaultAsync(d => d.Id == id);
+
+            var model = new DoctorDetailsViewModel() 
+            {
+                Id = doctor.Id,
+                FirstName = doctor.FirstName,
+                LastName = doctor.LastName,
+                ProfilePictureFilename = doctor.ProfilePictureFilename,
+                Speciality = doctor.Speciality.Name,
+                PricePerHour = doctor.PricePerAppointment.ToString(),
+                ShortBio = doctor.Biography
+            };
+
+        return model;
+    }
+
     public async Task<IEnumerable<FirstThreeDoctorsViewModel>> GetFirstThreeDoctors()
     {
         var model = await context.Doctors.Take(3)

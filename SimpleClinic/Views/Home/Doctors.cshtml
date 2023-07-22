@@ -32,7 +32,7 @@
                         </div>
                         <div class="detail-box">
                             <div class="social_box">
-                                <button type="button" class="btn btn-outline-primary">Details</button>
+                                <a asp-controller="Home" asp-action="DoctorDetails" asp-route-id="@doctor.Id" class="btn btn-outline-primary">Details</a>
                             </div>
                             <h5>
                                 @doctor.FirstName @doctor.LastName
