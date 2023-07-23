@@ -70,8 +70,13 @@
                 </nav>
             </div>
         </header>
+        @using static SimpleClinic.Common.ExceptionMessages.NotificationMessages
+
+        @if (!string.IsNullOrEmpty((string?)TempData[ErrorMessage]))
+        {
+            @await Html.PartialAsync("_ErrorPartial")
+        }
                     @RenderBody()
-                    @await Html.PartialAsync("_ErrorPartial") 
     </div>
 
     <footer  class="footer_section">

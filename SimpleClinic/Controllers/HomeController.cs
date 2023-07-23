@@ -60,7 +60,7 @@ public class HomeController : Controller
         catch (Exception)
         {
             TempData[ErrorMessage] = "Something went wrong!";
-            return RedirectToAction("Doctors", "Home");
+            return RedirectToAction("Error", "Home");
         }
 
     }
