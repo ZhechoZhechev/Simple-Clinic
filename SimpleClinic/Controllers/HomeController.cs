@@ -10,14 +10,17 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> logger;
     private readonly ISpecialityService specialityService;
     private readonly IDoctorService doctorService;
+    private readonly IServiceService serviceService;
 
     public HomeController(ILogger<HomeController> logger,
         ISpecialityService specialityService,
-        IDoctorService doctorService)
+        IDoctorService doctorService,
+        IServiceService serviceService)
     {
         this.logger = logger;
         this.specialityService = specialityService;
         this.doctorService = doctorService;
+        this.serviceService = serviceService;
     }
 
     public IActionResult Index()
@@ -30,11 +33,38 @@ public class HomeController : Controller
         return View();
     }
 
+    public IActionResult Contacts()
+    {
+        return View();
+    }
+
+    public async Task<IActionResult> Services() 
+    {
+        try
+        {
+            var model = await serviceService.GetFirstThreeServices();
+            return View(model);
+        }
+        catch (Exception)
+        {
+            TempData[ErrorMessage] = "Something went wrong!";
+            return RedirectToAction("Error", "Home");
+        }
+    }
+
     public async Task<IActionResult> Doctors()
     {
-        var model = await doctorService.GetFirstThreeDoctors();
+        try
+        {
+            var model = await doctorService.GetFirstThreeDoctors();
+            return View(model);
+        }
+        catch (Exception)
+        {
+            TempData[ErrorMessage] = "Something went wrong!";
+            return RedirectToAction("Error", "Home");
+        }
 
-        return View(model);
     }
     /// <summary>
     /// Get doctor details

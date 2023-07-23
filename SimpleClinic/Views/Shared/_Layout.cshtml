@@ -55,7 +55,10 @@
                                 <a class="nav-link" asp-controller="Home" asp-action="Doctors">Doctors</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="contact.html">Contact Us</a>
+                                <a class="nav-link" asp-controller="Home" asp-action="Services">Services</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Home" asp-action="Contacts">Contact Us</a>
                             </li>
                             <form class="form-inline">
                                 <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
@@ -151,7 +154,7 @@
                             <a class="" asp-controller="Home" asp-action="Doctors">
                                 Doctors
                             </a>
-                            <a class="" href="contact.html">
+                            <a class="" asp-controller="Home" asp-action="Contacts">
                                 Contact Us
                             </a>
                         </div>
@@ -184,7 +187,7 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
   </script>
   <script type="text/javascript" src="~/js/custom.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgObTkj9zah1AobESvOmapwUT3USJNOaM&callback=myMap">
   </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
