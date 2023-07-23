@@ -1,8 +1,6 @@
 ﻿namespace SimpleClinic.Core.Services;
 
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 using SimpleClinic.Core.Contracts;
 using SimpleClinic.Core.Models;
@@ -12,19 +10,35 @@ using SimpleClinic.Infrastructure;
 public class DoctorService : IDoctorService
 {
     private readonly SimpleClinicDbContext context;
-    private readonly string directoryPath;
-    private readonly IWebHostEnvironment webHostEnvironment;
 
 
-    public DoctorService(SimpleClinicDbContext context,
-        IConfiguration configuration,
-        IWebHostEnvironment webHostEnvironment)
+    public DoctorService(SimpleClinicDbContext context)
     {
         this.context = context;
-        this.directoryPath = configuration["UpploadSettings:ImageDir"];
-        this.webHostEnvironment = webHostEnvironment;
     }
 
+    /// <summary>
+    /// Checks if doctors exists
+    /// </summary>
+    /// <param name="id">identifier to check</param>
+    /// <returns></returns>
+    public async Task<bool> DoctorExistsById(string id) 
+    {
+        var result = await context.Doctors.FindAsync(id);
+
+        if (result != null)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Returns the details of a doctor by id
+    /// </summary>
+    /// <param name="id">identifier</param>
+    /// <returns></returns>
     public async Task<DoctorDetailsViewModel> DoctorDetails(string id)
     {
         var doctor = await context.Doctors
@@ -45,6 +59,10 @@ public class DoctorService : IDoctorService
         return model;
     }
 
+    /// <summary>
+    /// Get first 3 saved doctors
+    /// </summary>
+    /// <returns></returns>
     public async Task<IEnumerable<FirstThreeDoctorsViewModel>> GetFirstThreeDoctors()
     {
         var model = await context.Doctors.Take(3)

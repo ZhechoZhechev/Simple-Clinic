@@ -1,7 +1,9 @@
 ﻿namespace SimpleClinic.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
+
 using SimpleClinic.Core.Contracts;
+using static SimpleClinic.Common.ExceptionMessages.NotificationMessages;
 
 public class HomeController : Controller
 {
@@ -34,12 +36,33 @@ public class HomeController : Controller
 
         return View(model);
     }
-
+    /// <summary>
+    /// Get doctor details
+    /// </summary>
+    /// <param name="Id"></param>
+    /// <returns></returns>
     public async Task<IActionResult> DoctorDetails(string Id)
     {
-        var model = await doctorService.DoctorDetails(Id);
+        var result = await doctorService.DoctorExistsById(Id);
 
-        return View(model);
+        if (!result)
+        {
+            TempData[ErrorMessage] = "Docotor with such ID does not exist!";
+            return RedirectToAction("Doctors", "Home");
+        }
+
+        try
+        {
+            var model = await doctorService.DoctorDetails(Id);
+            return View(model);
+
+        }
+        catch (Exception)
+        {
+            TempData[ErrorMessage] = "Something went wrong!";
+            return RedirectToAction("Doctors", "Home");
+        }
+
     }
 
     public async Task<IActionResult> AllDepartments() 
