@@ -8,24 +8,24 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form_container contact-form">
-                    <form action="">
+                    <form asp-controller="Home" asp-action="SendEmail" method="post">
                         <div class="form-row">
                             <div class="col-lg-6">
                                 <div>
-                                    <input type="text" placeholder="Your Name" />
+                                    <input name="name"  type="text" placeholder="Your Name" />
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div>
-                                    <input type="text" placeholder="Phone Number" />
+                                    <input name="phone" type="text" placeholder="Phone Number" />
                                 </div>
                             </div>
                         </div>
                         <div>
-                            <input type="email" placeholder="Email" />
+                            <input name="email" type="email" placeholder="Email" />
                         </div>
                         <div>
-                            <input type="text" class="message-box" placeholder="Message" />
+                            <input name="message" type="text" class="message-box" placeholder="Message" />
                         </div>
                         <div class="btn_box">
                             <button>
@@ -47,27 +47,5 @@
 </section>
 
 
-@section Scripts
-    {
-    <script>
-        // Function to initialize the map
-        function initMap() {
-            // Replace YOUR_LATITUDE and YOUR_LONGITUDE with your desired location coordinates
-            var location = { lat: 43.577542, lng: 27.828741 };
-
-            // Create a new Google Map instance and display it in the "googleMap" div
-            var map = new google.maps.Map(document.getElementById("googleMap"), {
-                center: location,
-                zoom: 14 // Adjust the zoom level as needed (1 to 21)
-            });
-
-            // Add a marker to the map at the specified location
-            var marker = new google.maps.Marker({
-                position: location,
-                map: map,
-                title: "Marker Title" // Replace with your desired marker title
-            });
-        }
-    </script>
 }
 
