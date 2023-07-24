@@ -79,6 +79,10 @@
         {
             @await Html.PartialAsync("_ErrorPartial")
         }
+        @if (!string.IsNullOrEmpty((string?)TempData[SuccessMessage]))
+        {
+            @await Html.PartialAsync("_SuccessPartial")
+        }
                     @RenderBody()
     </div>
 

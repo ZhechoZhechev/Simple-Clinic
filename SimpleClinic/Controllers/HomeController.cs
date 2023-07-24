@@ -179,7 +179,8 @@ public class HomeController : Controller
                 smtpClient.Send(messageToSend);
                 smtpClient.Disconnect(true);
             }
-            TempData[ErrorMessage] = "You email, has been sent successfully. We will get back you soon!";
+
+            TempData[SuccessMessage] = "You email, has been sent successfully. We will get back you soon!";
             return RedirectToAction("Contacts", "Home");
         }
         catch (Exception ex)
