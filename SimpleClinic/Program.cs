@@ -3,7 +3,7 @@ namespace SimpleClinic;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SimpleClinic.Controllers;
+
 using SimpleClinic.Core.Contracts;
 using SimpleClinic.Core.Services;
 using SimpleClinic.Infrastructure;
@@ -39,7 +39,6 @@ public class Program
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<SimpleClinicDbContext>();
 
-        //TODO: uncoment it and add your first service
         builder.Services.AddApplicationServices(typeof(IAccountService));
         builder.Services.AddScoped(typeof(DoctorService));
 
@@ -77,7 +76,6 @@ public class Program
 
         app.UseRouting();
 
-        
         app.UseAuthentication();
         app.UseAuthorization();
 

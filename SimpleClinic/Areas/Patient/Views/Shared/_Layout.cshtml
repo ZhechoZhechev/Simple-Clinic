@@ -23,19 +23,19 @@
     <link href="~/css/style.css" rel="stylesheet" />
     <link href="~/css/responsive.css" rel="stylesheet" />
 </head>
-<body>
+<body class="sub_page">
     <div class="hero_area">
 
         <div class="hero_bg_box">
             <img src="~/img/images/hero-bg.png" alt="">
         </div>
 
-        <header  class="header_section">
-            <div style="box-sizing:content-box" class="container">
+        <header class="header_section">
+            <div class="container">
                 <nav class="navbar navbar-expand-lg custom_nav-container ">
-                    <a  class="navbar-brand" asp-controller="Home" asp-action="Index">
+                    <a class="navbar-brand" href="index.html">
                         <span>
-                            Simple Clinic
+                            Orthoc
                         </span>
                     </a>
 
@@ -45,29 +45,26 @@
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html">Home </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="about.html"> About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="departments.html">Departments</a>
+                            </li>
                             <li class="nav-item active">
-                                <a class="nav-link" asp-controller="Home" asp-action="Index">Home <span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="doctors.html">Doctors <span class="sr-only">(current)</span> </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="Home" asp-action="Departments">Departments</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Home" asp-action="Doctors">Doctors</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Home" asp-action="Services">Services</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Home" asp-action="Contacts">Contact Us</a>
+                                <a class="nav-link" href="contact.html">Contact Us</a>
                             </li>
                             <form class="form-inline">
                                 <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                 </button>
                             </form>
-                        </ul>
-                        <ul class="navbar-nav ms-auto d-flex flex-row">
-                            <partial name="_LoginPartial" />
                         </ul>
                     </div>
                 </nav>
@@ -86,7 +83,7 @@
                     @RenderBody()
     </div>
 
-    <footer  class="footer_section">
+    <footer class="footer_section">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-lg-3 footer_col">
@@ -95,7 +92,7 @@
                             Reach at..
                         </h4>
                         <div class="contact_link_box">
-                            <a asp-controller="Home" asp-action="Contacts">
+                            <a href="">
                                 <i class="fa fa-map-marker" aria-hidden="true"></i>
                                 <span>
                                     Location
@@ -107,10 +104,10 @@
                                     Call +01 1234567890
                                 </span>
                             </a>
-                            <a asp-controller="Home" asp-action="Contacts">
+                            <a href="">
                                 <i class="fa fa-envelope" aria-hidden="true"></i>
                                 <span>
-                                    clinicinfomail@gmail.com
+                                    demo@gmail.com
                                 </span>
                             </a>
                         </div>
@@ -146,16 +143,19 @@
                             Links
                         </h4>
                         <div class="footer_links">
-                            <a class="active" asp-controller="Home" asp-action="Index">
+                            <a class="" href="index.html">
                                 Home
                             </a>
-                            <a class="" asp-controller="Home" asp-action="Departments">
+                            <a class="" href="about.html">
+                                About
+                            </a>
+                            <a class="" href="departments.html">
                                 Departments
                             </a>
-                            <a class="" asp-controller="Home" asp-action="Doctors">
+                            <a class="active" href="doctors.html">
                                 Doctors
                             </a>
-                            <a class="" asp-controller="Home" asp-action="Contacts">
+                            <a class="" href="contact.html">
                                 Contact Us
                             </a>
                         </div>
@@ -176,8 +176,10 @@
             <div class="footer-info">
                 <p>
                     &copy; <span id="displayYear"></span> All Rights Reserved By
+                    <a href="https://html.design/">Free Html Templates<br><br></a>
+                    &copy; <span id="displayYear"></span> Distributed By
+                    <a href="https://themewagon.com/">ThemeWagon</a>
                 </p>
-
             </div>
         </div>
     </footer>
