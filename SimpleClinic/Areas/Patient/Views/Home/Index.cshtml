@@ -1,4 +1,8 @@
-﻿@*@model IEnumerable<FirstThreeDoctorsViewModel>
+﻿@model NextOfKinViewModel
+
+<link rel="stylesheet" href="~/css/site.css" />
+
+@*@model IEnumerable<FirstThreeDoctorsViewModel>
 
 @{
     ViewData["Title"] = "Doctors";
@@ -36,4 +40,39 @@
     </div>
 </section>*@
 
-<h1>Zdraveeiii</h1>
+<div class="login-container">
+    <div class="login-box-container">
+        <div class="box-right"></div>
+        <div class="box-left">
+            <div class="form-title">
+                <h2>Please, enter your next of kin details for emergencies!</h2>
+            </div>
+
+            <form asp-action="Register" asp-controller="Account" method="post">
+                <div class="form-input-container">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="text-center" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-input-container">
+                    <label asp-for="PhoneNumber"></label>
+                    <input asp-for="PhoneNumber" class="text-center" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-input-container">
+                    <label asp-for="Address"></label>
+                    <textarea style="width: 20rem" asp-for="Address" class="text-center"></textarea>
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+                <div class="form-input-container">
+                    <button type="submit" class="btn btn-primary col-3">Continue</button>
+                </div>
+
+                <div class="form-outline text-center text-danger">
+                    <span asp-validation-summary="All"></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

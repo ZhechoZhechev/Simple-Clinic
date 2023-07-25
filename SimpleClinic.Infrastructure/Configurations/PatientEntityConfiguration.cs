@@ -10,6 +10,7 @@ using SimpleClinic.Infrastructure.Entities;
 /// </summary>
 public class PatientEntityConfiguration : IEntityTypeConfiguration<Patient>
 {
+
     /// <summary>
     /// Configure method from IEntityTypeConfiguration interface
     /// </summary>
@@ -17,9 +18,13 @@ public class PatientEntityConfiguration : IEntityTypeConfiguration<Patient>
     public void Configure(EntityTypeBuilder<Patient> builder)
     {
         builder
-                .HasOne(u => u.MedicalHistory)
-                .WithOne(m => m.Patient)
-                .HasForeignKey<MedicalHistory>(m => m.PatientId)
-                .OnDelete(DeleteBehavior.Restrict);
+            .HasOne(u => u.MedicalHistory)
+            .WithOne(m => m.Patient)
+            .HasForeignKey<MedicalHistory>(m => m.PatientId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder
+            .Property(x => x.FormsCompleted)
+            .HasDefaultValue(false);
     }
 }

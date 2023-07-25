@@ -33,6 +33,12 @@ public class Patient : ApplicationUser
     public DateTime DateOfBirth { get; set; }
 
     /// <summary>
+    /// If next of kin and medical history forms are completed
+    /// </summary>
+    [Required]
+    public bool FormsCompleted { get; set; }
+
+    /// <summary>
     /// Patients medical history
     /// </summary>
     [ForeignKey(nameof(MedicalHistory))]

@@ -66,6 +66,9 @@
                                 </button>
                             </form>
                         </ul>
+                        <ul class="navbar-nav ms-auto d-flex flex-row">
+                            <partial name="_LoginPartial" />
+                        </ul>
                     </div>
                 </nav>
             </div>
@@ -83,7 +86,7 @@
                     @RenderBody()
     </div>
 
-    <footer class="footer_section">
+    <footer style="height: 35vh" class="footer_section">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-lg-3 footer_col">
@@ -92,7 +95,7 @@
                             Reach at..
                         </h4>
                         <div class="contact_link_box">
-                            <a href="">
+                            <a asp-controller="Home" asp-action="Contacts">
                                 <i class="fa fa-map-marker" aria-hidden="true"></i>
                                 <span>
                                     Location
@@ -104,10 +107,10 @@
                                     Call +01 1234567890
                                 </span>
                             </a>
-                            <a href="">
+                            <a asp-controller="Home" asp-action="Contacts">
                                 <i class="fa fa-envelope" aria-hidden="true"></i>
                                 <span>
-                                    demo@gmail.com
+                                    clinicinfomail@gmail.com
                                 </span>
                             </a>
                         </div>
@@ -173,12 +176,9 @@
                     </form>
                 </div>
             </div>
-            <div class="footer-info">
+            <div  class="footer-info">
                 <p>
-                    &copy; <span id="displayYear"></span> All Rights Reserved By
-                    <a href="https://html.design/">Free Html Templates<br><br></a>
-                    &copy; <span id="displayYear"></span> Distributed By
-                    <a href="https://themewagon.com/">ThemeWagon</a>
+                    &copy; <span id="displayYear"></span> All Rights Reserved
                 </p>
             </div>
         </div>
