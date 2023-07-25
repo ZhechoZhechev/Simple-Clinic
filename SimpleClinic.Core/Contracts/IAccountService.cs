@@ -9,4 +9,6 @@ public interface IAccountService
     public Task<bool> GetIsFormFilled(string userId);
 
     public Task AddNextOfKin(NextOfKinViewModel model, string userId);
+
+    public Task AddMedicalHistory(MedicalHistoryViewModel model, string userId);
 }

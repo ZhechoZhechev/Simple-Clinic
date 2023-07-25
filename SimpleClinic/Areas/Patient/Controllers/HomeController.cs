@@ -45,7 +45,33 @@ public class HomeController : BaseController
         try
         {
             await accountService.AddNextOfKin(model, userId);
-            return Ok();
+            return RedirectToAction("AddMedicalHistory", "Home");
+        }
+        catch (Exception)
+        {
+            TempData[ErrorMessage] = "Something went wrong!";
+            return RedirectToAction("Error", "Home");
+        }
+    }
+
+    [HttpGet]
+    public IActionResult AddMedicalHistory() 
+    {
+        var model = new MedicalHistoryViewModel();
+
+        return View(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> AddMedicalHistory(MedicalHistoryViewModel model) 
+    {
+        var userId = userManager.GetUserId(User);
+
+        try
+        {
+            await accountService.AddMedicalHistory(model, userId);
+            TempData["Formcompleted"] = "yes";
+            return RedirectToAction("Index", "Home");
         }
         catch (Exception)
         {

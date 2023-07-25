@@ -19,6 +19,28 @@ public class AccountService : IAccountService
         this.context = context;
     }
 
+    public async Task AddMedicalHistory(MedicalHistoryViewModel model, string userId)
+    {
+        var medicalHistory = new MedicalHistory()
+        {
+            Surgery = model.Surgery,
+            MedicalConditions = model.MedicalConditions,
+            PatientId = userId
+        };
+
+        var patient = await context.Patients
+            .FindAsync(userId);
+
+        if (patient != null) 
+        {
+            patient.FormsCompleted = true;
+        }
+            
+
+        await context.MedicalHistories.AddAsync(medicalHistory);
+        await context.SaveChangesAsync();
+    }
+
     public async Task AddNextOfKin(NextOfKinViewModel model, string userId)
     {
         var nextOfKin = new NextOfKin()
