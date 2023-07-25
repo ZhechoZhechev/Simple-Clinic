@@ -1,6 +1,5 @@
-﻿namespace SimpleClinic.Areas.Patient.Models;
+﻿namespace SimpleClinic.Core.Models.PatientModels;
 
-using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
 using static SimpleClinic.Common.Constants.DataConstants.NextOfKinConstants;
@@ -10,6 +9,8 @@ using static SimpleClinic.Common.Constants.DataConstants.NextOfKinConstants;
 /// </summary>
 public class NextOfKinViewModel
 {
+    [Required]
+    public bool FormsCompleted { get; set; }
 
     /// <summary>
     /// Name

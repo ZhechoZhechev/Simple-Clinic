@@ -12,7 +12,7 @@ public class NextOfKin
 {
     public NextOfKin()
     {
-        this.Id = new Guid().ToString();
+        this.Id = Guid.NewGuid().ToString();
     }
 
     /// <summary>

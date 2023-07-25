@@ -10,7 +10,7 @@ public class Service
     /// </summary>
     public Service()
     {
-        this.Id = new Guid().ToString();
+        this.Id = Guid.NewGuid().ToString();
         this.Schedules = new HashSet<Schedule>();
         this.Appointments = new HashSet<ServiceAppointment>();
     }

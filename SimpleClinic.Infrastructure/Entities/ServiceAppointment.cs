@@ -13,7 +13,7 @@ namespace SimpleClinic.Infrastructure.Entities
         /// </summary>
         public ServiceAppointment()
         {
-            this.Id = new Guid().ToString();
+            this.Id = Guid.NewGuid().ToString();
         }
 
         /// <summary>

@@ -15,7 +15,7 @@ using SimpleClinic.Infrastructure.Entities;
 /// Account controller
 /// </summary>
 [Authorize]
-public class AccountController : Controller
+public class AccountController : BaseController
 {
     private readonly UserManager<ApplicationUser> userManager;
     private readonly SignInManager<ApplicationUser> signInManager;
@@ -347,7 +347,7 @@ public class AccountController : Controller
     /// <returns></returns>
     private async Task<IActionResult> RedirectToRoleSpecificArea()
     {
-        var userId = TempData["CurrentUserId"]!.ToString();
+        var userId = GetCurrnetUserId(TempData);
         var roleId = await accountService.GetRoleId(userId);
         var role = await roleManager.FindByIdAsync(roleId);
 

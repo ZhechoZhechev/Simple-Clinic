@@ -12,7 +12,7 @@ public class TimeSlot
     /// </summary>
     public TimeSlot()
     {
-        this.Id = new Guid().ToString();
+        this.Id = Guid.NewGuid().ToString();
     }
 
     /// <summary>

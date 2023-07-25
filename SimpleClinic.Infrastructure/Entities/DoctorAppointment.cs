@@ -13,7 +13,7 @@ public class DoctorAppointment
     /// </summary>
     public DoctorAppointment()
     {
-        this.Id = new Guid().ToString();
+        this.Id = Guid.NewGuid().ToString();
     }
 
     /// <summary>

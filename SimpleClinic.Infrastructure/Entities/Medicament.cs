@@ -14,7 +14,7 @@ public class Medicament
     /// </summary>
     public Medicament()
     {
-        this.Id = new Guid().ToString();
+        this.Id = Guid.NewGuid().ToString();
     }
 
     /// <summary>

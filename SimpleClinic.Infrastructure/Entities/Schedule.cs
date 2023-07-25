@@ -12,7 +12,7 @@ public class Schedule
     /// </summary>
     public Schedule()
     {
-        this.Id = new Guid().ToString();
+        this.Id = Guid.NewGuid().ToString();
         this.TimeSlots = new HashSet<TimeSlot>();
     }
 

@@ -1,7 +1,6 @@
-﻿namespace SimpleClinic.Areas.Patient.Models;
+﻿namespace SimpleClinic.Core.Models.PatientModels;
 
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
 using static SimpleClinic.Common.Constants.DataConstants.MedicalHistoryConstants;
@@ -14,7 +13,7 @@ public class MedicalHistoryViewModel
     /// <summary>
     /// Surgeries if any
     /// </summary>
-    [StringLength(SurgeryDescrMaxLength, MinimumLength =SurgeryDescrMinLength)]
+    [StringLength(SurgeryDescrMaxLength, MinimumLength = SurgeryDescrMinLength)]
     [DisplayName("If any surgeries, describe them, please")]
     public string? Surgery { get; set; }
 

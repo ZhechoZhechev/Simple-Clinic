@@ -15,7 +15,7 @@ public class MedicalHistory
     /// </summary>
     public MedicalHistory()
     {
-        this.Id = new Guid().ToString();
+        this.Id = Guid.NewGuid().ToString();
         this.Medicaments = new HashSet<Medicament>();
     }
 

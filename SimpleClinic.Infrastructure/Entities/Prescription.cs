@@ -2,6 +2,7 @@
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+
 using static Common.Constants.DataConstants.PrescriptionConstants;
 
 /// <summary>
@@ -9,6 +10,14 @@ using static Common.Constants.DataConstants.PrescriptionConstants;
 /// </summary>
 public class Prescription
 {
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    public Prescription()
+    {
+        this.Id = Guid.NewGuid().ToString();
+    }
+
     /// <summary>
     /// Identifier
     /// </summary>
