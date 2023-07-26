@@ -6,10 +6,11 @@ using SimpleClinic.Infrastructure.Entities;
 
 public interface ISpecialityService
 {
-    public Task<IEnumerable<SpecialityViewModel>> GetAllSpecialities();
+    Task<IEnumerable<SpecialityViewModel>> GetAllSpecialities();
+    Task<IEnumerable<string>> GetAllSpecialityNames();
 
-    public Task<Speciality> AddCustomSpeciality(string customSpecialityNa);
+    Task<Speciality> AddCustomSpeciality(string customSpecialityNa);
 
-    public Task<IEnumerable<SpecialityViewModel>> GetAllSpecialitiesWithDoctorsCount();
+    Task<IEnumerable<SpecialityViewModel>> GetAllSpecialitiesWithDoctorsCount();
 
 }

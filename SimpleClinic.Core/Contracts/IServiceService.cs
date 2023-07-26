@@ -4,5 +4,5 @@ namespace SimpleClinic.Core.Contracts;
 
 public interface IServiceService
 {
-    public Task<IEnumerable<FirstThreeServicesViewModel>> GetFirstThreeServices();
+    Task<IEnumerable<FirstThreeServicesViewModel>> GetFirstThreeServices();
 }

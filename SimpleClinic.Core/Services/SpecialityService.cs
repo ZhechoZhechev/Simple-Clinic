@@ -54,4 +54,12 @@ public class SpecialityService : ISpecialityService
 
         return model;
     }
+
+    public async Task<IEnumerable<string>> GetAllSpecialityNames()
+    {
+        return await context.Specialities
+            .Select(s => s.Name)
+            .Distinct()
+            .ToListAsync();
+    }
 }

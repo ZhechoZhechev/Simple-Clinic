@@ -4,11 +4,11 @@ using SimpleClinic.Core.Models.PatientModels;
 
 public interface IAccountService
 {
-    public Task<string> GetRoleId(string userId);
+    Task<string> GetRoleId(string userId);
 
-    public Task<bool> GetIsFormFilled(string userId);
+    Task<bool> GetIsFormFilled(string userId);
 
-    public Task AddNextOfKin(NextOfKinViewModel model, string userId);
+    Task AddNextOfKin(NextOfKinViewModel model, string userId);
 
-    public Task AddMedicalHistory(MedicalHistoryViewModel model, string userId);
+    Task AddMedicalHistory(MedicalHistoryViewModel model, string userId);
 }

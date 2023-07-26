@@ -46,19 +46,16 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link" href="index.html">Home </a>
+                                <a class="nav-link" href="index.html">My Prescriptions</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="about.html"> About</a>
+                                <a class="nav-link" href="about.html"> My bookings</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="departments.html">Departments</a>
+                                <a asp-controller="Doctor" asp-action="All" asp-area="Patient" class="nav-link" >Doctors</a>
                             </li>
                             <li class="nav-item active">
-                                <a class="nav-link" href="doctors.html">Doctors <span class="sr-only">(current)</span> </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="contact.html">Contact Us</a>
+                                <a class="nav-link" href="doctors.html">Services <span class="sr-only">(current)</span> </a>
                             </li>
                             <form class="form-inline">
                                 <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
@@ -95,7 +92,7 @@
                             Reach at..
                         </h4>
                         <div class="contact_link_box">
-                            <a asp-controller="Home" asp-action="Contacts">
+                            <a asp-controller="Home" asp-action="Contacts" asp-area="">
                                 <i class="fa fa-map-marker" aria-hidden="true"></i>
                                 <span>
                                     Location
@@ -107,7 +104,7 @@
                                     Call +01 1234567890
                                 </span>
                             </a>
-                            <a asp-controller="Home" asp-action="Contacts">
+                            <a asp-controller="Home" asp-action="Contacts" asp-area="">
                                 <i class="fa fa-envelope" aria-hidden="true"></i>
                                 <span>
                                     clinicinfomail@gmail.com
@@ -147,19 +144,16 @@
                         </h4>
                         <div class="footer_links">
                             <a class="" href="index.html">
-                                Home
+                                My Prescriptions
                             </a>
                             <a class="" href="about.html">
-                                About
+                                My Bookings
                             </a>
                             <a class="" href="departments.html">
-                                Departments
-                            </a>
-                            <a class="active" href="doctors.html">
                                 Doctors
                             </a>
-                            <a class="" href="contact.html">
-                                Contact Us
+                            <a class="active" href="doctors.html">
+                                Services
                             </a>
                         </div>
                     </div>

@@ -2,13 +2,16 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
-using SimpleClinic.Core.Models.PatientModels;
+using SimpleClinic.Common;
 using SimpleClinic.Controllers;
 using SimpleClinic.Core.Contracts;
 using SimpleClinic.Infrastructure.Entities;
+using SimpleClinic.Core.Models.PatientModels;
 using static SimpleClinic.Common.ExceptionMessages.NotificationMessages;
 
+[Authorize(Roles = RoleNames.PatientRoleName)]
 [Area("Patient")]
 public class HomeController : BaseController
 {
@@ -32,7 +35,10 @@ public class HomeController : BaseController
         var model = new NextOfKinViewModel()
         {
             FormsCompleted = await accountService.GetIsFormFilled(userId)
+
         };
+
+
 
         return View(model);
     }
@@ -50,7 +56,7 @@ public class HomeController : BaseController
         catch (Exception)
         {
             TempData[ErrorMessage] = "Something went wrong!";
-            return RedirectToAction("Error", "Home");
+            return RedirectToAction("Error", "Home", new { area = "" });
         }
     }
 
@@ -76,7 +82,7 @@ public class HomeController : BaseController
         catch (Exception)
         {
             TempData[ErrorMessage] = "Something went wrong!";
-            return RedirectToAction("Error", "Home");
+            return RedirectToAction("Error", "Home", new {area = ""});
         }
     }
 }

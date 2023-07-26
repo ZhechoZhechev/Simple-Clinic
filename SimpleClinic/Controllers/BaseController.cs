@@ -7,11 +7,11 @@ namespace SimpleClinic.Controllers
     {
         protected string GetCurrnetUserId(ITempDataDictionary tempdata) 
         {
-            if (tempdata.TryGetValue("CurrentUserId", out var userId))
+            var userId = tempdata.Peek("CurrentUserId");
+            if (userId != null)
             {
                 return userId.ToString();
             }
-
             return null;
         }
     }

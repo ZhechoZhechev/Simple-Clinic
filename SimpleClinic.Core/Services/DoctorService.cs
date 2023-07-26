@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 using SimpleClinic.Core.Contracts;
 using SimpleClinic.Core.Models;
+using SimpleClinic.Core.Models.PatientModels;
 using SimpleClinic.Infrastructure;
 
 
@@ -77,6 +78,47 @@ public class DoctorService : IDoctorService
             .ToListAsync();
 
         return model;
+    }
+
+    public async Task<DoctorQueryServiceModel> All(string speciality = null, string searchTerm = null, int currentPage = 1, int doctorsPerPage = 1)
+    {
+        var doctorsQuery = context.Doctors.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(speciality))
+        {
+            doctorsQuery = context.Doctors
+                .Where(s => s.Speciality.Name == speciality);
+        }
+
+        if (!string.IsNullOrWhiteSpace(searchTerm))
+        {
+            doctorsQuery = doctorsQuery
+                .Where(t =>
+                t.FirstName.Contains(searchTerm.ToLower()) ||
+                t.LastName.Contains(searchTerm.ToLower()) ||
+                t.Speciality.Name.Contains(searchTerm.ToLower()));
+        }
+
+        var doctors = await doctorsQuery
+            .Skip((currentPage -1) * doctorsPerPage)
+            .Take(doctorsPerPage)
+            .Select(d => new DoctorServiceModel() 
+            {
+                Fullname = $"{d.FirstName} {d.LastName}",
+                OfficePhoneNumber = d.OfficePhoneNumber,
+                ProfilePictureFilename = d.ProfilePictureFilename,
+                PricePerHour = d.PricePerAppointment.ToString(),
+                Speciality = d.Speciality.Name
+            })
+            .ToListAsync();
+
+        var totalDoctors = doctorsQuery.Count();
+
+        return new DoctorQueryServiceModel()
+        {
+            Doctors = doctors,
+            TotalDoctorsCount = totalDoctors
+        };
     }
 }
 
