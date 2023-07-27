@@ -1,2 +1,2 @@
 # Simple-Clinic
-Repository for the C# WEB ASP.NET CORE project.
+Repository for the WEB ASP.NET CORE final project.
