@@ -28,6 +28,6 @@ public class MedicalHistoryViewModel
     /// <summary>
     /// Patient identifier
     /// </summary>
-    [Required]
-    public string PatientId { get; set; }
+    //[Required]
+    public string? PatientId { get; set; }
 }
