@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using SimpleClinic.Common;
 using SimpleClinic.Core.Contracts;
 using SimpleClinic.Core.Models.PatientModels;
+using static SimpleClinic.Common.ExceptionMessages.NotificationMessages;
 
 [Authorize(Roles = RoleNames.PatientRoleName)]
 [Area("Patient")]
@@ -38,5 +39,27 @@ public class DoctorController : Controller
         queryModel.Specialities = doctorSpecialities;
 
         return View(queryModel);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Details(string id)
+    {
+        var result = await doctorService.DoctorExistsById(id);
+
+        if (!result)
+        {
+            TempData[ErrorMessage] = "Docotor with such ID does not exist!";
+            return RedirectToAction("All", "Doctor", new { area = RoleNames.PatientRoleName });
+        }
+        try
+        {
+            var model = await doctorService.DetailsForPatient(id);
+            return View(model);
+        }
+        catch (Exception)
+        {
+            TempData[ErrorMessage] = "Something went wrong!";
+            return RedirectToAction("Error", "Home");
+        }
     }
 }

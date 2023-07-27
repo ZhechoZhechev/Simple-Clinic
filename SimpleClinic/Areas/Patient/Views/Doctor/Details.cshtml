@@ -1,0 +1,46 @@
+﻿@model DoctorServiceModel
+
+@{
+    ViewBag.Title = "Dcotor Details";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <img class="card-img-top" src="~/img/profiles/@Model.ProfilePictureFilename" alt="Doctor Image">
+                <div class="card-body text-center">
+                    <h4>@Model.Fullname</h4>
+
+                    <h6>Office number: <b>@Model.OfficePhoneNumber</b></h6>
+                    <h6>
+                        Price Per Month:
+                        <b>@String.Format("{0:f2}", Model.PricePerHour) &euro;</b>
+                    </h6>
+                    <h6>
+                        Speciality:
+                        <b>@Model.Speciality</b>
+                    </h6>
+                    <br />
+                    @if (this.User?.Identity?.IsAuthenticated ?? false)
+                    {
+                        <a asp-controller="House" asp-action="Edit" asp-route-id="@Model.Id"
+                           class="btn btn-warning">Appointment</a>
+
+                        <p></p>
+
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <div class="card-body text-center">
+                    <h4 class="card-title">Biography:</h4>
+                    <p class="card-text">@Model.Biography</p>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

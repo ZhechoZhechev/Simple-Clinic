@@ -10,6 +10,8 @@
 
         public string ProfilePictureFilename { get; set; } = null!;
 
+        public string Biography { get; set; } = null!;
+
         public string  PricePerHour { get; set; } = null!;
 
         public string Speciality { get; set; } = null!;

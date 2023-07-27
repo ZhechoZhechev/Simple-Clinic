@@ -2,7 +2,7 @@
 
 <div class="col-md-4">
     <div class="card mb-3">
-        <img class="card-img-top" src="~/img/profiles/@Model.ProfilePictureFilename" alt="House Image">
+        <img class="card-img-top" src="~/img/profiles/@Model.ProfilePictureFilename" alt="Doctor Image">
         <div class="card-body text-center">
             <h4>@Model.Fullname</h4>
 
@@ -16,12 +16,10 @@
                 <b>@Model.Speciality</b>
             </h6>
             <br />
-            <a asp-controller="House" asp-action="Details" asp-route-id="@Model.Id"
-               class="btn btn-success">Details</a>
             @if (this.User?.Identity?.IsAuthenticated ?? false)
             {
-                <a asp-controller="House" asp-action="Edit" asp-route-id="@Model.Id"
-                   class="btn btn-warning">Book</a>
+                <a asp-controller="Doctor" asp-action="Details" asp-area="Patient" asp-route-id="@Model.Id"
+                   class="btn btn-warning">See Details</a>
 
                 <p></p>
 

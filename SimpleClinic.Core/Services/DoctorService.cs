@@ -104,6 +104,7 @@ public class DoctorService : IDoctorService
             .Take(doctorsPerPage)
             .Select(d => new DoctorServiceModel() 
             {
+                Id = d.Id,
                 Fullname = $"{d.FirstName} {d.LastName}",
                 OfficePhoneNumber = d.OfficePhoneNumber,
                 ProfilePictureFilename = d.ProfilePictureFilename,
@@ -119,6 +120,26 @@ public class DoctorService : IDoctorService
             Doctors = doctors,
             TotalDoctorsCount = totalDoctors
         };
+    }
+
+    public async Task<DoctorServiceModel> DetailsForPatient(string id)
+    {
+        var model = await context.Doctors
+            .Where(d => d.Id == id)
+            .Select(d => new DoctorServiceModel() 
+            {
+                Id = d.Id,
+                Fullname = $"{d.FirstName} {d.LastName}",
+                OfficePhoneNumber = d.OfficePhoneNumber,
+                ProfilePictureFilename = d.ProfilePictureFilename,
+                PricePerHour = d.PricePerAppointment.ToString(),
+                Speciality = d.Speciality.Name,
+                Biography = d.Biography
+
+            })
+            .FirstOrDefaultAsync();
+
+        return model;
     }
 }
 

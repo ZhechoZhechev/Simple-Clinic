@@ -15,4 +15,6 @@ public interface IDoctorService
     Task<bool> DoctorExistsById(string id);
 
     Task<DoctorQueryServiceModel> All(string speciality = null, string searchTerm = null, int currentPage = 1, int doctorsPerPage = 1);
+
+    Task<DoctorServiceModel> DetailsForPatient(string id);
 }
