@@ -46,6 +46,24 @@
     </div>
 </section>
 
-
+@section Scripts
+{
+    <script>
+        function myMap() {
+            var mapProp = {
+                center: new google.maps.LatLng(43.57473430240195, 27.829789255761067),
+                zoom: 10,
+            };
+            var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+            var marker = new google.maps.Marker({
+                position: map.getCenter(),
+                map: map,
+                title: 'My Marker'
+            });
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgObTkj9zah1AobESvOmapwUT3USJNOaM&callback=myMap">
+    </script>
 }
+
 

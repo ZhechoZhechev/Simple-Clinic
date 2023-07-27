@@ -48,6 +48,11 @@ public class HomeController : BaseController
     { 
         var userId =  userManager.GetUserId(User);
 
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
         try
         {
             await accountService.AddNextOfKin(model, userId);
@@ -72,6 +77,11 @@ public class HomeController : BaseController
     public async Task<IActionResult> AddMedicalHistory(MedicalHistoryViewModel model) 
     {
         var userId = userManager.GetUserId(User);
+
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
 
         try
         {

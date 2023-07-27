@@ -39,6 +39,7 @@ public class HomeController : Controller
     /// Home page
     /// </summary>
     /// <returns></returns>
+    [HttpGet]
     public IActionResult Index()
     {
         return View();
@@ -48,6 +49,7 @@ public class HomeController : Controller
     /// Departments page
     /// </summary>
     /// <returns></returns>
+    [HttpGet]
     public IActionResult Departments()
     {
         return View();
@@ -57,6 +59,7 @@ public class HomeController : Controller
     /// Contacts page
     /// </summary>
     /// <returns></returns>
+    [HttpGet]
     public IActionResult Contacts()
     {
         return View();
@@ -66,6 +69,7 @@ public class HomeController : Controller
     /// Available services
     /// </summary>
     /// <returns></returns>
+    [HttpGet]
     public async Task<IActionResult> Services() 
     {
         try
@@ -84,6 +88,7 @@ public class HomeController : Controller
     /// Registered doctors
     /// </summary>
     /// <returns></returns>
+    [HttpGet]
     public async Task<IActionResult> Doctors()
     {
         try
@@ -103,6 +108,7 @@ public class HomeController : Controller
     /// </summary>
     /// <param name="Id"></param>
     /// <returns></returns>
+    [HttpGet]
     public async Task<IActionResult> DoctorDetails(string Id)
     {
         var result = await doctorService.DoctorExistsById(Id);
@@ -132,6 +138,7 @@ public class HomeController : Controller
     /// Available departments
     /// </summary>
     /// <returns></returns>
+    [HttpGet]
     public async Task<IActionResult> AllDepartments() 
     {
         try
