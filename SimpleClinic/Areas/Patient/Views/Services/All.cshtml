@@ -1,27 +1,34 @@
-﻿@{
+﻿@model AllServicesPaginationModel
+
+@{
+    ViewBag.Title = "All Services";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+@{
     int previousPage = Model.CurrentPage - 1;
     if (previousPage < 1)
     {
         previousPage = 1;
     }
 
-    int maxPage = (int)Math.Ceiling((double)Model.TotalDoctorsCount /
-        Model.DoctorsPerPage);
+    int maxPage = (int)Math.Ceiling((double)Model.TotalServicesCount /
+        Model.ServicesPerPage);
 }
 
 <div class="row mb-5">
     <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start">
         <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
-           asp-controller="Doctor"
+           asp-controller="Service"
            asp-action="All"
-           asp-route-currentPage="@previousPage"
-           asp-route-category="@Model.Specialty"
-           asp-route-searchTerm="@Model.SearchTerm"><<</a>
+           asp-route-currentPage="@previousPage"><<</a>
     </div>
 
     @{
         bool shouldNextPageBeDisabled = Model.CurrentPage == maxPage ||
-        !Model.Doctors.Any();
+        !Model.Services.Any();
     }
 
     <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
@@ -29,19 +36,17 @@
            @(shouldNextPageBeDisabled ? "disabled" : string.Empty)"
            asp-controller="Doctor"
            asp-action="All"
-           asp-route-currentPage="@(Model.CurrentPage + 1)"
-           asp-route-category="@Model.Specialty"
-           asp-route-searchTerm="@Model.SearchTerm">>></a>
+           asp-route-currentPage="@(Model.CurrentPage + 1)">>></a>
     </div>
 </div>
 
-@if (!Model.Doctors.Any())
+@if (!Model.Services.Any())
 {
     <h2 class="text-center">No houses found by the given criteria!</h2>
 }
 
 <div class="row">
-    @foreach (var house in Model.Doctors)
+    @foreach (var house in Model.Services)
     {
         <partial name="_DoctorPartial" model="@house" />
     }
