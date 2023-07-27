@@ -37,6 +37,6 @@ public class NextOfKinViewModel
     /// <summary>
     /// Patients identifier
     /// </summary>
-    [Required]
-    public string PatientId { get; set; }
+    //[Required]
+    public string? PatientId { get; set; }
 }
