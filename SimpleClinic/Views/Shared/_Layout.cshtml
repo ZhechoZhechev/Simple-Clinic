@@ -49,15 +49,18 @@
                     </button>
                     @{
                         bool isInPatientRole;
+                        bool isInDoctorRole;
 
                         if (User.Identity?.Name != null)
                         {
                             var user = await userManager.FindByNameAsync(User.Identity.Name);
                             isInPatientRole = await userManager.IsInRoleAsync(user, RoleNames.PatientRoleName);
+                            isInDoctorRole = await userManager.IsInRoleAsync(user, RoleNames.DoctorRoleName);
                         }
                         else
                         {
                             isInPatientRole = false;
+                            isInDoctorRole = false;
                         }
                         
                     }
@@ -69,6 +72,13 @@
                                 <li class="nav-item active">
                                     <a class="nav-link" asp-controller="Home" asp-action="Index" asp-area="Patient">Home <span class="sr-only">(current)</span></a>
                                 </li>
+                            }
+                            else if (isInDoctorRole)
+                            {
+                                <li class="nav-item active">
+                                    <a class="nav-link" asp-controller="Home" asp-action="Index" asp-area="Doctor">Home <span class="sr-only">(current)</span></a>
+                                </li>
+
                             }
                             else
                             {
