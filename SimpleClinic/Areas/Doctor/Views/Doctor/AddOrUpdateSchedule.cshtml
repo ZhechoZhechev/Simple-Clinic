@@ -1,55 +1,35 @@
 ﻿@model DoctorScheduleViewModel
 
+<h2>Create Doctor's Schedule</h2>
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <h2 class="text-center">Add or Update Nexts Week Schedule</h2>
-            <form asp-action="AddOrUpdateSchedule" asp-controller="Doctor" method="post">
-                <input type="hidden" asp-for="DoctorId" />
-                @for (var i = 0; i < Model.Days.Count; i++)
-                {
-                    var dayOfWeek = Model.Days[i].Day.DayOfWeek;
-                    if (dayOfWeek != DayOfWeek.Saturday && dayOfWeek != DayOfWeek.Sunday)
-                    {
-                        <h3>@Model.Days[i].Day.ToString("dddd, dd MMMM yyyy")</h3>
-
-                        <div id="timeSlotsContainer_@i">
-                            @for (var j = 0; j < Model.Days[i].TimeSlots.Count; j++)
-                            {
-                                <div class="form-group">
-                                    <label asp-for="Days[i].TimeSlots[j].StartTime">Start Time</label>
-                                    <input asp-for="Days[i].TimeSlots[j].StartTime" class="form-control" />
-                                    <span asp-validation-for="Days[i].TimeSlots[j].StartTime" class="text-danger"></span>
-                                </div>
-                            }
-                        </div>
-
-                        <button type="button" class="btn btn-primary" onclick="addTimeSlot(@i)">Add Time Slot</button>
-                    }
-                }
-
-                <button type="submit" class="btn btn-success">Save Schedule</button>
-            </form>
-        </div>
+@using (Html.BeginForm("CreateSchedule", "Doctor", FormMethod.Post))
+{
+    <div class="form-group">
+        <label asp-for="Day">Select Day:</label>
+        <input asp-for="Day" class="form-control" type="date" />
+        <span asp-validation-for="Day" class="text-danger"></span>
     </div>
-</div>
 
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Time Slot</th>
+                <th>Available</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < Model.TimeSlots.Count; i++)
+            {
+                <tr>
+                    <td>@Model.TimeSlots[i].StartTime.ToString("hh:mm tt") - @Model.TimeSlots[i].StartTime.AddHours(1).ToString("hh:mm tt")</td>
+                    <td>
+                        <input asp-for="TimeSlots[i].IsAvailable" type="checkbox" />
+                        <input asp-for="TimeSlots[i].StartTime" type="hidden" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
-
-@section scripts {
-    <script>
-        function addTimeSlot(dayIndex) {
-            var containerId = "timeSlotsContainer_" + dayIndex;
-            var index = $("#" + containerId + " .form-group").length;
-            var timeSlotTemplate = `
-                                <div class="form-group">
-                                    <label asp-for="Days[${dayIndex}].TimeSlots[${index}].StartTime">Start Time</label>
-                                    <input asp-for="Days[${dayIndex}].TimeSlots[${index}].StartTime" class="form-control" />
-                                    <span asp-validation-for="Days[${dayIndex}].TimeSlots[${index}].StartTime" class="text-danger"></span>
-                                </div>
-                            `;
-            $("#" + containerId).append(timeSlotTemplate);
-        }
-    </script>
+    <button type="submit" class="btn btn-primary">Save Schedule</button>
 }

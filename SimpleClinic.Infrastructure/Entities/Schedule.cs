@@ -25,8 +25,7 @@ public class Schedule
     /// <summary>
     /// Day
     /// </summary>
-    [Required]
-    public DateTime Day { get; set; }
+    public DateTime? Day { get; set; }
 
     /// <summary>
     /// Timeslots
