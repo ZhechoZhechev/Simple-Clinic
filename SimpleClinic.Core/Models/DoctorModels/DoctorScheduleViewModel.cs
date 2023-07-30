@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace SimpleClinic.Core.Models.DoctorModels;
+﻿namespace SimpleClinic.Core.Models.DoctorModels;
 
 public class DoctorScheduleViewModel
 {
@@ -9,7 +7,7 @@ public class DoctorScheduleViewModel
         Day = DateTime.Today;
         TimeSlots = new List<TimeSlotViewModel>();
 
-        var startTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0);
+        var startTime = TimeZoneInfo.ConvertTime(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0), TimeZoneInfo.Local);
 
         while (startTime.Hour < 16)
         {
