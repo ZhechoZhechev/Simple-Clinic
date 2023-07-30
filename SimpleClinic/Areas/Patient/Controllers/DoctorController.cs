@@ -51,6 +51,7 @@ public class DoctorController : Controller
             TempData[ErrorMessage] = "Docotor with such ID does not exist!";
             return RedirectToAction("All", "Doctor", new { area = RoleNames.PatientRoleName });
         }
+
         try
         {
             var model = await doctorService.DetailsForPatient(id);

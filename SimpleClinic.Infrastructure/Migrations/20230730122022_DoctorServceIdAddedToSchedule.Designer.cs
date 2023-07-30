@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SimpleClinic.Infrastructure;
 
@@ -11,9 +12,10 @@ using SimpleClinic.Infrastructure;
 namespace SimpleClinic.Infrastructure.Migrations
 {
     [DbContext(typeof(SimpleClinicDbContext))]
-    partial class SimpleClinicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230730122022_DoctorServceIdAddedToSchedule")]
+    partial class DoctorServceIdAddedToSchedule
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -272,7 +274,7 @@ namespace SimpleClinic.Infrastructure.Migrations
 
                     b.HasIndex("TimeSlotId");
 
-                    b.ToTable("DoctorAppointments", (string)null);
+                    b.ToTable("DoctorAppointments");
                 });
 
             modelBuilder.Entity("SimpleClinic.Infrastructure.Entities.MedicalHistory", b =>
@@ -297,7 +299,7 @@ namespace SimpleClinic.Infrastructure.Migrations
                     b.HasIndex("PatientId")
                         .IsUnique();
 
-                    b.ToTable("MedicalHistories", (string)null);
+                    b.ToTable("MedicalHistories");
                 });
 
             modelBuilder.Entity("SimpleClinic.Infrastructure.Entities.Medicament", b =>
@@ -320,7 +322,7 @@ namespace SimpleClinic.Infrastructure.Migrations
 
                     b.HasIndex("MedicalHistoryId");
 
-                    b.ToTable("Medicaments", (string)null);
+                    b.ToTable("Medicaments");
                 });
 
             modelBuilder.Entity("SimpleClinic.Infrastructure.Entities.NextOfKin", b =>
@@ -351,7 +353,7 @@ namespace SimpleClinic.Infrastructure.Migrations
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("NextOfKins", (string)null);
+                    b.ToTable("NextOfKins");
                 });
 
             modelBuilder.Entity("SimpleClinic.Infrastructure.Entities.Prescription", b =>
@@ -386,7 +388,7 @@ namespace SimpleClinic.Infrastructure.Migrations
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("Prescriptions", (string)null);
+                    b.ToTable("Prescriptions");
                 });
 
             modelBuilder.Entity("SimpleClinic.Infrastructure.Entities.Schedule", b =>
@@ -411,7 +413,7 @@ namespace SimpleClinic.Infrastructure.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("Schedules", (string)null);
+                    b.ToTable("Schedules");
                 });
 
             modelBuilder.Entity("SimpleClinic.Infrastructure.Entities.Service", b =>
@@ -432,7 +434,7 @@ namespace SimpleClinic.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Services", (string)null);
+                    b.ToTable("Services");
 
                     b.HasData(
                         new
@@ -485,7 +487,7 @@ namespace SimpleClinic.Infrastructure.Migrations
 
                     b.HasIndex("TimeSlotId");
 
-                    b.ToTable("ServiceAppointments", (string)null);
+                    b.ToTable("ServiceAppointments");
                 });
 
             modelBuilder.Entity("SimpleClinic.Infrastructure.Entities.Speciality", b =>
@@ -503,7 +505,7 @@ namespace SimpleClinic.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Specialities", (string)null);
+                    b.ToTable("Specialities");
 
                     b.HasData(
                         new
@@ -579,7 +581,7 @@ namespace SimpleClinic.Infrastructure.Migrations
 
                     b.HasIndex("ScheduleId");
 
-                    b.ToTable("TimeSlots", (string)null);
+                    b.ToTable("TimeSlots");
                 });
 
             modelBuilder.Entity("SimpleClinic.Infrastructure.Entities.Doctor", b =>

@@ -1,6 +1,7 @@
 ﻿namespace SimpleClinic.Infrastructure.Entities;
 
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 /// <summary>
 /// Schedule for service and doctor appoitment
@@ -26,6 +27,20 @@ public class Schedule
     /// Day
     /// </summary>
     public DateTime? Day { get; set; }
+
+    /// <summary>
+    /// Identifier of the doctor
+    /// </summary>
+    [ForeignKey(nameof(Doctor))]
+    public string? DoctorId { get; set; }
+    public Doctor Doctor { get; set; }
+
+    /// <summary>
+    /// Identifier of the service
+    /// </summary>
+    [ForeignKey(nameof(Service))]
+    public string? ServiceId { get; set; }
+    public Service Service { get; set; }
 
     /// <summary>
     /// Timeslots

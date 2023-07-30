@@ -1,8 +1,10 @@
-﻿using SimpleClinic.Core.Models.DoctorModels;
+﻿namespace SimpleClinic.Core.Contracts;
 
-namespace SimpleClinic.Core.Contracts;
+using SimpleClinic.Core.Models.DoctorModels;
 
 public interface IScheduleService
 {
-    //Task AddOrUpdateDoctorSchedule(string doctorId, DateTime startDate, DateTime endDate, List<DayScheduleViewModel> days);
+    Task<bool> AddOrUpdateDoctorScheduleAsync(string doctorId, DateTime day, List<TimeSlotViewModel> timeSlots);
+
+    Task<bool> IfDayScheduleExists(DateTime day);
 }
