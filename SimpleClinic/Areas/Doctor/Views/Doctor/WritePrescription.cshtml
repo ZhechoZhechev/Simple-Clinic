@@ -1,0 +1,113 @@
+﻿@model PrescriptionViewModel
+
+@{
+    ViewData["Title"] = "Create Prescription";
+}
+<div class="container mt-4 mb-4 text-center">
+    <div class="row justify-content-center">
+        <div class="col-lg-4">
+            <h2>Create Prescription</h2>
+
+            <form asp-action="Create" class="needs-validation" novalidate>
+
+                <div class="form-group">
+                    <label asp-for="PatientId">Patient:</label>
+                    <select asp-for="PatientId" class="form-control" asp-items="ViewBag.PatientList"></select>
+                    <span asp-validation-for="PatientId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="PrescriptionDate">Prescription Date:</label>
+                    <input asp-for="PrescriptionDate" class="form-control" />
+                    <span asp-validation-for="PrescriptionDate" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="MedicamenName">Medicament Name:</label>
+                    <div class="input-group">
+                        <input asp-for="MedicamenName" class="form-control" />
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#medicamentModal">Add Medicament</button>
+                        </div>
+                    </div>
+                    <span asp-validation-for="MedicamenName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Instructions">Instructions:</label>
+                    <textarea asp-for="Instructions" class="form-control"></textarea>
+                    <span asp-validation-for="Instructions" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Save Prescription</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Medicament -->
+<div class="modal fade" id="medicamentModal" tabindex="-1" role="dialog" aria-labelledby="medicamentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="medicamentModalLabel">Add Medicament</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="medicamentForm" class="needs-validation" novalidate>
+                    <div class="form-group">
+                        <label for="medicamentName">Medicament Name:</label>
+                        <input type="text" class="form-control" id="medicamentName" required />
+                        <div class="invalid-feedback">Medicament name is required.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="medicamentQuantity">Quantity (in milligrams):</label>
+                        <input type="number" class="form-control" id="medicamentQuantity" required />
+                        <div class="invalid-feedback">Quantity is required and must be a valid number.</div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="addMedicament">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Handle modal button click to add medicament
+        document.getElementById('addMedicament').addEventListener('click', function () {
+            var medicamentName = document.getElementById('medicamentName').value;
+            var medicamentQuantity = parseInt(document.getElementById('medicamentQuantity').value);
+
+            // Create an object with the medicament data
+            var medicamentData = {
+                Name: medicamentName,
+                QuantityPerDayMilligrams: medicamentQuantity
+            };
+
+            // Send the medicament data to the server using AJAX
+            $.ajax({
+                url: '@Url.Action("AddMedicament", "Doctor", new { area = "Docotor" })',
+                type: 'POST',
+                data: medicamentData,
+                success: function (response) {
+                    // Handle the response from the server
+                    if (response.success) {
+                        alert(response.message); // Show success message
+                        $('#medicamentModal').modal('hide'); // Close the modal
+                    } else {
+                        alert('Failed to add medicament. Please try again.');
+                    }
+                },
+                error: function () {
+                    alert('An error occurred while adding the medicament. Please try again.');
+                }
+            });
+        });
+    </script>
+        }

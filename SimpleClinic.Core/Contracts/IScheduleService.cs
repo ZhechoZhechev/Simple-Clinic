@@ -4,7 +4,7 @@ using SimpleClinic.Core.Models.DoctorModels;
 
 public interface IScheduleService
 {
-    Task<bool> AddOrUpdateDoctorScheduleAsync(string doctorId, DateTime day, List<TimeSlotViewModel> timeSlots);
+    Task<bool> AddDoctorScheduleAsync(string doctorId, DateTime day, List<TimeSlotViewModel> timeSlots);
 
     Task<bool> IfDayScheduleExists(DateTime day, string doctorId);
 

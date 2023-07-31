@@ -16,7 +16,7 @@ public class ScheduleService : IScheduleService
         this.context = context;
     }
 
-    public async Task<bool> AddOrUpdateDoctorScheduleAsync(string doctorId, DateTime day, List<TimeSlotViewModel> timeSlots)
+    public async Task<bool> AddDoctorScheduleAsync(string doctorId, DateTime day, List<TimeSlotViewModel> timeSlots)
     {
         var schedule = new Schedule
         {
@@ -52,6 +52,7 @@ public class ScheduleService : IScheduleService
             .Where(x => x.DoctorId == doctorId)
             .Select(x => new DayScheduleViewModel() 
             {
+                Id = x.Id,
                 Day = x.Day,
                 TimeSlots = x.TimeSlots
                 .Select(ts => new TimeSlotViewModel() 

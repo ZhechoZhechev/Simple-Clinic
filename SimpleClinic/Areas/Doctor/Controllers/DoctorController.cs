@@ -3,7 +3,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SimpleClinic.Common;
 using SimpleClinic.Core.Contracts;
 using SimpleClinic.Core.Models.DoctorModels;
@@ -15,17 +15,20 @@ using static SimpleClinic.Common.ExceptionMessages.NotificationMessages;
 public class DoctorController : Controller
 {
     private readonly IScheduleService scheduleService;
+    private readonly IPatientService patientService;
     private readonly UserManager<ApplicationUser> userManager;
 
     public DoctorController(IScheduleService scheduleService,
-        UserManager<ApplicationUser> userManager)
+        UserManager<ApplicationUser> userManager,
+        IPatientService patientService)
     {
         this.scheduleService = scheduleService;
         this.userManager = userManager;
+        this.patientService = patientService;
     }
 
     [HttpGet]
-    public IActionResult AddOrUpdateSchedule()
+    public IActionResult AddSchedule()
     {
         var model = new DoctorScheduleViewModel();
         return View(model);
@@ -49,7 +52,7 @@ public class DoctorController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddOSchedule(DoctorScheduleViewModel viewModel)
+    public async Task<IActionResult> AddSchedule(DoctorScheduleViewModel viewModel)
     {
         
             var doctor = await userManager.GetUserAsync(User);
@@ -75,7 +78,7 @@ public class DoctorController : Controller
 
             try
             {
-                await scheduleService.AddOrUpdateDoctorScheduleAsync(doctor.Id, viewModel.Day, viewModel.TimeSlots);
+                await scheduleService.AddDoctorScheduleAsync(doctor.Id, viewModel.Day, viewModel.TimeSlots);
                 return RedirectToAction("AddOrUpdateSchedule", "Doctor", new { area = RoleNames.DoctorRoleName });
             }
             catch (Exception)
@@ -84,5 +87,17 @@ public class DoctorController : Controller
                 return RedirectToAction("Index", "Home", new { area = RoleNames.DoctorRoleName });
             }
 
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> WritePrescription () 
+    {
+        //var model = new PrescriptionViewModel();
+
+        var patients = await patientService.GetAllPatients();
+
+        ViewBag.PatientList = new SelectList(patients, "Id", "FullName");
+
+        return View();
     }
 }

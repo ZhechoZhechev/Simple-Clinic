@@ -52,7 +52,7 @@
                                 <a class="nav-link" href="about.html"> My Made Appiontments</a>
                             </li>
                             <li class="nav-item">
-                                <a asp-controller="Doctor" asp-action="All" asp-area="Patient" class="nav-link" >Write a Prescription</a>
+                                <a asp-controller="Doctor" asp-action="WritePrescription" asp-area="Doctor" class="nav-link">Write a Prescription</a>
                             </li>
                             <form class="form-inline">
                                 <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
@@ -183,4 +183,9 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+@section Scripts
+    {
+    <partial name="_ValidationScriptsPartial" />
+}
 
