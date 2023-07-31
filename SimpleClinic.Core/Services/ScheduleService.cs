@@ -52,7 +52,7 @@ public class ScheduleService : IScheduleService
             .Where(x => x.DoctorId == doctorId)
             .Select(x => new DayScheduleViewModel() 
             {
-                Day = x.Day ?? DateTime.Now,
+                Day = x.Day,
                 TimeSlots = x.TimeSlots
                 .Select(ts => new TimeSlotViewModel() 
                 {

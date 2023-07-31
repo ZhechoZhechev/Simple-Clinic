@@ -23,10 +23,11 @@ public class Schedule
     [Key]
     public string Id { get; set; }
 
+    [Required]
     /// <summary>
     /// Day
     /// </summary>
-    public DateTime? Day { get; set; }
+    public DateTime Day { get; set; }
 
     /// <summary>
     /// Identifier of the doctor

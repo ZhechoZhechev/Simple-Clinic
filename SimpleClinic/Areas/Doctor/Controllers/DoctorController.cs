@@ -49,13 +49,11 @@ public class DoctorController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddOrUpdateSchedule(DoctorScheduleViewModel viewModel)
+    public async Task<IActionResult> AddOSchedule(DoctorScheduleViewModel viewModel)
     {
-        if (viewModel.Day.HasValue)
-        {
-            var day = viewModel.Day.Value;
+        
             var doctor = await userManager.GetUserAsync(User);
-            var scheduleExists = await scheduleService.IfDayScheduleExists(day, doctor.Id);
+            var scheduleExists = await scheduleService.IfDayScheduleExists(viewModel.Day, doctor.Id);
 
             if (doctor == null)
             {
@@ -77,7 +75,7 @@ public class DoctorController : Controller
 
             try
             {
-                await scheduleService.AddOrUpdateDoctorScheduleAsync(doctor.Id, day, viewModel.TimeSlots);
+                await scheduleService.AddOrUpdateDoctorScheduleAsync(doctor.Id, viewModel.Day, viewModel.TimeSlots);
                 return RedirectToAction("AddOrUpdateSchedule", "Doctor", new { area = RoleNames.DoctorRoleName });
             }
             catch (Exception)
@@ -85,10 +83,6 @@ public class DoctorController : Controller
                 TempData[ErrorMessage] = "Something went wrong!";
                 return RedirectToAction("Index", "Home", new { area = RoleNames.DoctorRoleName });
             }
-        }
-
-        TempData[ErrorMessage] = "Please, select a different day.";
-        return RedirectToAction("AddOrUpdateSchedule", "Doctor", new { area = RoleNames.DoctorRoleName });
 
     }
 }
