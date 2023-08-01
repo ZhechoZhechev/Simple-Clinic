@@ -22,3 +22,26 @@ $(document).ready(function () {
         minimumInputLength: 3
     });
 });
+$(document).ready(function () {
+    var url = $("#selectMedicament").data("url");
+
+    $("#selectPatient").select2({
+        ajax: {
+            url: url,
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    searchTerm: params.term
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        },
+        minimumInputLength: 3
+    });
+});
