@@ -3,7 +3,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+
 using SimpleClinic.Common;
 using SimpleClinic.Core.Contracts;
 using SimpleClinic.Core.Models.DoctorModels;
@@ -16,15 +16,19 @@ public class DoctorController : Controller
 {
     private readonly IScheduleService scheduleService;
     private readonly IPatientService patientService;
+    private readonly IPrescriptionService prescriptionService;
     private readonly UserManager<ApplicationUser> userManager;
 
-    public DoctorController(IScheduleService scheduleService,
-        UserManager<ApplicationUser> userManager,
-        IPatientService patientService)
+    public DoctorController(
+        IScheduleService scheduleService,
+        IPatientService patientService,
+        IPrescriptionService prescriptionService,
+        UserManager<ApplicationUser> userManager)
     {
         this.scheduleService = scheduleService;
-        this.userManager = userManager;
         this.patientService = patientService;
+        this.prescriptionService = prescriptionService;
+        this.userManager = userManager;
     }
 
     [HttpGet]
@@ -90,22 +94,37 @@ public class DoctorController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> WritePrescription () 
+    public async Task<IActionResult> WritePrescription() 
     {
-
-        //var patients = await patientService.GetAllPatients();
-
-        //ViewBag.PatientList = new SelectList(patients, "Id", "FullName");
-
         return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> WritePrescription(PrescriptionViewModel viewModel) 
+    {
+        if (ModelState.IsValid) 
+        {
+            return View(viewModel);
+        }
+
+        try
+        {
+            await prescriptionService.SavePrescription(viewModel);
+            TempData[SuccessMessage] = "Prescription created successfully";
+            return RedirectToAction("Index", "Home", new {area = RoleNames.DoctorRoleName});
+        }
+        catch (Exception)
+        {
+            TempData[ErrorMessage] = "Something went wrong!";
+            return RedirectToAction("Index", "Home", new { area = RoleNames.DoctorRoleName });
+
+        }
     }
 
     public async Task<IActionResult> GetPatientsForSelect2(string searchTerm)
     {
-        // Replace the following line with your actual logic to fetch the list of patients from the database based on the search term
         var patients = await patientService.GetAllPatients(searchTerm);
 
-        // Project the list of patients to an array of objects with "id" and "text" properties
         var patientData = patients.Select(patient => new { id = patient.Id, text = $"{patient.FullName}" });
 
         return Json(patientData);

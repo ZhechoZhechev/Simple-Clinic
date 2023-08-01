@@ -1,10 +1,9 @@
 ﻿namespace SimpleClinic.Core.Models.DoctorModels;
 
-using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-using SimpleClinic.Infrastructure.Entities;
 using static SimpleClinic.Common.Constants.DataConstants.PrescriptionConstants;
+using static SimpleClinic.Common.Constants.DataConstants.MedicamentConstants;
 
 public class PrescriptionViewModel
 {
@@ -32,10 +31,17 @@ public class PrescriptionViewModel
     public DateTime PrescriptionDate { get; set; }
 
     /// <summary>
-    /// Prescribed medicament
+    /// Medicament name
     /// </summary>
     [Required]
-    public string MedicamenName { get; set; }
+    [StringLength(NameMaxLength, MinimumLength = NameMinLength)]
+    public string MedicamentName { get; set; }
+
+    /// <summary>
+    /// Quantity per day in milligrams
+    /// </summary>
+    [Required]
+    public int MedicamentQuantity { get; set; }
 
     /// <summary>
     /// Instrictions

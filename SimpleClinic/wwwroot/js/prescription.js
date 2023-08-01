@@ -8,7 +8,7 @@
     };
 
     $.ajax({
-        url: '@Url.Action("AddMedicament", "Doctor", new { area = "Docotor" })',
+        url: $("#medicamentModal").data("url"),
         type: 'POST',
         data: medicamentData,
         success: function (response) {
@@ -25,27 +25,25 @@
     });
 });
 $(document).ready(function () {
-    $(document).ready(function () {
-        var url = $("#selectPatient").data("url");
+    var url = $("#selectPatient").data("url");
 
-        $("#selectPatient").select2({
-            ajax: {
-                url: url,
-                dataType: 'json',
-                delay: 250,
-                data: function (params) {
-                    return {
-                        searchTerm: params.term
-                    };
-                },
-                processResults: function (data) {
-                    return {
-                        results: data
-                    };
-                },
-                cache: true
+    $("#selectPatient").select2({
+        ajax: {
+            url: url,
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    searchTerm: params.term
+                };
             },
-            minimumInputLength: 3
-        });
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        },
+        minimumInputLength: 3
     });
 });
