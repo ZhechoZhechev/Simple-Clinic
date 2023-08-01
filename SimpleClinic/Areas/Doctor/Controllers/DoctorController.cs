@@ -107,7 +107,7 @@ public class DoctorController : Controller
     {
         var doctor = await userManager.GetUserAsync(User);
 
-        if (ModelState.IsValid) 
+        if (!ModelState.IsValid) 
         {
             return View(viewModel);
         }
