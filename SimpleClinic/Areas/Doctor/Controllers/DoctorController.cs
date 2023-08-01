@@ -92,12 +92,22 @@ public class DoctorController : Controller
     [HttpGet]
     public async Task<IActionResult> WritePrescription () 
     {
-        //var model = new PrescriptionViewModel();
 
-        var patients = await patientService.GetAllPatients();
+        //var patients = await patientService.GetAllPatients();
 
-        ViewBag.PatientList = new SelectList(patients, "Id", "FullName");
+        //ViewBag.PatientList = new SelectList(patients, "Id", "FullName");
 
         return View();
+    }
+
+    public async Task<IActionResult> GetPatientsForSelect2(string searchTerm)
+    {
+        // Replace the following line with your actual logic to fetch the list of patients from the database based on the search term
+        var patients = await patientService.GetAllPatients(searchTerm);
+
+        // Project the list of patients to an array of objects with "id" and "text" properties
+        var patientData = patients.Select(patient => new { id = patient.Id, text = $"{patient.FullName}" });
+
+        return Json(patientData);
     }
 }

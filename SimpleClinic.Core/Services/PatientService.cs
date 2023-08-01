@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿namespace SimpleClinic.Core.Services;
+
+using Microsoft.EntityFrameworkCore;
+
 using SimpleClinic.Core.Contracts;
 using SimpleClinic.Core.Models.DoctorModels;
 using SimpleClinic.Infrastructure;
-using SimpleClinic.Infrastructure.Entities;
 
-namespace SimpleClinic.Core.Services;
 
 public class PatientService : IPatientService
 {
@@ -14,16 +15,27 @@ public class PatientService : IPatientService
     {
         this.context = context;
     }
-    public async Task<List<PatientViewModel>> GetAllPatients()
+    public async Task<List<PatientViewModel>> GetAllPatients(string searchTerm)
     {
-        var patients = await context.Patients
+
+        var patientsQuery = context.Patients.AsQueryable();
+
+        if(!string.IsNullOrWhiteSpace(searchTerm)) 
+        {
+            patientsQuery = patientsQuery
+             .Where(t => 
+              t.FirstName.Contains(searchTerm.ToLower()) ||
+              t.LastName.Contains(searchTerm.ToLower()));
+        }
+
+        var patients = await patientsQuery
             .Select(p => new PatientViewModel() 
             {
                 Id = p.Id,
                 FullName = $"{p.FirstName} {p.LastName}"
-
             })
             .ToListAsync();
+
 
         return patients;
     }

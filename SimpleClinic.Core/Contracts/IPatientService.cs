@@ -4,5 +4,5 @@ using SimpleClinic.Core.Models.DoctorModels;
 
 public interface IPatientService
 {
-    Task<List<PatientViewModel>> GetAllPatients();
+    Task<List<PatientViewModel>> GetAllPatients(string searchTerm);
 }

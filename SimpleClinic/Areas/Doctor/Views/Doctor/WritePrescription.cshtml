@@ -3,6 +3,9 @@
 @{
     ViewData["Title"] = "Create Prescription";
 }
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
 <div class="container mt-4 mb-4 text-center">
     <div class="row justify-content-center">
         <div class="col-lg-4">
@@ -12,7 +15,8 @@
 
                 <div class="form-group">
                     <label asp-for="PatientId">Patient:</label>
-                    <select asp-for="PatientId" class="form-control" asp-items="ViewBag.PatientList"></select>
+                    <select asp-for="PatientId" class="form-control" id="selectPatient"
+                            data-url="@Url.Action("GetPatientsForSelect2", "Doctor", new { area = "Doctor" })"></select>
                     <span asp-validation-for="PatientId" class="text-danger"></span>
                 </div>
 
@@ -78,36 +82,10 @@
 </div>
 
 @section Scripts {
-    <script>
-        // Handle modal button click to add medicament
-        document.getElementById('addMedicament').addEventListener('click', function () {
-            var medicamentName = document.getElementById('medicamentName').value;
-            var medicamentQuantity = parseInt(document.getElementById('medicamentQuantity').value);
 
-            // Create an object with the medicament data
-            var medicamentData = {
-                Name: medicamentName,
-                QuantityPerDayMilligrams: medicamentQuantity
-            };
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-            // Send the medicament data to the server using AJAX
-            $.ajax({
-                url: '@Url.Action("AddMedicament", "Doctor", new { area = "Docotor" })',
-                type: 'POST',
-                data: medicamentData,
-                success: function (response) {
-                    // Handle the response from the server
-                    if (response.success) {
-                        alert(response.message); // Show success message
-                        $('#medicamentModal').modal('hide'); // Close the modal
-                    } else {
-                        alert('Failed to add medicament. Please try again.');
-                    }
-                },
-                error: function () {
-                    alert('An error occurred while adding the medicament. Please try again.');
-                }
-            });
-        });
-    </script>
+    <!-- Include Select2 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="~/js/prescription.js" asp-append-version="true"></script>
         }
