@@ -17,17 +17,20 @@ public class DoctorController : Controller
     private readonly IScheduleService scheduleService;
     private readonly IPatientService patientService;
     private readonly IPrescriptionService prescriptionService;
+    private readonly IMedicamentService medicamentService;
     private readonly UserManager<ApplicationUser> userManager;
 
     public DoctorController(
         IScheduleService scheduleService,
         IPatientService patientService,
         IPrescriptionService prescriptionService,
+        IMedicamentService medicamentService,
         UserManager<ApplicationUser> userManager)
     {
         this.scheduleService = scheduleService;
         this.patientService = patientService;
         this.prescriptionService = prescriptionService;
+        this.medicamentService = medicamentService;
         this.userManager = userManager;
     }
 
@@ -102,6 +105,8 @@ public class DoctorController : Controller
     [HttpPost]
     public async Task<IActionResult> WritePrescription(PrescriptionViewModel viewModel) 
     {
+        var doctor = await userManager.GetUserAsync(User);
+
         if (ModelState.IsValid) 
         {
             return View(viewModel);
@@ -109,7 +114,7 @@ public class DoctorController : Controller
 
         try
         {
-            await prescriptionService.SavePrescription(viewModel);
+            await prescriptionService.SavePrescription(viewModel, doctor.Id);
             TempData[SuccessMessage] = "Prescription created successfully";
             return RedirectToAction("Index", "Home", new {area = RoleNames.DoctorRoleName});
         }
@@ -126,6 +131,15 @@ public class DoctorController : Controller
         var patients = await patientService.GetAllPatients(searchTerm);
 
         var patientData = patients.Select(patient => new { id = patient.Id, text = $"{patient.FullName}" });
+
+        return Json(patientData);
+    }
+
+    public async Task<IActionResult> GetMedicamentsForSelect2(string searchTerm)
+    {
+        var medicaments = await medicamentService.GetAllMedicaments(searchTerm);
+
+        var patientData = medicaments.Select(patient => new { id = patient.Id, text = $"{patient.Name}" });
 
         return Json(patientData);
     }

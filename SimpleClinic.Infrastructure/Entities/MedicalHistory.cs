@@ -16,7 +16,6 @@ public class MedicalHistory
     public MedicalHistory()
     {
         this.Id = Guid.NewGuid().ToString();
-        this.Medicaments = new HashSet<Medicament>();
     }
 
     /// <summary>
@@ -44,9 +43,4 @@ public class MedicalHistory
     [ForeignKey(nameof(Patient))]
     public string PatientId { get; set; }
     public Patient Patient { get; set; }
-
-    /// <summary>
-    /// Medicaments patient is on
-    /// </summary>
-    public ICollection<Medicament> Medicaments { get; set; }
 }

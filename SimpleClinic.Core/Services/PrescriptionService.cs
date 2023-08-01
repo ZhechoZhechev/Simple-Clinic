@@ -19,16 +19,16 @@ public class PrescriptionService : IPrescriptionService
 
 
 
-    public async Task SavePrescription(PrescriptionViewModel model)
+    public async Task SavePrescription(PrescriptionViewModel model, string doctorId)
     {
 
         var prescription = new Prescription()
         {
-            DoctorId = model.DoctorId,
+            DoctorId = doctorId,
             PatientId = model.PatientId,
-            PrescriptionDate = model.PrescriptionDate,
             MedicamentId = model.MedicamentId,
-            Instructions = model.Instructions
+            Instructions = model.Instructions,
+            PrescriptionDate = model.PrescriptionDate
         };
 
         await context.Prescriptions.AddAsync(prescription);

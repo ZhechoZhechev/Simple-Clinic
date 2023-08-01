@@ -3,20 +3,18 @@
 using System.ComponentModel.DataAnnotations;
 
 using static SimpleClinic.Common.Constants.DataConstants.PrescriptionConstants;
-using static SimpleClinic.Common.Constants.DataConstants.MedicamentConstants;
 
 public class PrescriptionViewModel
 {
     /// <summary>
     /// Identifier
     /// </summary>
-    public string Id { get; set; }
+    public string? Id { get; set; }
 
     /// <summary>
     /// Doctors identifier
     /// </summary>
-    [Required]
-    public string DoctorId { get; set; }
+    public string? DoctorId { get; set; }
 
     /// <summary>
     /// Patients identifier

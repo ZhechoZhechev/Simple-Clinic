@@ -42,6 +42,14 @@ $(document).ready(function () {
             },
             cache: true
         },
-        minimumInputLength: 3
+        minimumInputLength: 3,
+        language: {
+            inputTooShort: function (args) {
+                return "Please enter at least 3 characters";
+            },
+            noResults: function () {
+                return "No such medicament, add it first";
+            }
+        }
     });
 });
