@@ -14,6 +14,12 @@
             <form asp-action="Create" class="needs-validation" novalidate>
 
                 <div class="form-group">
+                    <label asp-for="PrescriptionDate">Prescription Date:</label>
+                    <input asp-for="PrescriptionDate" class="form-control" />
+                    <span asp-validation-for="PrescriptionDate" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
                     <label asp-for="PatientId">Patient:</label>
                     <select asp-for="PatientId" class="form-control" id="selectPatient"
                             data-url="@Url.Action("GetPatientsForSelect2", "Doctor", new { area = "Doctor" })"></select>
@@ -21,21 +27,10 @@
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="PrescriptionDate">Prescription Date:</label>
-                    <input asp-for="PrescriptionDate" class="form-control" />
-                    <span asp-validation-for="PrescriptionDate" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="MedicamentName">Medicament Name:</label>
-                    <div class="input-group">
-                        <input asp-for="MedicamentName" class="form-control" />
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#medicamentModal"
-                                data-url="@Url.Action("GetOrCreateMedicament", "Doctor", new { area = "Doctor" })">
-                            Add Medicament
-                        </button>
-                    </div>
-                    <span asp-validation-for="MedicamentName" class="text-danger"></span>
+                    <label asp-for="MedicamentId">Patient:</label>
+                    <select asp-for="MedicamentId" class="form-control" id="selectMedicament"
+                            data-url="@Url.Action("GetMedicamentsForSelect2", "Doctor", new { area = "Doctor" })"></select>
+                    <span asp-validation-for="MedicamentId" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
@@ -50,37 +45,7 @@
     </div>
 </div>
 
-<!-- Modal for Medicament -->
-<div class="modal fade" id="medicamentModal" tabindex="-1" role="dialog" aria-labelledby="medicamentModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="medicamentModalLabel">Add Medicament</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="medicamentForm" class="needs-validation" novalidate>
-                    <div class="form-group">
-                        <label for="medicamentName">Medicament Name:</label>
-                        <input type="text" class="form-control" id="medicamentName" required />
-                        <div class="invalid-feedback">Medicament name is required.</div>
-                    </div>
-                    <div class="form-group">
-                        <label for="medicamentQuantity">Quantity (in milligrams):</label>
-                        <input type="number" class="form-control" id="medicamentQuantity" required />
-                        <div class="invalid-feedback">Quantity is required and must be a valid number.</div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="addMedicament">Add</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 @section Scripts {
 

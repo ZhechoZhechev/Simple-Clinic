@@ -25,23 +25,17 @@ public class PrescriptionViewModel
     public string PatientId { get; set; }
 
     /// <summary>
+    /// Medicament identifier
+    /// </summary>
+    [Required]
+    public string MedicamentId { get; set; }
+
+    /// <summary>
     /// Issued
     /// </summary>
     [Required]
     public DateTime PrescriptionDate { get; set; }
 
-    /// <summary>
-    /// Medicament name
-    /// </summary>
-    [Required]
-    [StringLength(NameMaxLength, MinimumLength = NameMinLength)]
-    public string MedicamentName { get; set; }
-
-    /// <summary>
-    /// Quantity per day in milligrams
-    /// </summary>
-    [Required]
-    public int MedicamentQuantity { get; set; }
 
     /// <summary>
     /// Instrictions
