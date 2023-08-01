@@ -25,7 +25,7 @@ $(document).ready(function () {
 $(document).ready(function () {
     var url = $("#selectMedicament").data("url");
 
-    $("#selectPatient").select2({
+    $("#selectMedicament").select2({
         ajax: {
             url: url,
             dataType: 'json',
