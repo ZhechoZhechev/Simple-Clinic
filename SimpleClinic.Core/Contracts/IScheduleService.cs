@@ -9,4 +9,6 @@ public interface IScheduleService
     Task<bool> IfDayScheduleExists(DateTime day, string doctorId);
 
     Task<List<DayScheduleViewModel>> CheckSchedule(string doctorId);
+
+    Task<DayScheduleViewModel> GetDoctorScheduleAsync(DateTime day, string doctorId);
 }

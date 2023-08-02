@@ -2,15 +2,23 @@
     ViewBag.Title = "Choose Appointment Date";
 }
 
-<div class="container">
-    <h2>Choose Appointment Date</h2>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-    <p>Select a date for your appointment:</p>
 
-    <input type="text" id="datepicker">
+<div class="container" style="height: 52vh; margin-top: 3rem">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <h2 class="text-center">Choose Appointment Date</h2>
 
-    <div id="doctor-schedule">
-        <!-- The doctor's schedule will be dynamically generated here -->
+            <p class="text-center">Select a date for your appointment:</p>
+
+            <div class="text-center">
+                <input type="text" id="datepicker" style="display: inline-block;">
+            </div>
+
+            <div id="doctor-schedule"></div>
+            <div id="doctorId" data-doctor-id="@ViewBag.DoctorId" style="display: none;"></div>
+        </div>
     </div>
 </div>
 
@@ -18,11 +26,14 @@
     <script>
         $(document).ready(function () {
             $("#datepicker").datepicker({
+                minDate: 0,
                 onSelect: function (selectedDate) {
+                    var doctorId = $("#doctorId").data("doctor-id");
+
                     $.ajax({
                         url: "/Patient/Appointment/GetDoctorSchedule",
                         type: "GET",
-                        data: { selectedDate: selectedDate },
+                        data: { selectedDate: selectedDate, doctorId: doctorId },
                         success: function (schedule) {
                             $("#doctor-schedule").html(schedule);
                         },
@@ -34,4 +45,9 @@
             });
         });
     </script>
-}
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    }

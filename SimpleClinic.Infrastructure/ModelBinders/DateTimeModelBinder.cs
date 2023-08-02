@@ -24,7 +24,7 @@ public class DateTimeModelBinder : IModelBinder
             try
             {
                 string dateStr = valueProviderResult.FirstValue;
-                parsedValue = Convert.ToDateTime(dateStr);
+                parsedValue = DateTime.ParseExact(dateStr, "MM/dd/yyyy", CultureInfo.InvariantCulture);
                 parsedValue = parsedValue.ToUniversalTime();
 
                 binederSucceeded = true;
