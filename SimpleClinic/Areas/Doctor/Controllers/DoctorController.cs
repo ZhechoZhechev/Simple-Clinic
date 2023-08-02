@@ -42,7 +42,7 @@ public class DoctorController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> CheckSchedule() 
+    public async Task<IActionResult> CheckSchedule()
     {
         var doctor = await userManager.GetUserAsync(User);
 
@@ -61,53 +61,54 @@ public class DoctorController : Controller
     [HttpPost]
     public async Task<IActionResult> AddSchedule(DoctorScheduleViewModel viewModel)
     {
-        
-            var doctor = await userManager.GetUserAsync(User);
-            var scheduleExists = await scheduleService.IfDayScheduleExists(viewModel.Day, doctor.Id);
 
-            if (doctor == null)
-            {
-                TempData[ErrorMessage] = "Docotor with such ID does not exist!";
-                return RedirectToAction("Index", "Home", new { area = RoleNames.DoctorRoleName });
+        var doctor = await userManager.GetUserAsync(User);
+        var scheduleExists = await scheduleService.IfDayScheduleExists(viewModel.Day, doctor.Id);
 
-            }
+        if (doctor == null)
+        {
+            TempData[ErrorMessage] = "Docotor with such ID does not exist!";
+            return RedirectToAction("Index", "Home", new { area = RoleNames.DoctorRoleName });
 
-            if (scheduleExists)
-            {
-                TempData[ErrorMessage] = "Schedule for this day exists. Please, select different day.";
-                return RedirectToAction("AddOrUpdateSchedule", "Doctor", new { area = RoleNames.DoctorRoleName });
-            }
+        }
 
-            if (!ModelState.IsValid)
-            {
-                return View(viewModel);
-            }
+        if (scheduleExists)
+        {
+            TempData[ErrorMessage] = "Schedule for this day exists. Please, select different day.";
+            return RedirectToAction("AddSchedule", "Doctor", new { area = RoleNames.DoctorRoleName });
+        }
 
-            try
-            {
-                await scheduleService.AddDoctorScheduleAsync(doctor.Id, viewModel.Day, viewModel.TimeSlots);
-                return RedirectToAction("AddOrUpdateSchedule", "Doctor", new { area = RoleNames.DoctorRoleName });
-            }
-            catch (Exception)
-            {
-                TempData[ErrorMessage] = "Something went wrong!";
-                return RedirectToAction("Index", "Home", new { area = RoleNames.DoctorRoleName });
-            }
+        if (!ModelState.IsValid)
+        {
+            return View(viewModel);
+        }
+
+        try
+        {
+            await scheduleService.AddDoctorScheduleAsync(doctor.Id, viewModel.Day, viewModel.TimeSlots);
+            TempData[SuccessMessage] = "Schedule added successfully!";
+            return RedirectToAction("AddSchedule", "Doctor", new { area = RoleNames.DoctorRoleName });
+        }
+        catch (Exception)
+        {
+            TempData[ErrorMessage] = "Something went wrong!";
+            return RedirectToAction("Index", "Home", new { area = RoleNames.DoctorRoleName });
+        }
 
     }
 
     [HttpGet]
-    public async Task<IActionResult> WritePrescription() 
+    public async Task<IActionResult> WritePrescription()
     {
         return View();
     }
 
     [HttpPost]
-    public async Task<IActionResult> WritePrescription(PrescriptionViewModel viewModel) 
+    public async Task<IActionResult> WritePrescription(PrescriptionViewModel viewModel)
     {
         var doctor = await userManager.GetUserAsync(User);
 
-        if (!ModelState.IsValid) 
+        if (!ModelState.IsValid)
         {
             return View(viewModel);
         }
@@ -116,7 +117,7 @@ public class DoctorController : Controller
         {
             await prescriptionService.SavePrescription(viewModel, doctor.Id);
             TempData[SuccessMessage] = "Prescription created successfully";
-            return RedirectToAction("Index", "Home", new {area = RoleNames.DoctorRoleName});
+            return RedirectToAction("Index", "Home", new { area = RoleNames.DoctorRoleName });
         }
         catch (Exception)
         {

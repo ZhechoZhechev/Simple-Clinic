@@ -13,15 +13,14 @@
             {
                 @foreach (var day in Model)
                 {
-                    <h3>@TimeZoneInfo.ConvertTimeFromUtc(day.Day, TimeZoneInfo.Local).ToString("dddd, dd MMMM yyyy")</h3>
+                    <h3>@day.Day.ToString("dddd, dd MMMM yyyy")</h3>
                     <ul class="list-group list-group-flush">
                         @foreach (var timeSlot in day.TimeSlots.OrderBy(ts => ts.StartTime))
                         {
                             if (timeSlot.IsAvailable)
                             {
-                                var startTimeLocal = TimeZoneInfo.ConvertTimeFromUtc(timeSlot.StartTime, TimeZoneInfo.Local);
-                                var endTimeLocal = startTimeLocal.AddHours(1);
-                                <li class="list-group-item">@startTimeLocal.ToString("hh:mm tt") - @endTimeLocal.ToString("hh:mm tt")</li>
+                                var endTimeLocal = @timeSlot.StartTime.AddHours(1);
+                                <li class="list-group-item">@timeSlot.StartTime.ToString("hh:mm tt") - @endTimeLocal.ToString("hh:mm tt")</li>
                             }
                         }
                     </ul>
