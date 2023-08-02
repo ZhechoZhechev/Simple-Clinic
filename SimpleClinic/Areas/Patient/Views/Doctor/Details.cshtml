@@ -4,6 +4,8 @@
     ViewBag.Title = "Dcotor Details";
 }
 
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-4">
@@ -24,8 +26,7 @@
                     <br />
                     @if (this.User?.Identity?.IsAuthenticated ?? false)
                     {
-                        <a asp-controller="House" asp-action="Edit" asp-route-id="@Model.Id"
-                           class="btn btn-warning">Appointment</a>
+                        <a asp-controller="Appointments" asp-action="ChooseDate" asp-route-id="@Model.Id" class="btn btn-warning">Appointment</a>
 
                         <p></p>
 
@@ -44,3 +45,22 @@
         </div>
     </div>
 </div>
+<div id="appointmentModal" class="modal">
+    <div class="modal-content">
+        <form asp-controller="Appointments" asp-action="Schedule" method="get">
+            <input type="hidden" name="doctorId" value="@Model.Id" />
+            <input type="date" id="appointmentDate" name="selectedDate" required />
+            <button type="submit" class="btn btn-primary">View Schedule</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#appointmentDate").datepicker();
+        });
+    </script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+}
