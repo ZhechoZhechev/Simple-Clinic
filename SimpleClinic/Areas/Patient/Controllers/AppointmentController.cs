@@ -1,14 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿namespace SimpleClinic.Areas.Patient.Controllers;
 
-namespace SimpleClinic.Areas.Patient.Controllers
+using Microsoft.AspNetCore.Mvc;
+
+public class AppointmentController : Controller
 {
-    public class AppointmentController : Controller
+    public IActionResult ChooseDate(string id)
     {
-        public IActionResult ChooseDate(string id)
-        {
-            ViewBag.DoctorId = id;
+        ViewBag.DoctorId = id;
 
-            return View();
-        }
+        return View();
     }
 }
