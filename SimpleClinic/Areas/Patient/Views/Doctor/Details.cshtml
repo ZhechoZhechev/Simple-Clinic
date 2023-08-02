@@ -26,39 +26,31 @@
                     <br />
                     @if (this.User?.Identity?.IsAuthenticated ?? false)
                     {
-                        <a asp-controller="Appointments" asp-action="ChooseDate" asp-route-id="@Model.Id" class="btn btn-warning">Appointment</a>
+                        <a href="@Url.Action("ChooseDate", "Appointment", new { area = "Patient", id = Model.Id })" class="btn btn-warning">Appointment</a>
 
-                        <p></p>
+                        <div id="chooseDateModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="chooseDateModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                </div>
+                            </div>
+                        </div>                        <p></p>
 
                     }
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card mb-3">
-                <div class="card-body text-center">
-                    <h4 class="card-title">Biography:</h4>
-                    <p class="card-text">@Model.Biography</p>
-                    <br />
-                </div>
-            </div>
-        </div>
+
     </div>
 </div>
-<div id="appointmentModal" class="modal">
-    <div class="modal-content">
-        <form asp-controller="Appointments" asp-action="Schedule" method="get">
-            <input type="hidden" name="doctorId" value="@Model.Id" />
-            <input type="date" id="appointmentDate" name="selectedDate" required />
-            <button type="submit" class="btn btn-primary">View Schedule</button>
-        </form>
-    </div>
-</div>
+
 
 @section Scripts {
     <script>
         $(document).ready(function () {
-            $("#appointmentDate").datepicker();
+            $("#openChooseDateModal").click(function () {
+                var url = $(this).attr("href"); 
+                window.open(url, "_blank");
+            });
         });
     </script>
 
