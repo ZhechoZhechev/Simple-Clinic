@@ -37,7 +37,6 @@ public class AppointmentController : Controller
         {
             // Fetch and generate the doctor's schedule based on the selectedDate
             var schedule = await scheduleService.GetDoctorScheduleAsync(selectedDate, doctorId);
-
             return View("GetDoctorSchedule", schedule);
         }
         catch (Exception ex)
