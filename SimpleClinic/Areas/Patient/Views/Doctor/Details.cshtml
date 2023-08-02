@@ -4,8 +4,6 @@
     ViewBag.Title = "Dcotor Details";
 }
 
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-4">
@@ -26,33 +24,23 @@
                     <br />
                     @if (this.User?.Identity?.IsAuthenticated ?? false)
                     {
-                        <a href="@Url.Action("ChooseDate", "Appointment", new { area = "Patient", id = Model.Id })" class="btn btn-warning">Appointment</a>
+                        <a asp-area="Patient" asp-controller="Appointment" asp-action="ChooseDate" asp-route-id="@Model.Id"
+                           class="btn btn-warning">Appointment</a>
 
-                        <div id="chooseDateModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="chooseDateModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                </div>
-                            </div>
-                        </div>                        <p></p>
+                        <p></p>
 
                     }
                 </div>
             </div>
         </div>
-
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <div class="card-body text-center">
+                    <h4 class="card-title">Biography:</h4>
+                    <p class="card-text">@Model.Biography</p>
+                    <br />
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
-
-@section Scripts {
-    <script>
-        $(document).ready(function () {
-            $("#openChooseDateModal").click(function () {
-                var url = $(this).attr("href"); 
-                window.open(url, "_blank");
-            });
-        });
-    </script>
-
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-}
