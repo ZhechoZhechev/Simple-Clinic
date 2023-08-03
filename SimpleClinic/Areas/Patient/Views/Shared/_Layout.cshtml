@@ -55,8 +55,8 @@
                                     My Bookings
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="about.html">View Bookings</a>
-                                    <a class="dropdown-item" href="new-booking.html">New Booking</a>
+                                    <a asp-area="Patient" asp-controller="Appointment" asp-action="GetDocBookings" class="dropdown-item" >Doctor Bookings</a>
+                                    <a class="dropdown-item" href="new-booking.html">Service Bookings</a>
                                 </div>
                             </li>
                             <li class="nav-item">

@@ -1,7 +1,6 @@
 ﻿namespace SimpleClinic.Core.Contracts;
 
 using SimpleClinic.Core.Models.DoctorModels;
-using System.Collections.Specialized;
 
 public interface IScheduleService
 {

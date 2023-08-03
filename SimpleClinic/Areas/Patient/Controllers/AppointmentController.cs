@@ -86,4 +86,13 @@ public class AppointmentController : Controller
             return RedirectToAction("Index", "Home", new { area = RoleNames.PatientRoleName });
         }
     }
+
+    public async Task<IActionResult> GetDocBookings() 
+    {
+        var patient = await userManager.GetUserAsync(User);
+
+        var model = await appointmentService.GetDoctorAppointmentsForPatient(patient.Id);
+
+        return View(model);
+    }
 }

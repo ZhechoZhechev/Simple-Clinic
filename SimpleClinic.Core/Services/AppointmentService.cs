@@ -3,6 +3,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using SimpleClinic.Core.Contracts;
+using SimpleClinic.Core.Models.PatientModels;
 using SimpleClinic.Infrastructure;
 using SimpleClinic.Infrastructure.Entities;
 using System.Threading.Tasks;
@@ -43,4 +44,20 @@ public class AppointmentService : IAppointmentService
         await context.SaveChangesAsync();
     }
 
+    public async Task<List<DoctorBookingViewModel>> GetDoctorAppointmentsForPatient(string patientId)
+    {
+        var doctorBookings = await context.DoctorAppointments
+            .Where(x => x.PatientId == patientId)
+            .Select(x => new DoctorBookingViewModel() 
+            {
+                DocFirstName = x.Doctor.FirstName,
+                DocLastName = x.Doctor.LastName,
+                BookingDate = x.BookingDateTime,
+                StartTime = x.TimeSlot.StartTime,
+                EndTime = x.TimeSlot.EndTime
+            })
+            .ToListAsync();
+
+        return doctorBookings;
+    }
 }
