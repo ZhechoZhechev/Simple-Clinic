@@ -1,6 +1,7 @@
 ﻿namespace SimpleClinic.Core.Services;
 
 using Microsoft.EntityFrameworkCore;
+
 using SimpleClinic.Core.Contracts;
 using SimpleClinic.Core.Models.DoctorModels;
 using SimpleClinic.Infrastructure;
@@ -44,6 +45,16 @@ public class ScheduleService : IScheduleService
         await context.SaveChangesAsync();
 
         return true;
+    }
+
+    public async Task<List<DateTime>> GetAvailableDates(string doctorId)
+    {
+        var dates = await context.Schedules
+            .Where(x => x.DoctorId == doctorId)
+            .Select(d => d.Day)
+            .ToListAsync();
+
+        return dates;
     }
 
     public async Task<List<DayScheduleViewModel>> CheckSchedule(string doctorId)

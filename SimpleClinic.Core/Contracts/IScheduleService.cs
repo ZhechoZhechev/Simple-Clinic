@@ -1,6 +1,7 @@
 ﻿namespace SimpleClinic.Core.Contracts;
 
 using SimpleClinic.Core.Models.DoctorModels;
+using System.Collections.Specialized;
 
 public interface IScheduleService
 {
@@ -11,4 +12,6 @@ public interface IScheduleService
     Task<List<DayScheduleViewModel>> CheckSchedule(string doctorId);
 
     Task<DayScheduleViewModel> GetDoctorScheduleAsync(DateTime day, string doctorId);
+
+    Task<List<DateTime>> GetAvailableDates(string doctorId);
 }

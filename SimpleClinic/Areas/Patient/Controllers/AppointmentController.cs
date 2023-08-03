@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using SimpleClinic.Common;
 using SimpleClinic.Core.Contracts;
+using static SimpleClinic.Common.ExceptionMessages.NotificationMessages;
 
 [Authorize(Roles = RoleNames.PatientRoleName)]
 [Area("Patient")]
@@ -28,21 +29,34 @@ public class AppointmentController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetDoctorSchedule(DateTime selectedDate, string doctorId)
+    public async Task<IActionResult> GetAvailableDates(string doctorId)
     {
-
-        //selectedDate = TimeZoneInfo.ConvertTimeFromUtc(selectedDate, TimeZoneInfo.Local);
-
         try
         {
-            // Fetch and generate the doctor's schedule based on the selectedDate
+            var availableDates = await scheduleService.GetAvailableDates(doctorId);
+
+            return Json(availableDates);
+        }
+        catch (Exception)
+        {
+            TempData[ErrorMessage] = "Something went wrong!";
+            return RedirectToAction("Index", "Home", new { area = RoleNames.PatientRoleName });
+        }
+    }
+
+
+    [HttpGet]
+    public async Task<IActionResult> GetDoctorSchedule(DateTime selectedDate, string doctorId)
+    {
+        try
+        {
             var schedule = await scheduleService.GetDoctorScheduleAsync(selectedDate, doctorId);
             return PartialView("_GetDoctorSchedule", schedule);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            // Handle errors and return an appropriate response
-            return BadRequest("Error fetching doctor's schedule: " + ex.Message);
+            TempData[ErrorMessage] = "Something went wrong!";
+            return RedirectToAction("Index", "Home", new { area = RoleNames.PatientRoleName });
         }
 
     }

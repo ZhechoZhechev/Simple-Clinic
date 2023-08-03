@@ -22,30 +22,17 @@
     </div>
 </div>
 
+<style>
+    .available-date {
+        background-color: #8aff86;
+        color: #000;
+        border-color: #8aff86;
+    }
+</style>
+
 @section Scripts {
-    <script>
-        $(document).ready(function () {
-            $("#datepicker").datepicker({
-                minDate: 0,
-                onSelect: function (selectedDate) {
-                    var doctorId = $("#doctorId").data("doctor-id");
 
-                    $.ajax({
-                        url: "/Patient/Appointment/GetDoctorSchedule",
-                        type: "GET",
-                        data: { selectedDate: selectedDate, doctorId: doctorId },
-                        success: function (schedule) {
-                            $("#doctor-schedule").html(schedule);
-                        },
-                        error: function () {
-                            alert("Error fetching doctor's schedule.");
-                        }
-                    });
-                }
-            });
-        });
-    </script>
-
+    <script src="~/js/ChooseAppointmentDate.js" asp-append-version="true"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
