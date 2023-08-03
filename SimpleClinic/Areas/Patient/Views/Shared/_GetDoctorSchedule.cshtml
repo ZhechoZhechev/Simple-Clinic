@@ -15,7 +15,10 @@
                         if (timeSlot.IsAvailable)
                         {
                             var endTimeLocal = @timeSlot.StartTime.AddHours(1);
-                            <li class="list-group-item">@timeSlot.StartTime.ToString("hh:mm tt") - @endTimeLocal.ToString("hh:mm tt")</li>
+                            <li class="list-group-item">
+                                <span>@timeSlot.StartTime.ToString("hh:mm tt") - @endTimeLocal.ToString("hh:mm tt")</span>
+                                <a asp-area="Patient" asp-controller="Appointment" asp-action="MakeAppointment" asp-route-id="@timeSlot.Id" class="btn btn-sm btn-primary float-right">Book</a>
+                            </li>
                         }
                     }
                 </ul>

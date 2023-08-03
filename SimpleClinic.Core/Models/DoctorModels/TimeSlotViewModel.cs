@@ -3,6 +3,7 @@
 using System.ComponentModel.DataAnnotations;
 public class TimeSlotViewModel
 {
+    public string? Id { get; set; }
 
     [Required]
     public DateTime StartTime { get; set; }

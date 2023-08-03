@@ -68,6 +68,7 @@ public class ScheduleService : IScheduleService
                 TimeSlots = x.TimeSlots
                 .Select(ts => new TimeSlotViewModel() 
                 {
+                    Id = ts.Id,
                     StartTime = ts.StartTime,
                     EndTime = ts.StartTime.AddHours(1),
                     IsAvailable = ts.IsAvailable
@@ -95,6 +96,7 @@ public class ScheduleService : IScheduleService
                 TimeSlots = schedule.TimeSlots
                 .Select(ts => new TimeSlotViewModel()
                 {
+                    Id = ts.Id,
                     StartTime = ts.StartTime,
                     EndTime = ts.StartTime.AddHours(1),
                     IsAvailable = ts.IsAvailable

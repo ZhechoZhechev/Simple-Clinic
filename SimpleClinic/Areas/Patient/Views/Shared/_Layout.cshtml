@@ -50,8 +50,14 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="index.html">My Prescriptions</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="about.html"> My bookings</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    My Bookings
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="about.html">View Bookings</a>
+                                    <a class="dropdown-item" href="new-booking.html">New Booking</a>
+                                </div>
                             </li>
                             <li class="nav-item">
                                 <a asp-controller="Doctor" asp-action="All" asp-area="Patient" class="nav-link">Doctors</a>

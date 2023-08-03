@@ -39,6 +39,14 @@ namespace SimpleClinic.Infrastructure.Entities
         public TimeSlot TimeSlot { get; set; }
 
         /// <summary>
+        /// Who made the appointment
+        /// </summary>
+        [Required]
+        [ForeignKey(nameof(Patient))]
+        public string PatientId { get; set; }
+        public Patient Patient { get; set; }
+
+        /// <summary>
         /// When it is made
         /// </summary>
         [Required]
