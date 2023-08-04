@@ -2,6 +2,8 @@
 
 public class DoctorBookingViewModel
 {
+    public string Id { get; set; }
+
     public string DocFirstName { get; set; }
 
     public string DocLastName { get; set; }

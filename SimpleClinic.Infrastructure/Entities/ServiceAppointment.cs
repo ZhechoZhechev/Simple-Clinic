@@ -47,9 +47,15 @@ namespace SimpleClinic.Infrastructure.Entities
         public Patient Patient { get; set; }
 
         /// <summary>
-        /// When it is made
+        /// The date appointment is for
         /// </summary>
         [Required]
         public DateTime BookingDateTime { get; set; }
+
+        /// <summary>
+        /// If appointment id canceled
+        /// </summary>
+        [Required]
+        public bool IsActive { get; set; }
     }
 }

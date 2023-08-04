@@ -23,7 +23,7 @@
                         <td>@appointment.BookingDate.ToString("dddd, dd MMMM yyyy")</td>
                         <td>@appointment.StartTime.ToString("hh:mm tt")- @appointment.EndTime.ToString("hh:mm tt")</td>
                         <td>
-                            <a href="" class="btn btn-primary">Cancel</a>
+                            <a asp-area="Patient" asp-action="Appointment" asp-controller="CancelDocBooking" asp-route-id="@appointment.Id" class="btn btn-primary">Cancel</a>
                         </td>
                     </tr>
                 }

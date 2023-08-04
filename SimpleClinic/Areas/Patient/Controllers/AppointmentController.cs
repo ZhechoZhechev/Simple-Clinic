@@ -9,9 +9,9 @@ using SimpleClinic.Core.Contracts;
 using SimpleClinic.Infrastructure.Entities;
 using static SimpleClinic.Common.ExceptionMessages.NotificationMessages;
 
+
 [Authorize(Roles = RoleNames.PatientRoleName)]
 [Area("Patient")]
-
 public class AppointmentController : Controller
 {
     private readonly UserManager<ApplicationUser> userManager;
@@ -94,5 +94,10 @@ public class AppointmentController : Controller
         var model = await appointmentService.GetDoctorAppointmentsForPatient(patient.Id);
 
         return View(model);
+    }
+
+    public async Task<IActionResult> CancelDocBooking(string id) 
+    {
+
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace SimpleClinic.Core.Services;
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+
 using SimpleClinic.Core.Contracts;
 using SimpleClinic.Core.Models.PatientModels;
 using SimpleClinic.Infrastructure;
@@ -16,6 +16,18 @@ public class AppointmentService : IAppointmentService
     {
         this.context = context;
     }
+
+    public async Task CancelDocAppointment(string id)
+    {
+        var appToCancel = await context.DoctorAppointments
+            .FindAsync(id);
+
+        if (appToCancel != null) 
+        {
+            return;
+        }
+    }
+
     public async Task CreateAppointment(string timeSlotId, string patientId)
     {
         var timeSlot = await context.TimeSlots.FindAsync(timeSlotId);
@@ -35,7 +47,7 @@ public class AppointmentService : IAppointmentService
             DoctorId = doctorId!,
             TimeSlotId = timeSlotId,
             PatientId = patientId,
-            BookingDateTime = bookingDate
+            BookingDateTime = bookingDate,
         };
 
         timeSlot!.IsAvailable = false;
@@ -50,6 +62,7 @@ public class AppointmentService : IAppointmentService
             .Where(x => x.PatientId == patientId)
             .Select(x => new DoctorBookingViewModel() 
             {
+                Id = x.Id,
                 DocFirstName = x.Doctor.FirstName,
                 DocLastName = x.Doctor.LastName,
                 BookingDate = x.BookingDateTime,
