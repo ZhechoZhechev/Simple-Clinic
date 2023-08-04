@@ -79,7 +79,7 @@ public class DoctorController : Controller
     {
         var patient = await userManager.GetUserAsync(User);
 
-        var model = prescriptionService.GetAllPrescriptionsForPatient(patient.Id);
+        var model = await prescriptionService.GetAllPrescriptionsForPatient(patient.Id);
 
         return View(model);
     }

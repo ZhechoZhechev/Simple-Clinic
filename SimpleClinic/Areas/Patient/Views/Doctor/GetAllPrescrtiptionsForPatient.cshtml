@@ -18,13 +18,13 @@
                 {
                     <tr>
                         <td>
-                            @prescription.DoctorNames -  @prescription.DoctorSpeciality
+                            @prescription.DoctorNames <span>(Speciality: @prescription.DoctorSpeciality)</span>
                         </td>
                         <td>
                             @prescription.PrescriptionDate.ToString("dddd, dd MMMM yyyy")
                         </td>
                         <td>
-                            @prescription.Medicament: @prescription.MedicamentQantity
+                            @prescription.Medicament <span>(@prescription.MedicamentQantity mgs)</span>
                         </td>
                         <td>
                             @prescription.Instructions
