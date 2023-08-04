@@ -67,7 +67,9 @@ public class AppointmentService : IAppointmentService
     public async Task<List<DoctorBookingViewModel>> GetDoctorAppointmentsForPatient(string patientId)
     {
         var doctorBookings = await context.DoctorAppointments
-            .Where(x => x.PatientId == patientId && x.IsActive == true)
+            .Where(x => x.PatientId == patientId
+            && x.IsActive == true
+            && x.BookingDateTime >= DateTime.Today)
             .Select(x => new DoctorBookingViewModel() 
             {
                 Id = x.Id,

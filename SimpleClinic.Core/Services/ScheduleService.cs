@@ -60,7 +60,7 @@ public class ScheduleService : IScheduleService
     public async Task<List<DayScheduleViewModel>> CheckSchedule(string doctorId)
     {
         var schedule = await context.Schedules
-            .Where(x => x.DoctorId == doctorId)
+            .Where(x => x.DoctorId == doctorId && x.Day >= DateTime.Today)
             .Select(x => new DayScheduleViewModel() 
             {
                 Id = x.Id,

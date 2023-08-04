@@ -1,26 +1,36 @@
 ﻿namespace SimpleClinic.Areas.Patient.Controllers;
 
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 using SimpleClinic.Common;
 using SimpleClinic.Core.Contracts;
 using SimpleClinic.Core.Models.PatientModels;
+using SimpleClinic.Infrastructure.Entities;
 using static SimpleClinic.Common.ExceptionMessages.NotificationMessages;
 
 [Authorize(Roles = RoleNames.PatientRoleName)]
 [Area("Patient")]
 public class DoctorController : Controller
 {
+    private readonly UserManager<ApplicationUser> userManager;
     private readonly IDoctorService doctorService;
     private readonly ISpecialityService specialityService;
+    private readonly IPrescriptionService prescriptionService;
 
 
-    public DoctorController(IDoctorService doctorService,
-        ISpecialityService specialityService)
+    public DoctorController(
+        UserManager<ApplicationUser> userManager,
+        IDoctorService doctorService,
+        ISpecialityService specialityService,
+        IPrescriptionService prescriptionService)
     {
+        this.userManager = userManager;
         this.doctorService = doctorService;
         this.specialityService = specialityService;
+        this.prescriptionService = prescriptionService;
+
     }
 
     [HttpGet]
@@ -62,5 +72,15 @@ public class DoctorController : Controller
             TempData[ErrorMessage] = "Something went wrong!";
             return RedirectToAction("Error", "Home");
         }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllPrescrtiptionsForPatient() 
+    {
+        var patient = await userManager.GetUserAsync(User);
+
+        var model = prescriptionService.GetAllPrescriptionsForPatient(patient.Id);
+
+        return View(model);
     }
 }
