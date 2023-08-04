@@ -98,6 +98,16 @@ public class AppointmentController : Controller
 
     public async Task<IActionResult> CancelDocBooking(string id) 
     {
-
+        try
+        {
+            await appointmentService.CancelDocAppointment(id);
+            TempData[SuccessMessage] = "Your appointment has been canceled successfully!";
+            return RedirectToAction("GetDocBookings", "Appointment", new { area = RoleNames.PatientRoleName });
+        }
+        catch (Exception)
+        {
+            TempData[ErrorMessage] = "Something went wrong!";
+            return RedirectToAction("Index", "Home", new { area = RoleNames.PatientRoleName });
+        }
     }
 }

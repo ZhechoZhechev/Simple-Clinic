@@ -1,12 +1,13 @@
 ﻿namespace SimpleClinic.Core.Services;
 
+using System.Threading.Tasks;
+
 using Microsoft.EntityFrameworkCore;
 
 using SimpleClinic.Core.Contracts;
 using SimpleClinic.Core.Models.PatientModels;
 using SimpleClinic.Infrastructure;
 using SimpleClinic.Infrastructure.Entities;
-using System.Threading.Tasks;
 
 public class AppointmentService : IAppointmentService
 {
@@ -24,7 +25,13 @@ public class AppointmentService : IAppointmentService
 
         if (appToCancel != null) 
         {
-            return;
+            var timeSlot = await context.TimeSlots
+            .FindAsync(appToCancel.TimeSlotId);
+
+            timeSlot!.IsAvailable = true;
+            appToCancel.IsActive = false;
+
+            await context.SaveChangesAsync();
         }
     }
 
@@ -48,6 +55,7 @@ public class AppointmentService : IAppointmentService
             TimeSlotId = timeSlotId,
             PatientId = patientId,
             BookingDateTime = bookingDate,
+            IsActive = true
         };
 
         timeSlot!.IsAvailable = false;
@@ -59,7 +67,7 @@ public class AppointmentService : IAppointmentService
     public async Task<List<DoctorBookingViewModel>> GetDoctorAppointmentsForPatient(string patientId)
     {
         var doctorBookings = await context.DoctorAppointments
-            .Where(x => x.PatientId == patientId)
+            .Where(x => x.PatientId == patientId && x.IsActive == true)
             .Select(x => new DoctorBookingViewModel() 
             {
                 Id = x.Id,
