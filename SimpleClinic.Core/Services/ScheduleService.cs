@@ -50,7 +50,7 @@ public class ScheduleService : IScheduleService
     public async Task<List<DateTime>> GetAvailableDates(string doctorId)
     {
         var dates = await context.Schedules
-            .Where(x => x.DoctorId == doctorId)
+            .Where(x => x.DoctorId == doctorId && x.TimeSlots.Any(x => x.IsAvailable == true))
             .Select(d => d.Day)
             .ToListAsync();
 
