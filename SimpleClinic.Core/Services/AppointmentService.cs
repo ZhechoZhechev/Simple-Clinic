@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 using SimpleClinic.Core.Contracts;
+using SimpleClinic.Core.Models.DoctorModels;
 using SimpleClinic.Core.Models.PatientModels;
 using SimpleClinic.Infrastructure;
 using SimpleClinic.Infrastructure.Entities;
@@ -23,7 +24,7 @@ public class AppointmentService : IAppointmentService
         var appToCancel = await context.DoctorAppointments
             .FindAsync(id);
 
-        if (appToCancel != null) 
+        if (appToCancel != null)
         {
             var timeSlot = await context.TimeSlots
             .FindAsync(appToCancel.TimeSlotId);
@@ -70,11 +71,32 @@ public class AppointmentService : IAppointmentService
             .Where(x => x.PatientId == patientId
             && x.IsActive == true
             && x.BookingDateTime >= DateTime.Today)
-            .Select(x => new DoctorBookingViewModel() 
+            .Select(x => new DoctorBookingViewModel()
             {
                 Id = x.Id,
                 DocFirstName = x.Doctor.FirstName,
                 DocLastName = x.Doctor.LastName,
+                BookingDate = x.BookingDateTime,
+                StartTime = x.TimeSlot.StartTime,
+                EndTime = x.TimeSlot.EndTime
+            })
+            .ToListAsync();
+
+        return doctorBookings;
+    }
+
+    public async Task<List<PatientAppointmentViewModel>> GetPatientAppointmentsForDoctor(string doctorId)
+    {
+        var doctorBookings = await context.DoctorAppointments
+            .Where(x => x.DoctorId == doctorId
+            && x.IsActive == true
+            && x.BookingDateTime >= DateTime.Today)
+            .Select(x => new PatientAppointmentViewModel()
+            {
+                Id = x.Id,
+                PatientFirstName = x.Doctor.FirstName,
+                PatientLastName = x.Doctor.LastName,
+                PatientEmail = x.Doctor.Email,
                 BookingDate = x.BookingDateTime,
                 StartTime = x.TimeSlot.StartTime,
                 EndTime = x.TimeSlot.EndTime

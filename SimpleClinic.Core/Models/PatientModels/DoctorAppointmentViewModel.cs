@@ -1,7 +1,5 @@
 ﻿namespace SimpleClinic.Core.Models.PatientModels;
 
-using SimpleClinic.Infrastructure.Entities;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
 

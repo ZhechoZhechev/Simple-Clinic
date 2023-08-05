@@ -1,0 +1,41 @@
+﻿@model List<PatientAppointmentViewModel>
+
+
+<div style="margin-top: 3rem; height: 52vh" class="container">
+    <h1 style="text-align:center">Doctors' Appointments</h1>
+    <div class="table-sm table-success table-striped table-hover">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Patient Name</th>
+                    <th>Patient Email</th>
+                    <th>Date</th>
+                    <th>Hour</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var appointment in Model)
+                {
+                    <tr>
+                        <td>
+                            @appointment.PatientFirstName @appointment.PatientLastName
+                        </td>
+                        <td>
+                            @appointment.PatientEmail
+                        </td>
+                        <td>
+                            @appointment.BookingDate.ToString("dddd, dd MMMM yyyy")
+                        </td>
+                        <td>
+                            @appointment.StartTime.ToString("hh:mm tt")- @appointment.EndTime.ToString("hh:mm tt")
+                        </td>
+                        <td>
+                            <a asp-area="Doctor" asp-action="CancelDocBooking" asp-controller="Appointment" asp-route-id="@appointment.Id" class="btn btn-primary">Cancel</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
