@@ -1,9 +1,11 @@
 ﻿namespace SimpleClinic.Core.Services;
 
+using Microsoft.EntityFrameworkCore;
+
 using SimpleClinic.Core.Contracts;
 using SimpleClinic.Infrastructure;
 using SimpleClinic.Core.Models.DoctorModels;
-using Microsoft.EntityFrameworkCore;
+using SimpleClinic.Infrastructure.Entities;
 
 public class MedicamentService : IMedicamentService
 {
@@ -12,6 +14,19 @@ public class MedicamentService : IMedicamentService
     public MedicamentService(SimpleClinicDbContext context)
     {
         this.context = context;
+    }
+
+    public async Task AddMedicamentAsync(MedicamentViewModel viewModel)
+    {
+        var model = new Medicament()
+        {
+            Id = viewModel.Id,
+            Name = viewModel.Name,
+            QuantityPerDayMilligrams = viewModel.QuantityPerDayMilligrams
+        };
+
+        await context.Medicaments.AddAsync(model);
+        await context.SaveChangesAsync();
     }
 
     public async Task<List<MedicamentViewModel>> GetAllMedicaments(string searchTerm)

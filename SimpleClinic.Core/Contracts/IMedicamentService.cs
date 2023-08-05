@@ -5,4 +5,6 @@ namespace SimpleClinic.Core.Contracts;
 public interface IMedicamentService
 {
     Task<List<MedicamentViewModel>> GetAllMedicaments(string searchTerm);
+
+    Task AddMedicamentAsync(MedicamentViewModel viewModel);
 }
