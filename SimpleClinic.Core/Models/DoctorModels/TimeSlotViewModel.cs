@@ -11,5 +11,6 @@ public class TimeSlotViewModel
     [Required]
     public DateTime EndTime { get; set; }
 
+    [Required]
     public bool IsAvailable { get; set; }
 }

@@ -53,7 +53,7 @@ public class Program
         {
             options.AddPolicy("DoctorAdmin", policy =>
             {
-                policy.RequireRole("Doctor", "Admin");
+                policy.RequireRole("Doctor", "Administrator");
             });
         });
 

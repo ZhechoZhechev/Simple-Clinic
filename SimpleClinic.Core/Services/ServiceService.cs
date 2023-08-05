@@ -3,6 +3,7 @@
 using Microsoft.EntityFrameworkCore;
 using SimpleClinic.Core.Contracts;
 using SimpleClinic.Core.Models;
+using SimpleClinic.Core.Models.DoctorModels;
 using SimpleClinic.Core.Models.PatientModels;
 using SimpleClinic.Infrastructure;
 
@@ -38,6 +39,19 @@ public class ServiceService : IServiceService
             TotalServicesCount = totalServices,
             Services = services
         };
+    }
+
+    public async Task<List<AllServicesForScheduleViewModel>> GetAllServicesForSchedule()
+    {
+        var model = await context.Services
+            .Select(s => new AllServicesForScheduleViewModel() 
+            {
+                Id = s.Id,
+                ServiceName = s.Name
+            })
+            .ToListAsync();
+
+        return model;
     }
 
     public async Task<IEnumerable<FirstThreeServicesViewModel>> GetFirstThreeServices()
