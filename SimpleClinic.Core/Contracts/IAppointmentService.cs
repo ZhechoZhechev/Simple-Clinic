@@ -1,7 +1,8 @@
-﻿using SimpleClinic.Core.Models.DoctorModels;
+﻿namespace SimpleClinic.Core.Contracts;
+
+using SimpleClinic.Core.Models.DoctorModels;
 using SimpleClinic.Core.Models.PatientModels;
 
-namespace SimpleClinic.Core.Contracts;
 
 public interface IAppointmentService
 {
@@ -12,4 +13,7 @@ public interface IAppointmentService
     Task<List<PatientAppointmentViewModel>> GetPatientAppointmentsForDoctor(string doctorId);
 
     Task CancelDocAppointment(string id);
+
+    Task CancelPatientAppointment(string id);
+
 }
