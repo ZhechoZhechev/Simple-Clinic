@@ -6,7 +6,7 @@ using static SimpleClinic.Common.Constants.DataConstants.MedicamentConstants;
 
 public class MedicamentViewModel
 {
-    public string Id { get; set; }
+    public string? Id { get; set; }
 
     /// <summary>
     /// Medicament name

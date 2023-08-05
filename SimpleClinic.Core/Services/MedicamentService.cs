@@ -20,7 +20,6 @@ public class MedicamentService : IMedicamentService
     {
         var model = new Medicament()
         {
-            Id = viewModel.Id,
             Name = viewModel.Name,
             QuantityPerDayMilligrams = viewModel.QuantityPerDayMilligrams
         };

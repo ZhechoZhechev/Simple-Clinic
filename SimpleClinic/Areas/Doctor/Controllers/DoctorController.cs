@@ -58,6 +58,35 @@ public class DoctorController : Controller
         return View(model);
     }
 
+    [HttpGet]
+    public IActionResult AddMedicament() 
+    {
+        var model = new MedicamentViewModel();
+
+        return View(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> AddMedicament(MedicamentViewModel viewModel) 
+    {
+        if (!ModelState.IsValid) 
+        {
+            return View(viewModel);
+        }
+
+        try
+        {
+            await medicamentService.AddMedicamentAsync(viewModel);
+            TempData[SuccessMessage] = "Medicament added successfully!";
+            return RedirectToAction("Index", "Home", new { area = RoleNames.DoctorRoleName });
+        }
+        catch (Exception)
+        {
+            TempData[ErrorMessage] = "Something went wrong!";
+            return RedirectToAction("Index", "Home", new { area = RoleNames.DoctorRoleName });
+        }
+    }
+
     [HttpPost]
     public async Task<IActionResult> AddSchedule(DoctorScheduleViewModel viewModel)
     {
