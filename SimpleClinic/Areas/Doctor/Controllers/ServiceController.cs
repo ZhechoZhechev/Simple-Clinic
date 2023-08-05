@@ -48,7 +48,7 @@ public class ServiceController : Controller
     [HttpPost]
     public async Task<IActionResult> AddSchedule(DoctorScheduleViewModel viewModel) 
     {
-        var scheduleExists = await scheduleService.IfDayScheduleExists(viewModel.Day, viewModel.ServiceId!);
+        var scheduleExists = await scheduleService.IfDayServiceScheduleExists(viewModel.Day, viewModel.ServiceId!);
 
 
         if (scheduleExists)
@@ -64,7 +64,7 @@ public class ServiceController : Controller
 
         try
         {
-            await scheduleService.AddDoctorScheduleAsync(viewModel.ServiceId!, viewModel.Day, viewModel.TimeSlots);
+            await scheduleService.AddServiceScheduleAsync(viewModel.ServiceId!, viewModel.Day, viewModel.TimeSlots);
             TempData[SuccessMessage] = "Schedule added successfully!";
             return RedirectToAction("AddSchedule", "Service", new { area = RoleNames.DoctorRoleName });
         }
@@ -74,5 +74,13 @@ public class ServiceController : Controller
             return RedirectToAction("Index", "Home", new { area = RoleNames.DoctorRoleName });
         }
 
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> CheckSchedule(string id) 
+    {
+        var model = await scheduleService.CheckServiceSchedule(id);
+
+        return View(model);
     }
 }

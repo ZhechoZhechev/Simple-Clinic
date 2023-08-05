@@ -170,4 +170,27 @@ public class ScheduleService : IScheduleService
             return true;
         }
     }
+
+    public async Task<List<DayScheduleViewModel>> CheckServiceSchedule(string serviceId)
+    {
+        var schedule = await context.Schedules
+            .Where(x => x.ServiceId == serviceId && x.Day >= DateTime.Today && x.TimeSlots.Any(x => x.IsAvailable == true))
+            .Select(x => new DayScheduleViewModel()
+            {
+                Id = x.Id,
+                Day = x.Day,
+                TimeSlots = x.TimeSlots
+            .Select(ts => new TimeSlotViewModel()
+            {
+                Id = ts.Id,
+                StartTime = ts.StartTime,
+                EndTime = ts.StartTime.AddHours(1),
+                IsAvailable = ts.IsAvailable
+            })
+            .ToList()
+            })
+    .ToListAsync();
+
+        return schedule;
+    }
 }

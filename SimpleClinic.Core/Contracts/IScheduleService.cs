@@ -7,8 +7,12 @@ public interface IScheduleService
     Task<bool> AddDoctorScheduleAsync(string doctorId, DateTime day, List<TimeSlotViewModel> timeSlots);
 
     Task<bool> IfDayScheduleExists(DateTime day, string doctorId);
+
     Task<bool> IfDayServiceScheduleExists(DateTime day, string serviceId);
+
     Task<List<DayScheduleViewModel>> CheckSchedule(string doctorId);
+
+    Task<List<DayScheduleViewModel>> CheckServiceSchedule(string serviceId);
 
     Task<DayScheduleViewModel> GetDoctorScheduleAsync(DateTime day, string doctorId);
 
