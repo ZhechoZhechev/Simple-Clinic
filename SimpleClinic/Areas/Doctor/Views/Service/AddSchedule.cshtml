@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <h2 class="text-center">Create @TempData["CurrServiceName"] Schedule</h2>
-            <form asp-action="AddSchedule" asp-controller="Doctor" asp-area="Doctor" method="post">
+            <form asp-action="AddSchedule" asp-controller="Service" asp-area="Doctor" method="post">
                 <div class="form-group">
                     <label asp-for="Day">Select Day:</label>
                     <input asp-for="Day" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />

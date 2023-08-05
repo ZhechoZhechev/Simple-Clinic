@@ -2,8 +2,11 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
+using SimpleClinic.Common;
 using SimpleClinic.Core.Contracts;
 using SimpleClinic.Core.Models.DoctorModels;
+using static SimpleClinic.Common.ExceptionMessages.NotificationMessages;
 
 
 [Area("Doctor")]
@@ -11,10 +14,15 @@ using SimpleClinic.Core.Models.DoctorModels;
 public class ServiceController : Controller
 {
     private readonly IServiceService serviceService;
+    private readonly IScheduleService scheduleService;
 
-    public ServiceController(IServiceService serviceService)
+    public ServiceController(
+        IServiceService serviceService,
+        IScheduleService scheduleService)
     {
         this.serviceService = serviceService;
+        this.scheduleService = scheduleService;
+
     }
 
     [HttpGet]
@@ -27,11 +35,44 @@ public class ServiceController : Controller
     }
 
     [HttpGet]
-    public IActionResult AddSchedule(string serviceName)
+    public IActionResult AddSchedule(string serviceName, string id)
     {
-        var model = new DoctorScheduleViewModel();
+        var model = new DoctorScheduleViewModel() 
+        {
+            ServiceId = id
+        };
         TempData["CurrServiceName"] = serviceName;
 
         return View(model);
+    }
+    [HttpPost]
+    public async Task<IActionResult> AddSchedule(DoctorScheduleViewModel viewModel) 
+    {
+        var scheduleExists = await scheduleService.IfDayScheduleExists(viewModel.Day, viewModel.ServiceId!);
+
+
+        if (scheduleExists)
+        {
+            TempData[ErrorMessage] = "Schedule for this day exists. Please, select different day.";
+            return RedirectToAction("AddSchedule", "Service", new { area = RoleNames.DoctorRoleName });
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return View(viewModel);
+        }
+
+        try
+        {
+            await scheduleService.AddDoctorScheduleAsync(viewModel.ServiceId!, viewModel.Day, viewModel.TimeSlots);
+            TempData[SuccessMessage] = "Schedule added successfully!";
+            return RedirectToAction("AddSchedule", "Service", new { area = RoleNames.DoctorRoleName });
+        }
+        catch (Exception)
+        {
+            TempData[ErrorMessage] = "Something went wrong!";
+            return RedirectToAction("Index", "Home", new { area = RoleNames.DoctorRoleName });
+        }
+
     }
 }

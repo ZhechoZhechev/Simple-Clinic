@@ -61,12 +61,12 @@ public class ScheduleService : IScheduleService
     {
         var schedule = await context.Schedules
             .Where(x => x.DoctorId == doctorId && x.Day >= DateTime.Today && x.TimeSlots.Any(x => x.IsAvailable == true))
-            .Select(x => new DayScheduleViewModel() 
+            .Select(x => new DayScheduleViewModel()
             {
                 Id = x.Id,
                 Day = x.Day,
                 TimeSlots = x.TimeSlots
-                .Select(ts => new TimeSlotViewModel() 
+                .Select(ts => new TimeSlotViewModel()
                 {
                     Id = ts.Id,
                     StartTime = ts.StartTime,
@@ -87,7 +87,7 @@ public class ScheduleService : IScheduleService
             .Where(x => x.DoctorId == doctorId && x.Day == day)
             .FirstOrDefaultAsync();
 
-        if (schedule != null) 
+        if (schedule != null)
         {
             return new DayScheduleViewModel()
             {
@@ -103,7 +103,7 @@ public class ScheduleService : IScheduleService
                 })
                 .ToList()
             };
-            
+
         }
 
         return null;
@@ -113,6 +113,52 @@ public class ScheduleService : IScheduleService
     {
         var schedule = await context.Schedules
             .Where(x => x.DoctorId == doctorId && x.Day == day)
+            .FirstOrDefaultAsync();
+
+        if (schedule == null)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    public async Task<bool> AddServiceScheduleAsync(string serviceId, DateTime day, List<TimeSlotViewModel> timeSlots)
+    {
+        var schedule = new Schedule
+        {
+            ServiceId = serviceId,
+            Day = day,
+            TimeSlots = new List<TimeSlot>()
+        };
+
+        await context.Schedules.AddAsync(schedule);
+
+        foreach (var timeSlot in timeSlots)
+        {
+            if (timeSlot.IsAvailable)
+            {
+                var newTimeSlot = new TimeSlot
+                {
+                    StartTime = timeSlot.StartTime,
+                    EndTime = timeSlot.StartTime.AddHours(1),
+                    IsAvailable = true
+                };
+                schedule.TimeSlots.Add(newTimeSlot);
+            }
+        }
+
+        await context.SaveChangesAsync();
+
+        return true;
+    }
+
+    public async Task<bool> IfDayServiceScheduleExists(DateTime day, string serviceId)
+    {
+        var schedule = await context.Schedules
+            .Where(x => x.ServiceId == serviceId && x.Day == day)
             .FirstOrDefaultAsync();
 
         if (schedule == null)

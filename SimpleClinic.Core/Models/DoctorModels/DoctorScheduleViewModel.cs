@@ -23,7 +23,7 @@ public class DoctorScheduleViewModel
         }
     }
 
-    public string? Id { get; set; }
+    public string? ServiceId { get; set; }
 
     [Required]
     public DateTime Day { get; set; }

@@ -7,6 +7,7 @@
         <div class="col-lg-8">
             <h2 class="text-center">Create Doctor's Schedule</h2>
             <form asp-action="AddSchedule" asp-controller="Doctor" asp-area="Doctor" method="post">
+                <input type="hidden" asp-for="ServiceId" />
                 <div class="form-group">
                     <label asp-for="Day">Select Day:</label>
                     <input asp-for="Day" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
