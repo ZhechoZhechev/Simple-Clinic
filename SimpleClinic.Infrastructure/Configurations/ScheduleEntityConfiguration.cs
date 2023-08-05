@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SimpleClinic.Infrastructure.Entities;
 
 
-internal class ScheduleEntityConfiguration : IEntityTypeConfiguration<Schedule>
+public class ScheduleEntityConfiguration : IEntityTypeConfiguration<Schedule>
 {
     public void Configure(EntityTypeBuilder<Schedule> builder)
     {

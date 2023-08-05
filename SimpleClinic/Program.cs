@@ -49,6 +49,13 @@ public class Program
                 //options.ModelBinderProviders.Insert(1, new DateTimeModelBinderProvider());
                 options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
             });
+        builder.Services.AddAuthorization(options =>
+        {
+            options.AddPolicy("DoctorAdmin", policy =>
+            {
+                policy.RequireRole("Doctor", "Admin");
+            });
+        });
 
         builder.Services.ConfigureApplicationCookie(options =>
         {
@@ -76,6 +83,8 @@ public class Program
 
         app.UseRouting();
 
+        app.UseMiddleware<RoleCreationMiddleware>();
+
         app.UseAuthentication();
         app.UseAuthorization();
 
@@ -86,7 +95,6 @@ public class Program
         app.MapDefaultControllerRoute();
         app.MapRazorPages();
 
-        app.UseMiddleware<RoleCreationMiddleware>();
 
         app.Run();
     }
