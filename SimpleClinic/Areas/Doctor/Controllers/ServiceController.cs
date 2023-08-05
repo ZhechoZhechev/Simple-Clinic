@@ -21,14 +21,17 @@ public class ServiceController : Controller
     public async Task<IActionResult> AllServicesForSchedule() 
     {
         var model = await serviceService.GetAllServicesForSchedule();
+        
 
         return View(model);
     }
 
     [HttpGet]
-    public IActionResult AddSchedule()
+    public IActionResult AddSchedule(string serviceName)
     {
         var model = new DoctorScheduleViewModel();
+        TempData["CurrServiceName"] = serviceName;
+
         return View(model);
     }
 }

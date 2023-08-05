@@ -5,7 +5,7 @@
 <div class="container mt-4 mb-4">
     <div class="row justify-content-center">
         <div class="col-lg-8">
-            <h2 class="text-center">Create Services's Schedule</h2>
+            <h2 class="text-center">Create @TempData["CurrServiceName"] Schedule</h2>
             <form asp-action="AddSchedule" asp-controller="Doctor" asp-area="Doctor" method="post">
                 <div class="form-group">
                     <label asp-for="Day">Select Day:</label>
@@ -23,6 +23,13 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <tr>
+                            <td colspan="2">
+                                <label style="margin-left: 26.6rem;">
+                                    <input type="checkbox" id="selectAllCheckboxes" /> Select All
+                                </label>
+                            </td>
+                        </tr>
                         @for (var i = 0; i < Model.TimeSlots.Count; i++)
                         {
                             <tr>
@@ -42,3 +49,18 @@
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var selectAllCheckbox = document.getElementById("selectAllCheckboxes");
+            var checkboxes = document.querySelectorAll("input[type='checkbox'][name^='TimeSlots']");
+
+            selectAllCheckbox.addEventListener("change", function () {
+                checkboxes.forEach(function (checkbox) {
+                    checkbox.checked = selectAllCheckbox.checked;
+                });
+            });
+        });
+    </script>
+}

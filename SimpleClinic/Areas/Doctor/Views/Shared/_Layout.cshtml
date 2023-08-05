@@ -48,7 +48,7 @@
                             @if (User.IsInRole("Doctor") && User.IsInRole("Administrator"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link" asp-area="Doctor" asp-controller="Doctor" asp-action="AllServicesForSchedule"> Set Services Schedule</a>
+                                    <a class="nav-link" asp-area="Doctor" asp-controller="Service" asp-action="AllServicesForSchedule"> Set Services Schedule</a>
                                 </li>
                             }
                             <li class="nav-item">

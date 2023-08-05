@@ -1,20 +1,13 @@
 ﻿@model List<AllServicesForScheduleViewModel>
 
-<section style="background-color: rgba(255, 255, 255, 0.5);padding-top:50px" class="doctor_section layout_padding">
+<section style="background-color: rgba(255, 255, 255, 0.5);padding-top:50px; height: 53.4vh" class="doctor_section layout_padding">
     <div class="container">
         <div class="heading_container heading_center">
             <h2>
                 Our Services
             </h2>
-            <div style="padding:0" class="alert alert-primary" role="alert">
-                <h4 class="alert-heading">To list all our services and make appointment, create account as PATIENT! </h4>
-            </div>
-            <p class="col-md-10 mx-auto px-0">
-                We have the best and modern medical devices that you can use!
-            </p>
         </div>
         <div class="row">
-
             @foreach (var service in Model)
             {
                 <div class="col-sm-6 col-lg-4 mx-auto">
@@ -24,7 +17,7 @@
                                 @service.ServiceName
                             </h5>
                             <h6 class="">
-                                <a class="btn btn-outline-info" asp-area="Doctor" asp-controller="Service" asp-action="AddSchedule" asp-route-id="@service.Id">Add Schedule</a>
+                                <a class="btn btn-outline-info" asp-area="Doctor" asp-controller="Service" asp-action="AddSchedule" asp-route-id="@service.Id" asp-route-serviceName="@service.ServiceName">Add Schedule</a>
                             </h6>
                         </div>
                     </div>
