@@ -20,7 +20,7 @@
                     $.ajax({
                         url: "/Patient/Appointment/GetServiceSchedule",
                         type: "GET",
-                        data: { selectedDate: selectedDate, doctorId: doctorId },
+                        data: { selectedDate: selectedDate, serviceId: serviceId },
                         success: function (schedule) {
                             $("#doctor-schedule").html(schedule);
                         },
