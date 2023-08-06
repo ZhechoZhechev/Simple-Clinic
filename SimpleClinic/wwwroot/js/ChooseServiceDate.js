@@ -1,10 +1,10 @@
 ﻿$(document).ready(function () {
-    var doctorId = $("#doctorId").data("doctor-id");
+    var serviceId = $("#serviceId").data("service-id");
 
     $.ajax({
         url: "/Patient/Appointment/GetAvailableDatesService",
         type: "GET",
-        data: { doctorId: doctorId },
+        data: { serviceId: serviceId },
         success: function (availableDates) {
             $("#datepicker").datepicker({
                 minDate: 0,

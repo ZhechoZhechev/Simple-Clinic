@@ -49,6 +49,23 @@ public class AppointmentService : IAppointmentService
         }
     }
 
+    public async Task CancelServiceAppointment(string id)
+    {
+        var appToCancel = await context.ServiceAppointments
+            .FindAsync(id);
+
+        if (appToCancel != null)
+        {
+            var timeSlot = await context.TimeSlots
+            .FindAsync(appToCancel.TimeSlotId);
+
+            timeSlot!.IsAvailable = true;
+            appToCancel.IsActive = false;
+
+            await context.SaveChangesAsync();
+        }
+    }
+
     public async Task CreateAppointment(string timeSlotId, string patientId)
     {
         var timeSlot = await context.TimeSlots.FindAsync(timeSlotId);
@@ -146,5 +163,24 @@ public class AppointmentService : IAppointmentService
             .ToListAsync();
 
         return doctorBookings;
+    }
+
+    public async Task<List<ServiceBookingViewModel>> GetServiceAppointmentsForPatient(string patientId)
+    {
+        var serviceBookings = await context.ServiceAppointments
+            .Where(x => x.PatientId == patientId
+            && x.IsActive == true
+            && x.BookingDateTime >= DateTime.Today)
+            .Select(x => new ServiceBookingViewModel()
+            {
+                Id = x.Id,
+                ServiceName = x.Service.Name,
+                BookingDate = x.BookingDateTime,
+                StartTime = x.TimeSlot.StartTime,
+                EndTime = x.TimeSlot.EndTime
+            })
+            .ToListAsync();
+
+        return serviceBookings;
     }
 }

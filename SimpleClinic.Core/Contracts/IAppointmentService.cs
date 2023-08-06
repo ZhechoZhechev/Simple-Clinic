@@ -12,9 +12,13 @@ public interface IAppointmentService
 
     Task<List<DoctorBookingViewModel>> GetDoctorAppointmentsForPatient(string patientId);
 
+    Task<List<ServiceBookingViewModel>> GetServiceAppointmentsForPatient(string patientId);
+
     Task<List<PatientAppointmentViewModel>> GetPatientAppointmentsForDoctor(string doctorId);
 
     Task CancelDocAppointment(string id);
+
+    Task CancelServiceAppointment(string id);
 
     Task CancelPatientAppointment(string id);
 
