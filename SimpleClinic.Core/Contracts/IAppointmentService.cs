@@ -8,6 +8,8 @@ public interface IAppointmentService
 {
     Task CreateAppointment(string timeSlotId, string patientId);
 
+    Task CreateServiceAppointment(string timeSlotId, string patientId);
+
     Task<List<DoctorBookingViewModel>> GetDoctorAppointmentsForPatient(string patientId);
 
     Task<List<PatientAppointmentViewModel>> GetPatientAppointmentsForDoctor(string doctorId);

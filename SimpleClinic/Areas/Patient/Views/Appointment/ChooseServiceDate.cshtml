@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Choose Appointment Date";
+}
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+<div class="container" style="height: 55vh; margin-top: 3rem">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <h2 class="text-center">Choose Appointment Date</h2>
+
+            <p class="text-center">Select a date for your appointment:</p>
+
+            <div class="text-center">
+                <input type="text" id="datepicker" style="display: inline-block;">
+            </div>
+
+            <div id="doctor-schedule"></div>
+            <div id="doctorId" data-doctor-id="@ViewBag.DoctorId" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .available-date {
+        background-color: #1a1cab;
+        color: #000;
+        border-color: #1a1cab;
+    }
+</style>
+
+@section Scripts {
+
+    <script src="~/js/ChooseServiceDate.js" asp-append-version="true"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    }

@@ -2,7 +2,7 @@
     var doctorId = $("#doctorId").data("doctor-id");
 
     $.ajax({
-        url: "/Patient/Appointment/GetAvailableDates",
+        url: "/Patient/Appointment/GetAvailableDatesService",
         type: "GET",
         data: { doctorId: doctorId },
         success: function (availableDates) {
@@ -18,11 +18,11 @@
                 },
                 onSelect: function (selectedDate) {
                     $.ajax({
-                        url: "/Patient/Appointment/GetDoctorSchedule",
+                        url: "/Patient/Appointment/GetServiceSchedule",
                         type: "GET",
-                        data: { selectedDate: selectedDate, serviceId: serviceId },
+                        data: { selectedDate: selectedDate, doctorId: doctorId },
                         success: function (schedule) {
-                            $("#service-schedule").html(schedule);
+                            $("#doctor-schedule").html(schedule);
                         },
                         error: function () {
                             alert("Error fetching doctor's schedule.");

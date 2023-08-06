@@ -16,7 +16,11 @@ public interface IScheduleService
 
     Task<DayScheduleViewModel> GetDoctorScheduleAsync(DateTime day, string doctorId);
 
+    Task<DayScheduleViewModel> GetServiceScheduleAsync(DateTime day, string serviceId);
+
     Task<List<DateTime>> GetAvailableDates(string doctorId);
+
+    Task<List<DateTime>> GetAvailableDatesService(string serviceId);
 
     Task<bool> AddServiceScheduleAsync(string serviceId, DateTime day, List<TimeSlotViewModel> timeSlots);
 }

@@ -193,4 +193,43 @@ public class ScheduleService : IScheduleService
 
         return schedule;
     }
+
+    public async Task<List<DateTime>> GetAvailableDatesService(string serviceId)
+    {
+        var dates = await context.Schedules
+            .Where(x => x.ServiceId == serviceId && x.TimeSlots.Any(x => x.IsAvailable == true))
+            .Select(d => d.Day)
+            .ToListAsync();
+
+        return dates;
+    }
+
+    public async Task<DayScheduleViewModel> GetServiceScheduleAsync(DateTime day, string serviceId)
+    {
+        var schedule = await context.Schedules
+            .Include(t => t.TimeSlots)
+            .Where(x => x.ServiceId == serviceId && x.Day == day)
+            .FirstOrDefaultAsync();
+
+        if (schedule != null)
+        {
+            return new DayScheduleViewModel()
+            {
+                Id = schedule.Id,
+                Day = day,
+                TimeSlots = schedule.TimeSlots
+                .Select(ts => new TimeSlotViewModel()
+                {
+                    Id = ts.Id,
+                    StartTime = ts.StartTime,
+                    EndTime = ts.StartTime.AddHours(1),
+                    IsAvailable = ts.IsAvailable
+                })
+                .ToList()
+            };
+
+        }
+
+        return null;
+    }
 }

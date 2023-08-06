@@ -1,0 +1,28 @@
+﻿@model DayScheduleViewModel
+
+<div class="container mt-4 mb-4 text-center">
+    <div class="row justify-content-center">
+        <div class="col-lg-4">
+            @if (Model == null)
+            {
+                <h2>No available hours for this day!</h2>
+            }
+            else
+            {
+                <ul class="list-group list-group-flush">
+                    @foreach (var timeSlot in Model.TimeSlots.OrderBy(ts => ts.StartTime))
+                    {
+                        if (timeSlot.IsAvailable)
+                        {
+                            var endTimeLocal = @timeSlot.StartTime.AddHours(1);
+                            <li class="list-group-item">
+                                <span>@timeSlot.StartTime.ToString("hh:mm tt") - @endTimeLocal.ToString("hh:mm tt")</span>
+                                <a asp-area="Patient" asp-controller="Appointment" asp-action="MakeServiceAppointment" asp-route-id="@timeSlot.Id" class="btn btn-sm btn-primary float-right">Book</a>
+                            </li>
+                        }
+                    }
+                </ul>
+            }
+        </div>
+    </div>
+</div>

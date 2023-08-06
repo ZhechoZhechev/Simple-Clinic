@@ -55,11 +55,13 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             var selectAllCheckbox = document.getElementById("selectAllCheckboxes");
-            var checkboxes = document.querySelectorAll("input[type='checkbox'][name^='TimeSlots']");
+            var checkboxes = document.querySelectorAll("input[type='checkbox'][name^='TimeSlots['");
 
             selectAllCheckbox.addEventListener("change", function () {
                 checkboxes.forEach(function (checkbox) {
                     checkbox.checked = selectAllCheckbox.checked;
+                    var startTimeInput = checkbox.nextElementSibling;
+                    startTimeInput.disabled = !checkbox.checked; 
                 });
             });
         });

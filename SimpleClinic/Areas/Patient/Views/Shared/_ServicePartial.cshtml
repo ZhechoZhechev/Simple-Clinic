@@ -12,7 +12,7 @@
             <br />
             @if (this.User?.Identity?.IsAuthenticated ?? false)
             {
-                <a asp-controller="Doctor" asp-action="Details" asp-area="Patient" asp-route-id="@Model.Id"
+                <a asp-area="Patient" asp-controller="Appointment" asp-action="ChooseServiceDate" asp-route-id="@Model.Id"
                    class="btn btn-warning">Make Booking</a>
 
                 <p></p>

@@ -78,6 +78,35 @@ public class AppointmentService : IAppointmentService
         await context.SaveChangesAsync();
     }
 
+    public async Task CreateServiceAppointment(string timeSlotId, string patientId)
+    {
+        var timeSlot = await context.TimeSlots.FindAsync(timeSlotId);
+
+        var serviceId = await context.Schedules
+            .Where(s => s.TimeSlots.Any(ts => ts.Id == timeSlotId))
+            .Select(s => s.ServiceId)
+            .FirstOrDefaultAsync();
+
+        var bookingDate = await context.Schedules
+            .Where(s => s.TimeSlots.Any(ts => ts.Id == timeSlotId))
+            .Select(s => s.Day)
+            .FirstOrDefaultAsync();
+
+        var newBooking = new ServiceAppointment()
+        {
+            ServiceId = serviceId!,
+            TimeSlotId = timeSlotId,
+            PatientId = patientId,
+            BookingDateTime = bookingDate,
+            IsActive = true
+        };
+
+        timeSlot!.IsAvailable = false;
+
+        await context.ServiceAppointments.AddAsync(newBooking);
+        await context.SaveChangesAsync();
+    }
+
     public async Task<List<DoctorBookingViewModel>> GetDoctorAppointmentsForPatient(string patientId)
     {
         var doctorBookings = await context.DoctorAppointments

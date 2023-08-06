@@ -37,6 +37,14 @@ public class AppointmentController : Controller
     }
 
     [HttpGet]
+    public IActionResult ChooseServiceDate(string id)
+    {
+        ViewBag.ServiceId = id;
+
+        return View();
+    }
+
+    [HttpGet]
     public async Task<IActionResult> GetAvailableDates(string doctorId)
     {
         try
@@ -52,6 +60,21 @@ public class AppointmentController : Controller
         }
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetAvailableDatesService(string serviceId)
+    {
+        try
+        {
+            var availableDates = await scheduleService.GetAvailableDatesService(serviceId);
+
+            return Json(availableDates);
+        }
+        catch (Exception)
+        {
+            TempData[ErrorMessage] = "Something went wrong!";
+            return RedirectToAction("Index", "Home", new { area = RoleNames.PatientRoleName });
+        }
+    }
 
     [HttpGet]
     public async Task<IActionResult> GetDoctorSchedule(DateTime selectedDate, string doctorId)
@@ -60,6 +83,22 @@ public class AppointmentController : Controller
         {
             var schedule = await scheduleService.GetDoctorScheduleAsync(selectedDate, doctorId);
             return PartialView("_GetDoctorSchedule", schedule);
+        }
+        catch (Exception)
+        {
+            TempData[ErrorMessage] = "Something went wrong!";
+            return RedirectToAction("Index", "Home", new { area = RoleNames.PatientRoleName });
+        }
+
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetServiceSchedule(DateTime selectedDate, string serviceId)
+    {
+        try
+        {
+            var schedule = await scheduleService.GetServiceScheduleAsync(selectedDate, serviceId);
+            return PartialView("_GetServiceSchedule", schedule);
         }
         catch (Exception)
         {
@@ -79,6 +118,24 @@ public class AppointmentController : Controller
             await appointmentService.CreateAppointment(id, patient.Id);
             TempData[SuccessMessage] = "Doctors appointment created successfully!";
             return RedirectToAction("All", "Doctor", new { area = RoleNames.PatientRoleName });
+        }
+        catch (Exception)
+        {
+            TempData[ErrorMessage] = "Something went wrong!";
+            return RedirectToAction("Index", "Home", new { area = RoleNames.PatientRoleName });
+        }
+    }
+
+    public async Task<IActionResult> MakeServiceAppointment(string id)
+    {
+
+        var patient = await userManager.GetUserAsync(User);
+
+        try
+        {
+            await appointmentService.CreateServiceAppointment(id, patient.Id);
+            TempData[SuccessMessage] = "Service appointment created successfully!";
+            return RedirectToAction("All", "Service", new { area = RoleNames.PatientRoleName });
         }
         catch (Exception)
         {

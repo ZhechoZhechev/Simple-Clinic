@@ -49,6 +49,7 @@ public class Program
                 //options.ModelBinderProviders.Insert(1, new DateTimeModelBinderProvider());
                 options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
             });
+
         builder.Services.AddAuthorization(options =>
         {
             options.AddPolicy("DoctorAdmin", policy =>
