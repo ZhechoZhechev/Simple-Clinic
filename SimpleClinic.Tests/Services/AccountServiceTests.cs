@@ -9,7 +9,7 @@ using SimpleClinic.Core.Models.PatientModels;
 using SimpleClinic.Core.Services;
 using SimpleClinic.Infrastructure;
 
-internal class AccountServiceTests
+public class AccountServiceTests
 {
     private DbContextOptions<SimpleClinicDbContext> DbContextOptions;
     private SimpleClinicDbContext context;
