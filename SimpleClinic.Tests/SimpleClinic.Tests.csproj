@@ -6,4 +6,21 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.15" />
+    <PackageReference Include="NUnit" Version="3.13.3" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SimpleClinic.Commn\SimpleClinic.Common.csproj" />
+    <ProjectReference Include="..\SimpleClinic.Core\SimpleClinic.Core.csproj" />
+    <ProjectReference Include="..\SimpleClinic.Infrastructure\SimpleClinic.Infrastructure.csproj" />
+    <ProjectReference Include="..\SimpleClinic\SimpleClinic.csproj" />
+  </ItemGroup>
+
 </Project>
