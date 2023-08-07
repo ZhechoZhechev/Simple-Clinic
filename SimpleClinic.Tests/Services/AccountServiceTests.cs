@@ -1,17 +1,12 @@
 ﻿namespace SimpleClinic.Tests.Services;
 
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Moq;
 using NUnit.Framework;
 
 using SimpleClinic.Core.Contracts;
 using SimpleClinic.Core.Models.PatientModels;
 using SimpleClinic.Core.Services;
 using SimpleClinic.Infrastructure;
-using SimpleClinic.Infrastructure.Entities;
 using static DatabaseSeeder;
 public class AccountServiceTests
 {
