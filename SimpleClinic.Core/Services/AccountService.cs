@@ -77,7 +77,7 @@ public class AccountService : IAccountService
     public async Task<string> GetRoleId(string userId)
     {
         var roleId = await context.UserRoles
-            .Where(r => r.UserId == userId)
+            .Where(u => u.UserId == userId)
             .Select(r => r.RoleId)
             .FirstOrDefaultAsync();
 
