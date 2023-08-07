@@ -1,14 +1,14 @@
 ﻿namespace SimpleClinic.Tests.Services;
 
 using Microsoft.EntityFrameworkCore;
-
+using Moq;
 using NUnit.Framework;
 
 using SimpleClinic.Core.Contracts;
 using SimpleClinic.Core.Models.PatientModels;
 using SimpleClinic.Core.Services;
 using SimpleClinic.Infrastructure;
-
+using static DatabaseSeeder;
 public class AccountServiceTests
 {
     private DbContextOptions<SimpleClinicDbContext> DbContextOptions;
@@ -16,7 +16,7 @@ public class AccountServiceTests
     private IAccountService accountService;
 
     [OneTimeSetUp]
-    public void OneTimeSetUp() 
+    public void OneTimeSetUp()
     {
         this.DbContextOptions = new DbContextOptionsBuilder<SimpleClinicDbContext>()
             .UseInMemoryDatabase(databaseName: "SimpleClinicInMemory" + Guid.NewGuid().ToString())
@@ -24,13 +24,18 @@ public class AccountServiceTests
 
         this.context = new SimpleClinicDbContext(this.DbContextOptions);
 
+        this.context.Database.EnsureCreated();
+
+        SeedDatabase(this.context);
+
         this.accountService = new AccountService(this.context);
     }
 
     [Test]
     public async Task AddMedicalHistory_Should_AddMedicalHistoryAndSetFormsCompleted()
     {
-        var userId = "test userId";
+        var userId = await context.Patients.Where(x => x.FirstName == "Pesho")
+            .Select(x => x.Id).FirstOrDefaultAsync();
 
         var model = new MedicalHistoryViewModel()
         {
@@ -45,6 +50,6 @@ public class AccountServiceTests
         var patient = await context.Patients.FindAsync(userId);
 
         Assert.IsNotNull(medicalHistory);
-        Assert.True(patient.FormsCompleted == true);
+        Assert.True(patient.FormsCompleted);
     }
 }

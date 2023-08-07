@@ -34,6 +34,7 @@ public class AccountService : IAccountService
         if (patient != null) 
         {
             patient.FormsCompleted = true;
+            patient.MedicalHistoryId = medicalHistory.Id;
         }
             
 
@@ -43,6 +44,9 @@ public class AccountService : IAccountService
 
     public async Task AddNextOfKin(NextOfKinViewModel model, string userId)
     {
+        var patient = await context.Patients
+            .FindAsync(userId);
+
         var nextOfKin = new NextOfKin()
         {
             Name = model.Name,
@@ -50,6 +54,11 @@ public class AccountService : IAccountService
             Address = model.Address,
             PatientId = userId
         };
+
+        if (patient != null) 
+        {
+            patient.NextOfKinId = nextOfKin.Id;
+        }
 
         await context.NextOfKins.AddAsync(nextOfKin);
         await context.SaveChangesAsync();
