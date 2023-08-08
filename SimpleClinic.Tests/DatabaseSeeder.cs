@@ -9,10 +9,12 @@ using SimpleClinic.Infrastructure.Entities;
 public class DatabaseSeeder
 {
     public static Patient patient;
-    public static Doctor doctor;
+    public static List<Doctor> doctors;
 
     public static void SeedDatabase(SimpleClinicDbContext context)
     {
+
+
         patient = new Patient()
         {
             UserName = "Pesho",
@@ -35,28 +37,74 @@ public class DatabaseSeeder
 
         };
 
-        doctor = new Doctor()
+        doctors = new List<Doctor>()
         {
-            UserName = "Joro",
-            NormalizedUserName = "JORO",
-            Email = "Joro@MAIL.com",
-            NormalizedEmail = "JORO@MAIL.COM",
-            EmailConfirmed = true,
-            PasswordHash = "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
-            ConcurrencyStamp = "caf271d7-0ba7-4ab1-8d8d-6d0e3711c27d",
-            SecurityStamp = "ca32c787-626e-4234-a4e4-8c94d85a2b1c",
-            TwoFactorEnabled = false,
-            FirstName = "Joro",
-            LastName = "Jorov",
-            Address = "Test address",
-            LicenseNumber = "23152131",
-            Biography = "realy short bio",
-            OfficePhoneNumber = "2311334121",
-            PricePerAppointment = 400,
-            ProfilePictureFilename = "joro.jpg",
-            SpecialityId = 2
+            new Doctor()
+            {
+                UserName = "Joro",
+                NormalizedUserName = "JORO",
+                Email = "Joro@MAIL.com",
+                NormalizedEmail = "JORO@MAIL.COM",
+                EmailConfirmed = true,
+                PasswordHash = "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+                ConcurrencyStamp = "caf271d7-0ba7-4ab1-8d8d-6d0e3711c27d",
+                SecurityStamp = "ca32c787-626e-4234-a4e4-8c94d85a2b1c",
+                TwoFactorEnabled = false,
+                FirstName = "Joro",
+                LastName = "Jorov",
+                Address = "Test address",
+                LicenseNumber = "23152131",
+                Biography = "realy short bio",
+                OfficePhoneNumber = "2311334121",
+                PricePerAppointment = 400,
+                ProfilePictureFilename = "joro.jpg",
+                SpecialityId = 3
+            },
+            new Doctor()
+            {
+                UserName = "pesho",
+                NormalizedUserName = "PESHO",
+                Email = "pesho@MAIL.com",
+                NormalizedEmail = "PESHO@MAIL.COM",
+                EmailConfirmed = true,
+                PasswordHash = "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+                ConcurrencyStamp = "caf271d7-0ba7-4ab1-8d8d-6d0e3711c27d",
+                SecurityStamp = "ca32c787-626e-4234-a4e4-8c94d85a2b1c",
+                TwoFactorEnabled = false,
+                FirstName = "pesho",
+                LastName = "peshev",
+                Address = "Test address",
+                LicenseNumber = "23152131",
+                Biography = "realy short bio",
+                OfficePhoneNumber = "2311334121",
+                PricePerAppointment = 400,
+                ProfilePictureFilename = "pesho.jpg",
+                SpecialityId = 2
+            },
+            new Doctor()
+            {
+                UserName = "gosho",
+                NormalizedUserName = "GOSHO",
+                Email = "gosho@MAIL.com",
+                NormalizedEmail = "GOSHO@MAIL.COM",
+                EmailConfirmed = true,
+                PasswordHash = "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+                ConcurrencyStamp = "caf271d7-0ba7-4ab1-8d8d-6d0e3711c27d",
+                SecurityStamp = "ca32c787-626e-4234-a4e4-8c94d85a2b1c",
+                TwoFactorEnabled = false,
+                FirstName = "gosho",
+                LastName = "goshev",
+                Address = "Test address",
+                LicenseNumber = "23152131",
+                Biography = "realy short bio",
+                OfficePhoneNumber = "2311334121",
+                PricePerAppointment = 400,
+                ProfilePictureFilename = "gosho.jpg",
+                SpecialityId = 1
+            }
         };
-        context.Doctors.Add(doctor);
+        ;
+        context.Doctors.AddRange(doctors);
 
         var userRole = new IdentityUserRole<string>
         {
@@ -85,7 +133,7 @@ public class DatabaseSeeder
         var docAppointment1 = new DoctorAppointment()
         {
             Id = "TestAppointmentId1",
-            DoctorId = doctor.Id,
+            DoctorId = doctors.First().Id,
             TimeSlotId = "TestSlotId",
             PatientId = patient.Id,
             BookingDateTime = new DateTime(2023, 9, 9),

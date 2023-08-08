@@ -33,6 +33,7 @@ public class AccountServiceTests
     [Test]
     public async Task AddMedicalHistory_Should_AddMedicalHistoryAndSetFormsCompleted()
     {
+        
         var userId = await context.Patients.Where(x => x.FirstName == "Pesho")
             .Select(x => x.Id).FirstOrDefaultAsync();
 
