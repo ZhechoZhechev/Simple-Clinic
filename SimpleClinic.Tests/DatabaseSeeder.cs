@@ -9,6 +9,7 @@ using SimpleClinic.Infrastructure.Entities;
 public class DatabaseSeeder
 {
     public static Patient patient;
+    public static Doctor doctor;
 
     public static void SeedDatabase(SimpleClinicDbContext context)
     {
@@ -33,11 +34,86 @@ public class DatabaseSeeder
             NextOfKinId = "33f29002-010f-41c9-bd19-fce963be36a0"
 
         };
+
+        doctor = new Doctor()
+        {
+            UserName = "Joro",
+            NormalizedUserName = "JORO",
+            Email = "Joro@MAIL.com",
+            NormalizedEmail = "JORO@MAIL.COM",
+            EmailConfirmed = true,
+            PasswordHash = "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+            ConcurrencyStamp = "caf271d7-0ba7-4ab1-8d8d-6d0e3711c27d",
+            SecurityStamp = "ca32c787-626e-4234-a4e4-8c94d85a2b1c",
+            TwoFactorEnabled = false,
+            FirstName = "Joro",
+            LastName = "Jorov",
+            Address = "Test address",
+            LicenseNumber = "23152131",
+            Biography = "realy short bio",
+            OfficePhoneNumber = "2311334121",
+            PricePerAppointment = 400,
+            ProfilePictureFilename = "joro.jpg",
+            SpecialityId = 2
+        };
+        context.Doctors.Add(doctor);
+
         var userRole = new IdentityUserRole<string>
         {
             UserId = patient.Id,
             RoleId = "TestRoleId"
         };
+
+        var timeSlot = new TimeSlot()
+        {
+            Id = "TestSlotId",
+            StartTime = new DateTime(2023, 8, 9, 8, 0, 0),
+            EndTime = new DateTime(2023, 8, 9, 9, 0, 0),
+            IsAvailable = false
+        };
+        context.TimeSlots.Add(timeSlot);
+
+        var docAppointment = new DoctorAppointment()
+        {
+            Id = "TestAppointmentId",
+            DoctorId = "TestDoctor",
+            TimeSlotId = timeSlot.Id,
+            PatientId = patient.Id,
+            BookingDateTime = new DateTime(2023, 8, 9),
+            IsActive = true
+        };
+        var docAppointment1 = new DoctorAppointment()
+        {
+            Id = "TestAppointmentId1",
+            DoctorId = doctor.Id,
+            TimeSlotId = "TestSlotId",
+            PatientId = patient.Id,
+            BookingDateTime = new DateTime(2023, 9, 9),
+            IsActive = true
+        };
+        context.DoctorAppointments.Add(docAppointment);
+        context.DoctorAppointments.Add(docAppointment1);
+
+        var service = new Service()
+        {
+            Id = "TestServiceId",
+            Name = "TestServiceName",
+            EquipmentPicture = "some url",
+            Price = 10000
+        };
+        context.Services.Add(service);
+
+        var serviceAppointment = new ServiceAppointment()
+        {
+            Id = "TestServiceAppointmentId",
+            ServiceId = "TestServiceId",
+            TimeSlotId = timeSlot.Id,
+            PatientId = patient.Id,
+            BookingDateTime = new DateTime(2023, 8, 9),
+            IsActive = true
+        };
+        context.ServiceAppointments.Add(serviceAppointment);
+
 
         context.UserRoles.Add(userRole);
         context.Patients.Add(patient);
