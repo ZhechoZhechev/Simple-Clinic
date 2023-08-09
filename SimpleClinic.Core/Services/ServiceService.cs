@@ -54,7 +54,7 @@ public class ServiceService : IServiceService
         return model;
     }
 
-    public async Task<IEnumerable<FirstThreeServicesViewModel>> GetFirstThreeServices()
+    public async Task<List<FirstThreeServicesViewModel>> GetFirstThreeServices()
     {
         var model = await context.Services.Take(3).
             Select(s => new FirstThreeServicesViewModel()

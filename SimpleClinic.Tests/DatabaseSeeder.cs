@@ -9,11 +9,31 @@ using SimpleClinic.Infrastructure.Entities;
 public class DatabaseSeeder
 {
     public static Patient patient;
+    public static Service service;
     public static List<Doctor> doctors;
+    public static List<Service> services;
 
     public static void SeedDatabase(SimpleClinicDbContext context)
     {
 
+        services = new List<Service>()
+        {
+            new Service()
+            {
+            Id = "TestServiceId1",
+            Name = "TestServiceName1",
+            EquipmentPicture = "some url1",
+            Price = 9999
+            },
+            new Service()
+            {
+            Id = "TestServiceId2",
+            Name = "TestServiceName2",
+            EquipmentPicture = "some url2",
+            Price = 9999
+            }
+        };
+        context.Services.AddRange(services);
 
         patient = new Patient()
         {
@@ -142,7 +162,7 @@ public class DatabaseSeeder
         context.DoctorAppointments.Add(docAppointment);
         context.DoctorAppointments.Add(docAppointment1);
 
-        var service = new Service()
+        service = new Service()
         {
             Id = "TestServiceId",
             Name = "TestServiceName",

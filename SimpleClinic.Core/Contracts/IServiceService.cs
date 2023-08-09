@@ -6,7 +6,7 @@ namespace SimpleClinic.Core.Contracts;
 
 public interface IServiceService
 {
-    Task<IEnumerable<FirstThreeServicesViewModel>> GetFirstThreeServices();
+    Task<List<FirstThreeServicesViewModel>> GetFirstThreeServices();
 
     Task<ServiceQueryServiceModel> All(int currentPage = 1, int servicesPerPage = 1);
 

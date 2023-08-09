@@ -4,10 +4,10 @@ public class ServiceQueryServiceModel
 {
     public ServiceQueryServiceModel()
     {
-        this.Services = new HashSet<ServiceServiceModel>();
+        this.Services = new List<ServiceServiceModel>();
     }
 
     public int TotalServicesCount { get; set; }
 
-    public IEnumerable<ServiceServiceModel> Services { get; set; }
+    public List<ServiceServiceModel> Services { get; set; }
 }
