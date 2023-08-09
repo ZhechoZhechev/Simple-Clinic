@@ -3,7 +3,7 @@
 using Microsoft.EntityFrameworkCore;
 
 using NUnit.Framework;
-using Org.BouncyCastle.Math.EC.Rfc7748;
+
 using SimpleClinic.Core.Services;
 using SimpleClinic.Infrastructure;
 using SimpleClinic.Infrastructure.Entities;
@@ -28,8 +28,6 @@ public class SpecialityServiceTests
         context = new SimpleClinicDbContext(dbContextOptions);
 
         context.Database.EnsureCreated();
-
-        //SeedDatabase(this.context);
 
         specialityService = new SpecialityService(context);
     }
