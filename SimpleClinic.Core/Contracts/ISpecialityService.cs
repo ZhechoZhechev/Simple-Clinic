@@ -8,7 +8,7 @@ public interface ISpecialityService
 {
     Task<IEnumerable<SpecialityViewModel>> GetAllSpecialities();
 
-    Task<IEnumerable<string>> GetAllSpecialityNames();
+    Task<List<string>> GetAllSpecialityNames();
 
     Task<Speciality> AddCustomSpeciality(string customSpecialityNa);
 

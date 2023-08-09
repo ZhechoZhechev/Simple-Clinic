@@ -55,9 +55,10 @@ public class SpecialityService : ISpecialityService
         return model;
     }
 
-    public async Task<IEnumerable<string>> GetAllSpecialityNames()
+    public async Task<List<string>> GetAllSpecialityNames()
     {
         return await context.Specialities
+            .OrderBy(x => x.Name)
             .Select(s => s.Name)
             .Distinct()
             .ToListAsync();
