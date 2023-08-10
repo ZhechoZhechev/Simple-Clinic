@@ -9,7 +9,7 @@ using SimpleClinic.Core.Services;
 using SimpleClinic.Infrastructure;
 
 [TestFixture]
-public class ScheduleServiceTests
+internal class ScheduleServiceTests
 {
     private DbContextOptions<SimpleClinicDbContext> dbContextOptions;
     private SimpleClinicDbContext context;

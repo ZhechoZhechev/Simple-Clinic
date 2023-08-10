@@ -7,7 +7,9 @@ using NUnit.Framework;
 using SimpleClinic.Core.Services;
 using SimpleClinic.Infrastructure;
 using static DatabaseSeeder;
-public class ServiceServiceTests
+
+[TestFixture]
+internal class ServiceServiceTests
 {
     private DbContextOptions<SimpleClinicDbContext> dbContextOptions;
     private SimpleClinicDbContext context;

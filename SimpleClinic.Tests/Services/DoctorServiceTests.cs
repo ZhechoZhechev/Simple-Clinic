@@ -9,8 +9,8 @@ using SimpleClinic.Core.Services;
 using SimpleClinic.Infrastructure;
 using static DatabaseSeeder;
 
-
-public class DoctorServiceTests
+[TestFixture]
+internal class DoctorServiceTests
 {
 
     private DbContextOptions<SimpleClinicDbContext> DbContextOptions;

@@ -13,8 +13,8 @@ using SimpleClinic.Infrastructure.Entities;
 using static DatabaseSeeder;
 
 
-
-public class AppointmentServiceTests
+[TestFixture]
+internal class AppointmentServiceTests
 {
     private DbContextOptions<SimpleClinicDbContext> DbContextOptions;
     private SimpleClinicDbContext context;

@@ -17,7 +17,8 @@ using SimpleClinic.Core.Models.DoctorModels;
 using SimpleClinic.Infrastructure.Entities;
 using System.Security.Claims;
 
-public class DoctorsAppointmentControllerTestsClass1
+[TestFixture]
+internal class DoctorsAppointmentControllerTests
 {
     private AppointmentController controller;
     private Mock<IAppointmentService> mockAppointmentService;

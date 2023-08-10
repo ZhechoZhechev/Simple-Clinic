@@ -12,7 +12,7 @@ using static DatabaseSeeder;
 
 
 [TestFixture]
-public class PrescriptionServiceTests
+internal class PrescriptionServiceTests
 {
     private DbContextOptions<SimpleClinicDbContext> dbContextOptions;
     private SimpleClinicDbContext context;

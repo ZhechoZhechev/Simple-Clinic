@@ -8,7 +8,9 @@ using SimpleClinic.Core.Models.PatientModels;
 using SimpleClinic.Core.Services;
 using SimpleClinic.Infrastructure;
 using static DatabaseSeeder;
-public class AccountServiceTests
+
+[TestFixture]
+internal class AccountServiceTests
 {
     private DbContextOptions<SimpleClinicDbContext> DbContextOptions;
     private SimpleClinicDbContext context;

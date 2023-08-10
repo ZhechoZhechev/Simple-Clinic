@@ -13,7 +13,7 @@ using SimpleClinic.Core.Contracts;
 using SimpleClinic.Core.Models;
 
 [TestFixture]
-public class HomeControllerTests
+internal class HomeControllerTests
 {
     private HomeController controller;
     private Mock<ISpecialityService> mockSpecialityService;

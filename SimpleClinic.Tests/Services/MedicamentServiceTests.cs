@@ -11,7 +11,7 @@ using SimpleClinic.Infrastructure;
 
 
 [TestFixture]
-public class MedicamentServiceTests
+internal class MedicamentServiceTests
 {
     private DbContextOptions<SimpleClinicDbContext> dbContextOptions;
     private SimpleClinicDbContext context;
