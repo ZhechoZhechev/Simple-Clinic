@@ -45,6 +45,7 @@ public class ServiceController : Controller
 
         return View(model);
     }
+
     [HttpPost]
     public async Task<IActionResult> AddSchedule(DoctorScheduleViewModel viewModel) 
     {
