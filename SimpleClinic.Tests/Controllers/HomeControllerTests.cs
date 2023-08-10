@@ -79,7 +79,7 @@ public class HomeControllerTests
     };
 
         mockServiceService.Setup(s => s.GetFirstThreeServices())
-                          .ReturnsAsync(expectedModel);
+            .ReturnsAsync(expectedModel);
 
         var result = await controller.Services() as ViewResult;
 
@@ -88,6 +88,20 @@ public class HomeControllerTests
 
         var model = result.Model as List<FirstThreeServicesViewModel>;
         Assert.AreEqual(expectedModel, model);
+    }
+
+    [Test]
+    public async Task Services_Redirects_To_Error_Page() 
+    {
+        mockServiceService.Setup(s => s.GetFirstThreeServices())
+            .ThrowsAsync(new Exception());
+
+        var result = await controller.Services() as RedirectToActionResult; 
+
+        Assert.IsNotNull(result);
+        Assert.IsInstanceOf<RedirectToActionResult>(result);
+        Assert.AreEqual("Home", result.ControllerName);
+        Assert.AreEqual("Error", result.ActionName);
     }
 
     [Test]
@@ -101,7 +115,7 @@ public class HomeControllerTests
     };
 
         mockDoctorService.Setup(s => s.GetFirstThreeDoctors())
-                          .ReturnsAsync(expectedModel);
+            .ReturnsAsync(expectedModel);
 
         var result = await controller.Doctors() as ViewResult;
 
@@ -110,6 +124,20 @@ public class HomeControllerTests
 
         var model = result.Model as List<FirstThreeDoctorsViewModel>;
         Assert.AreEqual(expectedModel, model);
+    }
+
+    [Test]
+    public async Task Doctors_Redirects_To_Error_Page() 
+    {
+        mockDoctorService.Setup(d => d.GetFirstThreeDoctors())
+            .ThrowsAsync(new Exception());
+
+        var result = await controller.Doctors() as RedirectToActionResult; 
+        
+        Assert.IsNotNull(result);
+        Assert.IsInstanceOf<RedirectToActionResult>(result);
+        Assert.AreEqual("Home", result.ControllerName);
+        Assert.AreEqual("Error", result.ActionName);
     }
 
     [Test]
@@ -184,5 +212,32 @@ public class HomeControllerTests
         var model = result.ViewData.Model as List<SpecialityViewModel>;
         Assert.IsNotNull(model);
         CollectionAssert.AreEqual(expectedModel, model);
+    }
+
+    [Test]
+    public async Task AllDepartments_Redirects_To_Error_Page() 
+    {
+        mockSpecialityService.Setup(s => s.GetAllSpecialitiesWithDoctorsCount())
+            .ThrowsAsync(new Exception());
+
+        var result = await controller.AllDepartments() as RedirectToActionResult; 
+        
+        Assert.IsNotNull(result);
+        Assert.IsInstanceOf<RedirectToActionResult>(result);
+        Assert.AreEqual("Home", result.ControllerName);
+        Assert.AreEqual("Error", result.ActionName);
+    }
+
+    [Test]
+    [TestCase(400, "Error404")]
+    [TestCase(404, "Error404")]
+    [TestCase(401, "Error401")]
+    public void Error_ReturnsCorrectView(int statusCode, string expectedViewName)
+    {
+
+        var result = controller.Error(statusCode) as ViewResult;
+
+        Assert.IsNotNull(result);
+        Assert.AreEqual(expectedViewName, result.ViewName);
     }
 }
