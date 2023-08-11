@@ -124,6 +124,36 @@ public class AppointmentService : IAppointmentService
         await context.SaveChangesAsync();
     }
 
+    public async Task<AppointmentViewModel> GetAppointmentById(string id)
+    {
+        var appointment = await context.DoctorAppointments
+            .Where(a => a.Id == id)
+            .Select(a => new AppointmentViewModel() 
+            {
+                Doctor = a.Doctor,
+                TimeSlot = a.TimeSlot,
+                Patient = a.Patient,
+                BookingDateTime = a.BookingDateTime
+            })
+            .FirstOrDefaultAsync();
+
+        if (appointment == null)
+        {
+            appointment = await context.ServiceAppointments
+            .Where(a => a.Id == id)
+            .Select(a => new AppointmentViewModel()
+            {
+                Service = a.Service,
+                TimeSlot = a.TimeSlot,
+                Patient = a.Patient,
+                BookingDateTime = a.BookingDateTime
+            })
+            .FirstOrDefaultAsync();
+        }
+
+        return appointment;
+    }
+
     public async Task<List<DoctorBookingViewModel>> GetDoctorAppointmentsForPatient(string patientId)
     {
         var doctorBookings = await context.DoctorAppointments

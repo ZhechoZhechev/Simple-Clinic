@@ -22,4 +22,5 @@ public interface IAppointmentService
 
     Task CancelPatientAppointment(string id);
 
+    Task<AppointmentViewModel> GetAppointmentById(string id);
 }

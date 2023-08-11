@@ -2,6 +2,7 @@
 
 using SimpleClinic.Core.Models;
 using SimpleClinic.Core.Models.PatientModels;
+using SimpleClinic.Infrastructure.Entities;
 
 /// <summary>
 /// DoctorService interface
@@ -17,4 +18,5 @@ public interface IDoctorService
     Task<DoctorQueryServiceModel> All(string speciality = null, string searchTerm = null, int currentPage = 1, int doctorsPerPage = 1);
 
     Task<DoctorServiceModel> DetailsForPatient(string id);
+
 }
