@@ -12,6 +12,8 @@ public class DatabaseSeeder
     public static Service service;
     public static List<Doctor> doctors;
     public static List<Service> services;
+    public static DoctorAppointment docAppointment;
+    public static ServiceAppointment serviceAppointment;
 
     public static void SeedDatabase(SimpleClinicDbContext context)
     {
@@ -141,7 +143,7 @@ public class DatabaseSeeder
         };
         context.TimeSlots.Add(timeSlot);
 
-        var docAppointment = new DoctorAppointment()
+        var docAppointment1 = new DoctorAppointment()
         {
             Id = "TestAppointmentId",
             DoctorId = "TestDoctor",
@@ -150,7 +152,7 @@ public class DatabaseSeeder
             BookingDateTime = new DateTime(2023, 8, 9),
             IsActive = true
         };
-        var docAppointment1 = new DoctorAppointment()
+        docAppointment = new DoctorAppointment()
         {
             Id = "TestAppointmentId1",
             DoctorId = doctors.First().Id,
@@ -171,10 +173,10 @@ public class DatabaseSeeder
         };
         context.Services.Add(service);
 
-        var serviceAppointment = new ServiceAppointment()
+        serviceAppointment = new ServiceAppointment()
         {
             Id = "TestServiceAppointmentId",
-            ServiceId = "TestServiceId",
+            ServiceId = service.Id,
             TimeSlotId = timeSlot.Id,
             PatientId = patient.Id,
             BookingDateTime = new DateTime(2023, 8, 9),

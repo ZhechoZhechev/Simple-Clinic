@@ -224,4 +224,50 @@ internal class AppointmentServiceTests
             Assert.AreEqual(appointment.EndTime, serviceBookingViewModel.EndTime);
         }
     }
+
+    [Test]
+    public async Task GetAppointmentById_Should_Return_Docotor_Appointment() 
+    {
+        var expectedModel = await context.DoctorAppointments
+            .Where(a => a.Id == docAppointment.Id)
+            .Select(a => new AppointmentViewModel() 
+            {
+                Doctor = a.Doctor,
+                TimeSlot = a.TimeSlot,
+                Patient = a.Patient,
+                BookingDateTime = a.BookingDateTime
+            })
+            .FirstOrDefaultAsync();
+
+        var actualModel = await appointmentService.GetAppointmentById(docAppointment.Id);
+
+        Assert.IsNotNull(actualModel);
+        Assert.AreEqual(expectedModel.Doctor.Id, actualModel.Doctor.Id);
+        Assert.AreEqual(expectedModel.TimeSlot.Id, actualModel.TimeSlot.Id);
+        Assert.AreEqual(expectedModel.Patient.Id, actualModel.Patient.Id);
+        Assert.AreEqual(expectedModel.BookingDateTime, actualModel.BookingDateTime);
+    }
+
+    [Test]
+    public async Task GetAppointmentById_Should_Return_Service_Appointment()
+    {
+        var expectedModel = await context.ServiceAppointments
+            .Where(a => a.Id == serviceAppointment.Id)
+            .Select(a => new AppointmentViewModel()
+            {
+                Service = a.Service,
+                TimeSlot = a.TimeSlot,
+                Patient = a.Patient,
+                BookingDateTime = a.BookingDateTime
+            })
+            .FirstOrDefaultAsync();
+
+        var actualModel = await appointmentService.GetAppointmentById(serviceAppointment.Id);
+
+        Assert.IsNotNull(actualModel);
+        Assert.AreEqual(expectedModel.Service.Id, actualModel.Service.Id);
+        Assert.AreEqual(expectedModel.TimeSlot.Id, actualModel.TimeSlot.Id);
+        Assert.AreEqual(expectedModel.Patient.Id, actualModel.Patient.Id);
+        Assert.AreEqual(expectedModel.BookingDateTime, actualModel.BookingDateTime);
+    }
 }

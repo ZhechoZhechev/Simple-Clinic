@@ -1,4 +1,4 @@
-﻿namespace SimpleClinic.Core.Services;
+﻿namespace SimpleClinic.Areas.Patient.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
