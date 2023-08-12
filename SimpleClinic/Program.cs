@@ -3,7 +3,7 @@ namespace SimpleClinic;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
+using SimpleClinic.Common.Helpers;
 using SimpleClinic.Core.Contracts;
 using SimpleClinic.Core.Services;
 using SimpleClinic.Infrastructure;
@@ -40,7 +40,7 @@ public class Program
             .AddEntityFrameworkStores<SimpleClinicDbContext>();
 
         builder.Services.AddApplicationServices(typeof(IAccountService));
-        builder.Services.AddScoped(typeof(DoctorService));
+        builder.Services.AddScoped(typeof(EmailService));
 
         builder.Services.AddControllersWithViews()
             .AddMvcOptions(options => 
