@@ -3,9 +3,9 @@ namespace SimpleClinic;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
 using SimpleClinic.Common.Helpers;
 using SimpleClinic.Core.Contracts;
-using SimpleClinic.Core.Services;
 using SimpleClinic.Infrastructure;
 using SimpleClinic.Infrastructure.CustomMiddleWares;
 using SimpleClinic.Infrastructure.Entities;
