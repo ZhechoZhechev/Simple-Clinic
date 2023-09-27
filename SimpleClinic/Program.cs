@@ -23,6 +23,11 @@ public class Program
             options.UseSqlServer(connectionString));
         builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+        builder.Services.AddResponseCompression(options => 
+        {
+            options.EnableForHttps = true;
+        });
+
         builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
         {
             options.SignIn.RequireConfirmedAccount =
@@ -81,6 +86,8 @@ public class Program
          
         app.UseHttpsRedirection();
         app.UseStaticFiles();
+
+        app.UseResponseCompression();
 
         app.UseRouting();
 
