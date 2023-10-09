@@ -23,6 +23,7 @@ public class Program
             options.UseSqlServer(connectionString));
         builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+        //Compression Algorithms,Automatic Compression
         builder.Services.AddResponseCompression(options => 
         {
             options.EnableForHttps = true;
