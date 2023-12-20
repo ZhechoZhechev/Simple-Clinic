@@ -10,6 +10,7 @@ public class EmailService
 {
     private readonly IConfiguration configuration;
 
+
     public EmailService(IConfiguration configuration)
     {
         this.configuration = configuration;

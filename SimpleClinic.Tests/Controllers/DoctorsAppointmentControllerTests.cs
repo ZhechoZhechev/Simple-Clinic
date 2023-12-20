@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -12,6 +13,7 @@ using NUnit.Framework;
 
 using SimpleClinic.Areas.Doctor.Controllers;
 using SimpleClinic.Common;
+using SimpleClinic.Common.Helpers;
 using SimpleClinic.Core.Contracts;
 using SimpleClinic.Core.Models.DoctorModels;
 using SimpleClinic.Infrastructure.Entities;
@@ -22,12 +24,16 @@ internal class DoctorsAppointmentControllerTests
 {
     private AppointmentController controller;
     private Mock<IAppointmentService> mockAppointmentService;
+    private Mock<IConfiguration> mockConfiguration;
     private Mock<UserManager<ApplicationUser>> mockUserManager;
+    private Mock<EmailService> mockEmailService;
 
     [SetUp]
     public void Setup()
     {
         mockAppointmentService = new Mock<IAppointmentService>();
+        mockConfiguration = new Mock<IConfiguration>();
+        mockEmailService = new Mock<EmailService>(mockConfiguration.Object);
 
         mockUserManager = new Mock<UserManager<ApplicationUser>>(
             new Mock<IUserStore<ApplicationUser>>().Object,
@@ -46,7 +52,9 @@ internal class DoctorsAppointmentControllerTests
         mockUserManager
             .Setup(userManager => userManager.AddToRoleAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()));
 
-        controller = new AppointmentController(mockUserManager.Object,
+        controller = new AppointmentController(
+            mockUserManager.Object,
+            mockEmailService.Object,
             mockAppointmentService.Object);
 
         controller.TempData = new TempDataDictionary(new DefaultHttpContext(), Mock.Of<ITempDataProvider>());
