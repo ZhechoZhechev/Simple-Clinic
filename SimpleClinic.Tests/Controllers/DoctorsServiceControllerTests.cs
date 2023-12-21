@@ -63,9 +63,9 @@ internal class DoctorsServiceControllerTests
         var model = result.Model as List<AllServicesForScheduleViewModel>;
 
 
-        Assert.IsNotNull(result);
-        Assert.IsInstanceOf<ViewResult>(result);
-        Assert.AreEqual(expectedModel, model);
+        Assert.That(result, Is.Not.EqualTo(null));
+        Assert.That(result, Is.InstanceOf<ViewResult>());
+        Assert.Equals(expectedModel, model);
     }
 
     [Test]
@@ -83,10 +83,10 @@ internal class DoctorsServiceControllerTests
         var tempDataValue = controller.TempData["CurrServiceName"] as string;
 
 
-        Assert.IsNotNull(result);
-        Assert.IsInstanceOf<ViewResult>(result);
-        Assert.AreEqual(expectedModel.ServiceId, model!.ServiceId);
-        Assert.AreEqual(serviceName, tempDataValue);
+        Assert.That(result, Is.Not.EqualTo(null));
+        Assert.That(result, Is.InstanceOf<ViewResult>());
+        Assert.Equals(expectedModel.ServiceId, model!.ServiceId);
+        Assert.Equals(serviceName, tempDataValue);
     }
 
     [Test]
@@ -98,11 +98,11 @@ internal class DoctorsServiceControllerTests
 
         var result = await controller.AddSchedule(doctorScheduleViewModel) as RedirectToActionResult;
 
-        Assert.IsInstanceOf<RedirectToActionResult>(result);
-        Assert.AreEqual("AddSchedule", result!.ActionName);
-        Assert.AreEqual("Service", result.ControllerName);
-        Assert.AreEqual(RoleNames.DoctorRoleName, result.RouteValues!["area"]);
-        Assert.AreEqual("Schedule for this day exists. Please, select different day.", controller.TempData["ErrorMessage"]);
+        Assert.That(result, Is.InstanceOf<RedirectToActionResult>());
+        Assert.Equals("AddSchedule", result!.ActionName);
+        Assert.Equals("Service", result.ControllerName);
+        Assert.Equals(RoleNames.DoctorRoleName, result.RouteValues!["area"]);
+        Assert.Equals("Schedule for this day exists. Please, select different day.", controller.TempData["ErrorMessage"]);
     }
 
     [Test]
@@ -113,7 +113,7 @@ internal class DoctorsServiceControllerTests
 
         var result = await controller.AddSchedule(doctorScheduleViewModel) as ViewResult;
 
-        Assert.AreEqual(doctorScheduleViewModel, result!.Model);
+        Assert.Equals(doctorScheduleViewModel, result!.Model);
     }
 
     [Test]
@@ -124,11 +124,11 @@ internal class DoctorsServiceControllerTests
 
         var result = await controller.AddSchedule(doctorScheduleViewModel) as RedirectToActionResult;
 
-        Assert.IsInstanceOf<RedirectToActionResult>(result);
-        Assert.AreEqual("AddSchedule", result!.ActionName);
-        Assert.AreEqual("Service", result.ControllerName);
-        Assert.AreEqual(RoleNames.DoctorRoleName, result.RouteValues!["area"]);
-        Assert.AreEqual("Schedule added successfully!", controller.TempData["SuccessMessage"]);
+        Assert.That(result, Is.InstanceOf<RedirectToActionResult>());
+        Assert.Equals("AddSchedule", result!.ActionName);
+        Assert.Equals("Service", result.ControllerName);
+        Assert.Equals(RoleNames.DoctorRoleName, result.RouteValues!["area"]);
+        Assert.Equals("Schedule added successfully!", controller.TempData["SuccessMessage"]);
     }
     [Test]
     public async Task AddSchedule_Returns_RedirectToAction_When_Error_With_Success_Message() 
@@ -140,11 +140,11 @@ internal class DoctorsServiceControllerTests
 
         var result = await controller.AddSchedule(doctorScheduleViewModel) as RedirectToActionResult;
 
-        Assert.IsInstanceOf<RedirectToActionResult>(result);
-        Assert.AreEqual("Index", result!.ActionName);
-        Assert.AreEqual("Home", result.ControllerName);
-        Assert.AreEqual(RoleNames.DoctorRoleName, result.RouteValues!["area"]);
-        Assert.AreEqual("Something went wrong!", controller.TempData["ErrorMessage"]);
+        Assert.That(result, Is.InstanceOf<RedirectToActionResult>());
+        Assert.Equals("Index", result!.ActionName);
+        Assert.Equals("Home", result.ControllerName);
+        Assert.Equals(RoleNames.DoctorRoleName, result.RouteValues!["area"]);
+        Assert.Equals("Something went wrong!", controller.TempData["ErrorMessage"]);
     }
 
     [Test]
@@ -172,8 +172,8 @@ internal class DoctorsServiceControllerTests
         var result = await controller.CheckSchedule(serviceId) as ViewResult;
         var model = result!.Model;
 
-        Assert.IsNotNull(result);
-        Assert.IsInstanceOf<ViewResult>(result);
-        Assert.AreEqual(expectedModel, model);
+        Assert.That(result, Is.Not.EqualTo(null));
+        Assert.That(result, Is.InstanceOf<ViewResult>());
+        Assert.Equals(expectedModel, model);
     }
 }

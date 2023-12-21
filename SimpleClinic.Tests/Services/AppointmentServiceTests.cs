@@ -46,8 +46,8 @@ internal class AppointmentServiceTests
 
         await appointmentService.CancelDocAppointment(docAppointmentId);
 
-        Assert.IsTrue(timeSlot.IsAvailable);
-        Assert.IsFalse(docAppointment.IsActive);
+        Assert.That(timeSlot.IsAvailable, Is.EqualTo(true));
+        Assert.That(docAppointment.IsActive, Is.EqualTo(false));
     }
 
     [Test]
@@ -62,8 +62,8 @@ internal class AppointmentServiceTests
 
         await appointmentService.CancelPatientAppointment(appointmentId);
 
-        Assert.IsFalse(timeSlot.IsAvailable);
-        Assert.IsFalse(docAppointment.IsActive);
+        Assert.That(timeSlot.IsAvailable, Is.EqualTo(false));
+        Assert.That(docAppointment.IsActive, Is.EqualTo(false));
     }
 
     [Test]
@@ -77,8 +77,8 @@ internal class AppointmentServiceTests
 
         await appointmentService.CancelServiceAppointment(appointmentId);
 
-        Assert.IsTrue(timeSlot.IsAvailable);
-        Assert.IsFalse(serviceAppointment.IsActive);
+        Assert.That(timeSlot.IsAvailable, Is.EqualTo(true));
+        Assert.That(serviceAppointment.IsActive, Is.EqualTo(false));
     }
 
     [Test]
@@ -93,8 +93,8 @@ internal class AppointmentServiceTests
         await appointmentService.CreateAppointment("timeSlotId", "patientId");
 
         var createdAppointment = await context.DoctorAppointments.FirstOrDefaultAsync(a => a.TimeSlotId == "timeSlotId");
-        Assert.IsNotNull(createdAppointment);
-        Assert.IsFalse(timeSlot.IsAvailable);
+        Assert.That(createdAppointment,Is.Not.EqualTo(null));
+        Assert.That(timeSlot.IsAvailable, Is.EqualTo(false));
     }
 
     [Test]
@@ -109,8 +109,8 @@ internal class AppointmentServiceTests
         await appointmentService.CreateServiceAppointment("serviceTimeSlotId", "patientId");
 
         var createdAppointment = await context.ServiceAppointments.FirstOrDefaultAsync(a => a.TimeSlotId == "serviceTimeSlotId");
-        Assert.IsNotNull(createdAppointment);
-        Assert.IsFalse(timeSlot.IsAvailable);
+        Assert.That(createdAppointment, Is.Not.EqualTo(null));
+        Assert.That(timeSlot.IsAvailable, Is.EqualTo(false));
     }
 
     [Test]
@@ -134,18 +134,18 @@ internal class AppointmentServiceTests
 
         var actualList = await appointmentService.GetDoctorAppointmentsForPatient(patientId!);
 
-        Assert.AreEqual(expectedList.Count, actualList.Count);
+        Assert.That(expectedList.Count, Is.EqualTo(actualList.Count));
 
         foreach (var appointment in actualList)
         {
             var doctorBookingViewModel = expectedList.FirstOrDefault(x => x.Id == appointment.Id);
 
-            Assert.IsNotNull(doctorBookingViewModel);
-            Assert.AreEqual(appointment.DocFirstName, doctorBookingViewModel!.DocFirstName);
-            Assert.AreEqual(appointment.DocLastName, doctorBookingViewModel.DocLastName);
-            Assert.AreEqual(appointment.BookingDate, doctorBookingViewModel.BookingDate);
-            Assert.AreEqual(appointment.StartTime, doctorBookingViewModel.StartTime);
-            Assert.AreEqual(appointment.EndTime, doctorBookingViewModel.EndTime);
+            Assert.That(doctorBookingViewModel, Is.Not.EqualTo(null));
+            Assert.That(appointment.DocFirstName, Is.EqualTo(doctorBookingViewModel!.DocFirstName));
+            Assert.That(appointment.DocLastName, Is.EqualTo(doctorBookingViewModel.DocLastName));
+            Assert.That(appointment.BookingDate, Is.EqualTo(doctorBookingViewModel.BookingDate));
+            Assert.That(appointment.StartTime, Is.EqualTo(doctorBookingViewModel.StartTime));
+            Assert.That(appointment.EndTime, Is.EqualTo(doctorBookingViewModel.EndTime));
         }
     }
 
@@ -172,19 +172,19 @@ internal class AppointmentServiceTests
 
         var actualList = await appointmentService.GetPatientAppointmentsForDoctor(doctorId!);
 
-        Assert.AreEqual(expectedList.Count, actualList.Count);
+        Assert.That(expectedList.Count, Is.EqualTo(actualList.Count));
 
         foreach (var appointment in actualList)
         {
             var patientBookingViewModel = expectedList.FirstOrDefault(x => x.Id == appointment.Id);
 
-            Assert.IsNotNull(patientBookingViewModel);
-            Assert.AreEqual(appointment.PatientFirstName, patientBookingViewModel!.PatientFirstName);
-            Assert.AreEqual(appointment.PatientLastName, patientBookingViewModel.PatientLastName);
-            Assert.AreEqual(appointment.PatientEmail, patientBookingViewModel.PatientEmail);
-            Assert.AreEqual(appointment.BookingDate, patientBookingViewModel.BookingDate);
-            Assert.AreEqual(appointment.StartTime, patientBookingViewModel.StartTime);
-            Assert.AreEqual(appointment.EndTime, patientBookingViewModel.EndTime);
+            Assert.That(patientBookingViewModel, Is.Not.EqualTo(null));
+            Assert.That(appointment.PatientFirstName, Is.EqualTo(patientBookingViewModel!.PatientFirstName));
+            Assert.That(appointment.PatientLastName, Is.EqualTo(patientBookingViewModel.PatientLastName));
+            Assert.That(appointment.PatientEmail, Is.EqualTo(patientBookingViewModel.PatientEmail));
+            Assert.That(appointment.BookingDate, Is.EqualTo(patientBookingViewModel.BookingDate));
+            Assert.That(appointment.StartTime, Is.EqualTo(patientBookingViewModel.StartTime));
+            Assert.That(appointment.EndTime, Is.EqualTo(patientBookingViewModel.EndTime));
         }
     }
 
@@ -211,17 +211,17 @@ internal class AppointmentServiceTests
 
         var actualList = await appointmentService.GetServiceAppointmentsForPatient(patientId);
 
-        Assert.AreEqual(expectedList.Count, actualList.Count);
+        Assert.That(expectedList.Count, Is.EqualTo(actualList.Count));
 
         foreach (var appointment in actualList)
         {
             var serviceBookingViewModel = expectedList.FirstOrDefault(x => x.Id == appointment.Id);
 
-            Assert.IsNotNull(serviceBookingViewModel);
-            Assert.AreEqual(appointment.ServiceName, serviceBookingViewModel!.ServiceName);
-            Assert.AreEqual(appointment.BookingDate, serviceBookingViewModel.BookingDate);
-            Assert.AreEqual(appointment.StartTime, serviceBookingViewModel.StartTime);
-            Assert.AreEqual(appointment.EndTime, serviceBookingViewModel.EndTime);
+            Assert.That(serviceBookingViewModel, Is.Not.EqualTo(null));
+            Assert.That(appointment.ServiceName, Is.EqualTo(serviceBookingViewModel!.ServiceName));
+            Assert.That(appointment.BookingDate, Is.EqualTo(serviceBookingViewModel.BookingDate));
+            Assert.That(appointment.StartTime, Is.EqualTo(serviceBookingViewModel.StartTime));
+            Assert.That(appointment.EndTime, Is.EqualTo(serviceBookingViewModel.EndTime));
         }
     }
 
@@ -241,11 +241,11 @@ internal class AppointmentServiceTests
 
         var actualModel = await appointmentService.GetAppointmentById(docAppointment.Id);
 
-        Assert.IsNotNull(actualModel);
-        Assert.AreEqual(expectedModel.Doctor.Id, actualModel.Doctor.Id);
-        Assert.AreEqual(expectedModel.TimeSlot.Id, actualModel.TimeSlot.Id);
-        Assert.AreEqual(expectedModel.Patient.Id, actualModel.Patient.Id);
-        Assert.AreEqual(expectedModel.BookingDateTime, actualModel.BookingDateTime);
+        Assert.That(actualModel, Is.Not.EqualTo(null));
+        Assert.That(expectedModel.Doctor.Id, Is.EqualTo(actualModel.Doctor.Id));
+        Assert.That(expectedModel.TimeSlot.Id, Is.EqualTo(actualModel.TimeSlot.Id));
+        Assert.That(expectedModel.Patient.Id, Is.EqualTo(actualModel.Patient.Id));
+        Assert.That(expectedModel.BookingDateTime, Is.EqualTo(actualModel.BookingDateTime));
     }
 
     [Test]
@@ -264,10 +264,10 @@ internal class AppointmentServiceTests
 
         var actualModel = await appointmentService.GetAppointmentById(serviceAppointment.Id);
 
-        Assert.IsNotNull(actualModel);
-        Assert.AreEqual(expectedModel.Service.Id, actualModel.Service.Id);
-        Assert.AreEqual(expectedModel.TimeSlot.Id, actualModel.TimeSlot.Id);
-        Assert.AreEqual(expectedModel.Patient.Id, actualModel.Patient.Id);
-        Assert.AreEqual(expectedModel.BookingDateTime, actualModel.BookingDateTime);
+        Assert.That(actualModel, Is.Not.EqualTo(null));
+        Assert.That(expectedModel.Service.Id, Is.EqualTo(actualModel.Service.Id));
+        Assert.That(expectedModel.TimeSlot.Id, Is.EqualTo(actualModel.TimeSlot.Id));
+        Assert.That(expectedModel.Patient.Id, Is.EqualTo(actualModel.Patient.Id));
+        Assert.That(expectedModel.BookingDateTime, Is.EqualTo(actualModel.BookingDateTime));
     }
 }

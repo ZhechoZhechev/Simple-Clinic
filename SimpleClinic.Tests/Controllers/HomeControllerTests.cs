@@ -45,7 +45,7 @@ internal class HomeControllerTests
         var result = controller.Index();
 
 
-        Assert.IsInstanceOf<ViewResult>(result);
+        Assert.That(result, Is.InstanceOf<ViewResult>());
     }
 
     [Test]
@@ -55,7 +55,7 @@ internal class HomeControllerTests
         var result = controller.Departments();
 
 
-        Assert.IsInstanceOf<ViewResult>(result);
+        Assert.That(result, Is.InstanceOf<ViewResult>());
     }
 
     [Test]
@@ -65,7 +65,7 @@ internal class HomeControllerTests
         var result = controller.Contacts();
 
 
-        Assert.IsInstanceOf<ViewResult>(result);
+        Assert.That(result, Is.InstanceOf<ViewResult>());
     }
 
     [Test]
@@ -83,11 +83,11 @@ internal class HomeControllerTests
 
         var result = await controller.Services() as ViewResult;
 
-        Assert.IsNotNull(result);
-        Assert.IsInstanceOf<ViewResult>(result);
+        Assert.That(result, Is.Not.EqualTo(null));
+        Assert.That(result, Is.InstanceOf<ViewResult>());
 
         var model = result.Model as List<FirstThreeServicesViewModel>;
-        Assert.AreEqual(expectedModel, model);
+        Assert.Equals(expectedModel, model);
     }
 
     [Test]
@@ -98,10 +98,10 @@ internal class HomeControllerTests
 
         var result = await controller.Services() as RedirectToActionResult; 
 
-        Assert.IsNotNull(result);
-        Assert.IsInstanceOf<RedirectToActionResult>(result);
-        Assert.AreEqual("Home", result.ControllerName);
-        Assert.AreEqual("Error", result.ActionName);
+        Assert.That(result, Is.Not.EqualTo(null));
+        Assert.That(result, Is.InstanceOf<RedirectToActionResult>());
+        Assert.Equals("Home", result.ControllerName);
+        Assert.Equals("Error", result.ActionName);
     }
 
     [Test]
@@ -119,11 +119,11 @@ internal class HomeControllerTests
 
         var result = await controller.Doctors() as ViewResult;
 
-        Assert.IsNotNull(result);
-        Assert.IsInstanceOf<ViewResult>(result);
+        Assert.That(result, Is.Not.EqualTo(null));
+        Assert.That(result, Is.InstanceOf<ViewResult>());
 
         var model = result.Model as List<FirstThreeDoctorsViewModel>;
-        Assert.AreEqual(expectedModel, model);
+        Assert.Equals(expectedModel, model);
     }
 
     [Test]
@@ -134,10 +134,10 @@ internal class HomeControllerTests
 
         var result = await controller.Doctors() as RedirectToActionResult; 
         
-        Assert.IsNotNull(result);
-        Assert.IsInstanceOf<RedirectToActionResult>(result);
-        Assert.AreEqual("Home", result.ControllerName);
-        Assert.AreEqual("Error", result.ActionName);
+        Assert.That(result, Is.Not.EqualTo(null));
+        Assert.That(result, Is.InstanceOf<RedirectToActionResult>());
+        Assert.Equals("Home", result.ControllerName);
+        Assert.Equals("Error", result.ActionName);
     }
 
     [Test]
@@ -158,12 +158,12 @@ internal class HomeControllerTests
 
         var result = await controller.DoctorDetails("Doc1Id") as ViewResult;
 
-        Assert.IsNotNull(result);
-        Assert.IsInstanceOf<ViewResult>(result);
+        Assert.That(result, Is.Not.EqualTo(null));
+        Assert.That(result, Is.InstanceOf<ViewResult>());
 
         var model = result.Model as DoctorDetailsViewModel;
-        Assert.IsNotNull(model);
-        Assert.AreEqual(expectedModel, model);
+        Assert.That(model, Is.Not.EqualTo(null));
+        Assert.Equals(expectedModel, model);
     }
 
     [Test]
@@ -173,10 +173,10 @@ internal class HomeControllerTests
 
         var result = await controller.DoctorDetails("nosuchId") as RedirectToActionResult;
 
-        Assert.IsNotNull(result);
-        Assert.IsInstanceOf<RedirectToActionResult>(result);
-        Assert.AreEqual("Home", result.ControllerName);
-        Assert.AreEqual("Doctors", result.ActionName);
+        Assert.That(result, Is.Not.EqualTo(null));
+        Assert.That(result, Is.InstanceOf<RedirectToActionResult>());
+        Assert.Equals("Home", result.ControllerName);
+        Assert.Equals("Doctors", result.ActionName);
     }
 
     [Test]
@@ -187,10 +187,10 @@ internal class HomeControllerTests
 
         var result = await controller.DoctorDetails("existingIdThrowingError") as RedirectToActionResult;
 
-        Assert.IsNotNull(result);
-        Assert.IsInstanceOf<RedirectToActionResult>(result);
-        Assert.AreEqual("Home", result.ControllerName);
-        Assert.AreEqual("Error", result.ActionName);
+        Assert.That(result, Is.Not.EqualTo(null));
+        Assert.That(result, Is.InstanceOf<RedirectToActionResult>());
+        Assert.Equals("Home", result.ControllerName);
+        Assert.Equals("Error", result.ActionName);
     }
 
     [Test]
@@ -206,12 +206,12 @@ internal class HomeControllerTests
 
         var result = await controller.AllDepartments() as ViewResult;
 
-        Assert.IsNotNull(result);
-        Assert.IsInstanceOf<ViewResult>(result);
+        Assert.That(result, Is.Not.EqualTo(null));
+        Assert.That(result, Is.InstanceOf<ViewResult>());
 
         var model = result.ViewData.Model as List<SpecialityViewModel>;
-        Assert.IsNotNull(model);
-        CollectionAssert.AreEqual(expectedModel, model);
+        Assert.That(model, Is.Not.EqualTo(null));
+        Assert.Equals(expectedModel, model);
     }
 
     [Test]
@@ -222,10 +222,10 @@ internal class HomeControllerTests
 
         var result = await controller.AllDepartments() as RedirectToActionResult; 
         
-        Assert.IsNotNull(result);
-        Assert.IsInstanceOf<RedirectToActionResult>(result);
-        Assert.AreEqual("Home", result.ControllerName);
-        Assert.AreEqual("Error", result.ActionName);
+        Assert.That(result, Is.Not.EqualTo(null));
+        Assert.That(result, Is.InstanceOf<RedirectToActionResult>());
+        Assert.Equals("Home", result.ControllerName);
+        Assert.Equals("Error", result.ActionName);
     }
 
     [Test]
@@ -237,7 +237,7 @@ internal class HomeControllerTests
 
         var result = controller.Error(statusCode) as ViewResult;
 
-        Assert.IsNotNull(result);
-        Assert.AreEqual(expectedViewName, result.ViewName);
+        Assert.That(result, Is.Not.EqualTo(null));
+        Assert.Equals(expectedViewName, result.ViewName);
     }
 }

@@ -40,7 +40,7 @@ internal class DoctorServiceTests
 
         var result = await doctorService.DoctorExistsById(doctorId);
 
-        Assert.IsTrue(result);
+        Assert.That(result, Is.EqualTo(true));
     }
 
     [Test]
@@ -50,7 +50,7 @@ internal class DoctorServiceTests
 
         var result = await doctorService.DoctorExistsById(doctorId);
 
-        Assert.IsFalse(result);
+        Assert.That(result, Is.EqualTo(false));
     }
 
     [Test]
@@ -76,13 +76,13 @@ internal class DoctorServiceTests
 
         var expectedModel = await doctorService.DoctorDetails(doctor.Id);
 
-        Assert.AreEqual(actualModel.Id, expectedModel.Id);
-        Assert.AreEqual(actualModel.FirstName, expectedModel.FirstName);
-        Assert.AreEqual(actualModel.LastName, expectedModel.LastName);
-        Assert.AreEqual(actualModel.ProfilePictureFilename, expectedModel.ProfilePictureFilename);
-        Assert.AreEqual(actualModel.Speciality, expectedModel.Speciality);
-        Assert.AreEqual(actualModel.PricePerHour, expectedModel.PricePerHour);
-        Assert.AreEqual(actualModel.ShortBio, expectedModel.ShortBio);
+        Assert.That(actualModel.Id, Is.EqualTo(expectedModel.Id));
+        Assert.That(actualModel.FirstName, Is.EqualTo(expectedModel.FirstName));
+        Assert.That(actualModel.LastName, Is.EqualTo(expectedModel.LastName));
+        Assert.That(actualModel.ProfilePictureFilename, Is.EqualTo(expectedModel.ProfilePictureFilename));
+        Assert.That(actualModel.Speciality, Is.EqualTo(expectedModel.Speciality));
+        Assert.That(actualModel.PricePerHour, Is.EqualTo(expectedModel.PricePerHour));
+        Assert.That(actualModel.ShortBio, Is.EqualTo(expectedModel.ShortBio));
     }
 
     [Test]
@@ -90,8 +90,8 @@ internal class DoctorServiceTests
     {
         var result = await doctorService.GetFirstThreeDoctors();
 
-        Assert.IsNotNull(result);
-        Assert.AreEqual(3, result.Count());
+        Assert.That(result, Is.Not.EqualTo(null));
+        Assert.That(3, Is.EqualTo(result.Count()));
     }
 
     [Test]
@@ -108,12 +108,12 @@ internal class DoctorServiceTests
         var result = await doctorService.All(speciality, searchTerm, currentPage, doctorsPerPage);
         var doctorInModel = result.Doctors.FirstOrDefault();
 
-        Assert.IsNotNull(result);
-        Assert.AreEqual(result.TotalDoctorsCount, 1);
-        Assert.AreEqual(doctorInModel!.Fullname, $"{actualResult.FirstName} {actualResult.LastName}");
-        Assert.AreEqual(doctorInModel.Id, actualResult.Id);
-        Assert.AreEqual(doctorInModel.Speciality, actualResult.Speciality.Name);
-        Assert.AreEqual(doctorInModel.OfficePhoneNumber, actualResult.OfficePhoneNumber);
+        Assert.That(result, Is.Not.EqualTo(null));
+        Assert.That(result.TotalDoctorsCount, Is.EqualTo(1));
+        Assert.That(doctorInModel!.Fullname, Is.EqualTo($"{actualResult.FirstName} {actualResult.LastName}"));
+        Assert.That(doctorInModel.Id, Is.EqualTo(actualResult.Id));
+        Assert.That(doctorInModel.Speciality, Is.EqualTo(actualResult.Speciality.Name));
+        Assert.That(doctorInModel.OfficePhoneNumber, Is.EqualTo(actualResult.OfficePhoneNumber));
     }
 
     [Test]
@@ -135,12 +135,12 @@ internal class DoctorServiceTests
         var result = await doctorService.All(speciality, searchTerm, currentPage, doctorsPerPage);
         var doctorInModel = result.Doctors.FirstOrDefault();
 
-        Assert.IsNotNull(result);
-        Assert.AreEqual(result.TotalDoctorsCount, 1);
-        Assert.AreEqual(doctorInModel!.Fullname, $"{actualResult.FirstName} {actualResult.LastName}");
-        Assert.AreEqual(doctorInModel.Id, actualResult.Id);
-        Assert.AreEqual(doctorInModel.Speciality, actualResult.Speciality.Name);
-        Assert.AreEqual(doctorInModel.OfficePhoneNumber, actualResult.OfficePhoneNumber);
+        Assert.That(result, Is.Not.EqualTo(null));
+        Assert.That(result.TotalDoctorsCount, Is.EqualTo(1));
+        Assert.That(doctorInModel!.Fullname, Is.EqualTo($"{actualResult.FirstName} {actualResult.LastName}"));
+        Assert.That(doctorInModel.Id, Is.EqualTo(actualResult.Id));
+        Assert.That(doctorInModel.Speciality, Is.EqualTo(actualResult.Speciality.Name));
+        Assert.That(doctorInModel.OfficePhoneNumber, Is.EqualTo(actualResult.OfficePhoneNumber));
     }
 
     [Test]
@@ -166,11 +166,11 @@ internal class DoctorServiceTests
 
         var expectedModel = await doctorService.DetailsForPatient(doctor.Id);
 
-        Assert.AreEqual(actualModel.Id, expectedModel.Id);
-        Assert.AreEqual($"{actualModel.FirstName} {actualModel.LastName}", expectedModel.Fullname);
-        Assert.AreEqual(actualModel.ProfilePictureFilename, expectedModel.ProfilePictureFilename);
-        Assert.AreEqual(actualModel.Speciality, expectedModel.Speciality);
-        Assert.AreEqual(actualModel.PricePerHour, expectedModel.PricePerHour);
-        Assert.AreEqual(actualModel.ShortBio, expectedModel.Biography);
+        Assert.That(actualModel.Id, Is.EqualTo(expectedModel.Id));
+        Assert.That($"{actualModel.FirstName} {actualModel.LastName}", Is.EqualTo(expectedModel.Fullname));
+        Assert.That(actualModel.ProfilePictureFilename, Is.EqualTo(expectedModel.ProfilePictureFilename));
+        Assert.That(actualModel.Speciality, Is.EqualTo(expectedModel.Speciality));
+        Assert.That(actualModel.PricePerHour, Is.EqualTo(expectedModel.PricePerHour));
+        Assert.That(actualModel.ShortBio, Is.EqualTo(expectedModel.Biography));
     }
 }

@@ -43,9 +43,9 @@ internal class MedicamentServiceTests
         await medicamentService.AddMedicamentAsync(viewModel);
 
         var addedMedicament = await context.Medicaments.FirstOrDefaultAsync(m => m.Name == viewModel.Name);
-        Assert.NotNull(addedMedicament);
-        Assert.AreEqual(viewModel.Name, addedMedicament.Name);
-        Assert.AreEqual(viewModel.QuantityPerDayMilligrams, addedMedicament.QuantityPerDayMilligrams);
+        Assert.That(addedMedicament, Is.Not.EqualTo(null));
+        Assert.That(viewModel.Name, Is.EqualTo(addedMedicament.Name));
+        Assert.That(viewModel.QuantityPerDayMilligrams, Is.EqualTo(addedMedicament.QuantityPerDayMilligrams));
     }
 
     [Test]
@@ -60,9 +60,9 @@ internal class MedicamentServiceTests
 
         var result = await medicamentService.GetAllMedicaments(searchTerm);
 
-        Assert.NotNull(result);
-        Assert.AreEqual(4, result.Count);
-        Assert.IsTrue(result.All(m => m.Name.Contains(searchTerm)));
+        Assert.That(result, Is.Not.EqualTo(null));
+        Assert.That(4, Is.EqualTo(result.Count));
+        Assert.That(result.All(m => m.Name.Contains(searchTerm)));
     }
 }
 

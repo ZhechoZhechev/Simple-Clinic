@@ -48,9 +48,9 @@ internal class PatientServiceTests
         var expectedResult = await patientService.GetAllPatients(searchTerm);
         var patient = expectedResult.First();
 
-        Assert.IsNotNull(expectedResult);
-        Assert.AreEqual(expectedResult.Count(), 1);
-        Assert.AreEqual(patient.FullName, $"{actualResult.FirstName} {actualResult.LastName}");
-        Assert.AreEqual(patient.Id, actualResult.Id);
+        Assert.That(expectedResult, Is.Not.EqualTo(null));
+        Assert.That(expectedResult.Count(), Is.EqualTo(1));
+        Assert.That(patient.FullName, Is.EqualTo($"{actualResult.FirstName} {actualResult.LastName}"));
+        Assert.That(patient.Id, Is.EqualTo(actualResult.Id));
     }
 }

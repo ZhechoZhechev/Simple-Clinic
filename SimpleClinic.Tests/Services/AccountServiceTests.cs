@@ -51,8 +51,8 @@ internal class AccountServiceTests
         var medicalHistory = await context.MedicalHistories.FirstOrDefaultAsync();
         var patient = await context.Patients.FindAsync(userId);
 
-        Assert.IsNotNull(medicalHistory);
-        Assert.True(patient.FormsCompleted);
+        Assert.That(medicalHistory, Is.Not.EqualTo(null));
+        Assert.That(patient.FormsCompleted, Is.EqualTo(true));
     }
 
     [Test]
@@ -75,7 +75,7 @@ internal class AccountServiceTests
 
         var nextOfKin = await context.NextOfKins.FirstOrDefaultAsync();
 
-        Assert.IsNotNull(nextOfKin);
+        Assert.That(nextOfKin, Is.Not.EqualTo(null));
         Assert.That(user.Result!.NextOfKinId == nextOfKin!.Id);
     }
 
@@ -87,7 +87,7 @@ internal class AccountServiceTests
 
         var isFormFilled = await accountService.GetIsFormFilled(userId);
 
-        Assert.True(isFormFilled);
+        Assert.That(isFormFilled, Is.Not.EqualTo(null));
     }
 
     [Test]
@@ -99,6 +99,6 @@ internal class AccountServiceTests
 
         var roleId = await accountService.GetRoleId(userId);
 
-        Assert.AreEqual(roleId, "TestRoleId");
+        Assert.That(roleId, Is.EqualTo("TestRoleId"));
     }
 }

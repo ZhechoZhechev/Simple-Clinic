@@ -40,10 +40,10 @@ internal class ServiceServiceTests
 
         var servicesModel = await serviceService.All(currentPage, servicePerPage);
 
-        Assert.AreEqual(servicesModel.TotalServicesCount, totalServicesCount);
-        Assert.AreEqual(servicesModel.Services[3].Name, services[0].Name);
-        Assert.AreEqual(servicesModel.Services[4].Name, services[1].Name);
-        Assert.AreEqual(servicesModel.Services[5].Name, service.Name);
+        Assert.Equals(servicesModel.TotalServicesCount, totalServicesCount);
+        Assert.Equals(servicesModel.Services[3].Name, services[0].Name);
+        Assert.Equals(servicesModel.Services[4].Name, services[1].Name);
+        Assert.Equals(servicesModel.Services[5].Name, service.Name);
     }
 
     [Test]
@@ -53,14 +53,14 @@ internal class ServiceServiceTests
 
         var actualResult = await serviceService.GetAllServicesForSchedule();
 
-        Assert.IsNotNull(actualResult);
-        Assert.AreEqual(testSerices.Count, actualResult.Count);
-        Assert.AreEqual(testSerices[3].Id, actualResult[3].Id);
-        Assert.AreEqual(testSerices[3].Name, actualResult[3].ServiceName);
-        Assert.AreEqual(testSerices[4].Id, actualResult[4].Id);
-        Assert.AreEqual(testSerices[4].Name, actualResult[4].ServiceName);
-        Assert.AreEqual(testSerices[5].Id, actualResult[5].Id);
-        Assert.AreEqual(testSerices[5].Name, actualResult[5].ServiceName);
+        Assert.That(actualResult, Is.Not.EqualTo(null));
+        Assert.Equals(testSerices.Count, actualResult.Count);
+        Assert.Equals(testSerices[3].Id, actualResult[3].Id);
+        Assert.Equals(testSerices[3].Name, actualResult[3].ServiceName);
+        Assert.Equals(testSerices[4].Id, actualResult[4].Id);
+        Assert.Equals(testSerices[4].Name, actualResult[4].ServiceName);
+        Assert.Equals(testSerices[5].Id, actualResult[5].Id);
+        Assert.Equals(testSerices[5].Name, actualResult[5].ServiceName);
     }
 
     [Test]
@@ -70,17 +70,17 @@ internal class ServiceServiceTests
 
         var actualResult = await serviceService.GetFirstThreeServices();
 
-        Assert.IsNotNull(actualResult);
-        Assert.AreEqual(testSerices.Count, actualResult.Count);
-        Assert.AreEqual(testSerices[0].Price, actualResult[0].Price);
-        Assert.AreEqual(testSerices[0].Name, actualResult[0].Name);
-        Assert.AreEqual(testSerices[0].EquipmentPicture, actualResult[0].EquipmentPicture);
-        Assert.AreEqual(testSerices[1].Price, actualResult[1].Price);
-        Assert.AreEqual(testSerices[1].Name, actualResult[1].Name);
-        Assert.AreEqual(testSerices[1].EquipmentPicture, actualResult[1].EquipmentPicture);
-        Assert.AreEqual(testSerices[2].Price, actualResult[2].Price);
-        Assert.AreEqual(testSerices[2].Name, actualResult[2].Name);
-        Assert.AreEqual(testSerices[2].EquipmentPicture, actualResult[2].EquipmentPicture);
+        Assert.That(actualResult, Is.Not.EqualTo(null));
+        Assert.Equals(testSerices.Count, actualResult.Count);
+        Assert.Equals(testSerices[0].Price, actualResult[0].Price);
+        Assert.Equals(testSerices[0].Name, actualResult[0].Name);
+        Assert.Equals(testSerices[0].EquipmentPicture, actualResult[0].EquipmentPicture);
+        Assert.Equals(testSerices[1].Price, actualResult[1].Price);
+        Assert.Equals(testSerices[1].Name, actualResult[1].Name);
+        Assert.Equals(testSerices[1].EquipmentPicture, actualResult[1].EquipmentPicture);
+        Assert.Equals(testSerices[2].Price, actualResult[2].Price);
+        Assert.Equals(testSerices[2].Name, actualResult[2].Name);
+        Assert.Equals(testSerices[2].EquipmentPicture, actualResult[2].EquipmentPicture);
 
     }
 }

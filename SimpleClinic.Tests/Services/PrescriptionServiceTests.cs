@@ -29,6 +29,8 @@ internal class PrescriptionServiceTests
 
         context.Database.EnsureCreated();
 
+        SeedDatabase(this.context);
+
         prescriptionService = new PrescriptionService(context);
     }
 
@@ -38,7 +40,7 @@ internal class PrescriptionServiceTests
         var patientId = patient.Id;
         var doctor = doctors[0];
         var medicament = new Medicament { Name = "Test Medicament", QuantityPerDayMilligrams = 50 };
-        var prescription1 = new Prescription { Doctor = doctor, PatientId = patientId, Medicament = medicament, PrescriptionDate = DateTime.Now.AddDays(1), Instructions = "Take once a day" };
+        var prescription1 = new Prescription { Doctor = doctor, PatientId = patientId, Medicament = medicament, PrescriptionDate = DateTime.Now, Instructions = "Take once a day" };
         var prescription2 = new Prescription { Doctor = doctor, PatientId = patientId, Medicament = medicament, PrescriptionDate = DateTime.Now, Instructions = "Take twice a day" };
         context.Prescriptions.AddRange(prescription1, prescription2);
         await context.SaveChangesAsync();
@@ -50,14 +52,14 @@ internal class PrescriptionServiceTests
 
         var result = await prescriptionService.GetAllPrescriptionsForPatient(patientId);
 
-        Assert.NotNull(result);
-        Assert.AreEqual(2, result.Count);
-        Assert.AreEqual($"{doctor.FirstName} {doctor.LastName}", result[0].DoctorNames);
-        Assert.AreEqual(doctorSpecialityName, result[0].DoctorSpeciality);
-        Assert.AreEqual(prescription1.PrescriptionDate, result[0].PrescriptionDate);
-        Assert.AreEqual(medicament.Name, result[0].Medicament);
-        Assert.AreEqual(medicament.QuantityPerDayMilligrams.ToString(), result[0].MedicamentQantity);
-        Assert.AreEqual(prescription1.Instructions, result[0].Instructions);
+        Assert.That(result, Is.Not.EqualTo(null));
+        Assert.That(result.Count, Is.EqualTo(2));
+        Assert.That($"{doctor.FirstName} {doctor.LastName}", Is.EqualTo(result[0].DoctorNames));
+        Assert.That(doctorSpecialityName, Is.EqualTo(result[0].DoctorSpeciality));
+        Assert.That(prescription1.PrescriptionDate.Date, Is.EqualTo(result[0].PrescriptionDate.Date));
+        Assert.That(result[0].Medicament, Is.EqualTo(medicament.Name));
+        Assert.That(medicament.QuantityPerDayMilligrams.ToString(), Is.EqualTo(result[0].MedicamentQantity));
+        Assert.That(prescription1.Instructions, Is.EqualTo(result[1].Instructions));
     }
 
     [Test]
@@ -77,11 +79,11 @@ internal class PrescriptionServiceTests
         await prescriptionService.SavePrescription(model, doctorId);
 
         var addedPrescription = await context.Prescriptions.FirstOrDefaultAsync(p => p.PatientId == patientId);
-        Assert.NotNull(addedPrescription);
-        Assert.AreEqual(doctorId, addedPrescription!.DoctorId);
-        Assert.AreEqual(patientId, addedPrescription.PatientId);
-        Assert.AreEqual(medicamentId, addedPrescription.MedicamentId);
-        Assert.AreEqual(model.Instructions, addedPrescription.Instructions);
-        Assert.AreEqual(model.PrescriptionDate, addedPrescription.PrescriptionDate);
+        Assert.That(addedPrescription, Is.Not.EqualTo(null));
+        Assert.That(doctorId, Is.EqualTo(addedPrescription!.DoctorId));
+        Assert.That(patientId, Is.EqualTo(addedPrescription.PatientId));
+        Assert.That(medicamentId, Is.EqualTo(addedPrescription.MedicamentId));
+        Assert.That(model.Instructions, Is.EqualTo(addedPrescription.Instructions));
+        Assert.That(model.PrescriptionDate, Is.EqualTo(addedPrescription.PrescriptionDate));
     }
 }

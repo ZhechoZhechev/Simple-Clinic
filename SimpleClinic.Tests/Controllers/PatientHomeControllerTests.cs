@@ -69,9 +69,9 @@ public class PatientHomeControllerTests
 
         var result = await controller.Index(nextOfKinViewModel) as RedirectToActionResult;
 
-        Assert.IsInstanceOf<RedirectToActionResult>(result);
-        Assert.AreEqual("AddMedicalHistory", result.ActionName);
-        Assert.AreEqual("Home", result.ControllerName);
+        Assert.That(result, Is.InstanceOf<RedirectToActionResult>());
+        Assert.Equals("AddMedicalHistory", result.ActionName);
+        Assert.Equals("Home", result.ControllerName);
     }
 
     [Test]
@@ -94,9 +94,9 @@ public class PatientHomeControllerTests
 
         var result = await controller.Index(nextOfKinViewModel) as ViewResult;
 
-        Assert.IsInstanceOf<ViewResult>(result);
-        Assert.AreEqual(nextOfKinViewModel, result.Model);
-        Assert.AreEqual(null, result.ViewName);
+        Assert.That(result, Is.InstanceOf<ViewResult>());
+        Assert.Equals(nextOfKinViewModel, result.Model);
+        Assert.Equals(result.ViewName, null);
     }
 
 }

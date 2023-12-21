@@ -95,11 +95,11 @@ internal class DoctorsAppointmentControllerTests
 
         var result = await controller.GetPatientAppointments() as ViewResult;
 
-        Assert.IsNotNull(result);
-        Assert.IsInstanceOf<ViewResult>(result);
+        Assert.That(result, Is.Not.EqualTo(null));
+        Assert.That(result, Is.InstanceOf<ViewResult>());
 
         var model = result.Model as List<PatientAppointmentViewModel>;
-        Assert.AreEqual(expectedModel, model);
+        Assert.Equals(expectedModel, model);
     }
 
     [Test]
@@ -112,10 +112,10 @@ internal class DoctorsAppointmentControllerTests
 
         var result = await controller.CancelPatientAppointment(appId) as RedirectToActionResult;
 
-        Assert.IsNotNull(result);
-        Assert.AreEqual("GetPatientAppointments", result.ActionName);
-        Assert.AreEqual("Appointment", result.ControllerName);
-        Assert.AreEqual(RoleNames.DoctorRoleName, result.RouteValues["area"]);
+        Assert.That(result, Is.Not.EqualTo(null));
+        Assert.Equals("GetPatientAppointments", result.ActionName);
+        Assert.Equals("Appointment", result.ControllerName);
+        Assert.Equals(RoleNames.DoctorRoleName, result.RouteValues["area"]);
     }
 
 
@@ -128,10 +128,10 @@ internal class DoctorsAppointmentControllerTests
 
         var result = await controller.CancelPatientAppointment(appId) as RedirectToActionResult;
 
-        Assert.IsNotNull(result);
-        Assert.AreEqual("Index", result.ActionName);
-        Assert.AreEqual("Home", result.ControllerName);
-        Assert.AreEqual(RoleNames.DoctorRoleName, result.RouteValues["area"]);
+        Assert.That(result, Is.Not.EqualTo(null));
+        Assert.Equals("Index", result.ActionName);
+        Assert.Equals("Home", result.ControllerName);
+        Assert.Equals(RoleNames.DoctorRoleName, result.RouteValues["area"]);
 
     }
 }

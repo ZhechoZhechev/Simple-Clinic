@@ -43,8 +43,8 @@ internal class SpecialityServiceTests
         var addedSpeciality = await context.Specialities
             .FirstOrDefaultAsync(s => s.Name == specialityName);
 
-        Assert.NotNull(addedSpeciality);
-        Assert.AreEqual(specialityName, addedSpeciality!.Name);
+        Assert.That(addedSpeciality, Is.Not.EqualTo(null));
+        Assert.Equals(specialityName, addedSpeciality!.Name);
     }
 
     [Test]
@@ -54,13 +54,13 @@ internal class SpecialityServiceTests
 
         var result = await specialityService.GetAllSpecialities();
 
-        Assert.NotNull(result);
-        Assert.AreEqual(specialities.Count, result.Count());
+        Assert.That(result, Is.Not.EqualTo(null));
+        Assert.Equals(specialities.Count, result.Count());
 
         foreach (var speciality in specialities)
         {
             var matchingResult = result.FirstOrDefault(r => r.Id == speciality.Id && r.Name == speciality.Name);
-            Assert.NotNull(matchingResult);
+            Assert.That(matchingResult, Is.Not.EqualTo(null));
         }
     }
 
@@ -79,13 +79,13 @@ internal class SpecialityServiceTests
 
         var result = await specialityService.GetAllSpecialitiesWithDoctorsCount();
 
-        Assert.NotNull(result);
-        Assert.AreEqual(specialities.Count, result.Count());
+        Assert.That(result, Is.Not.EqualTo(null));
+        Assert.Equals(specialities.Count, result.Count());
 
         foreach (var speciality in specialities)
         {
             var matchingResult = result.FirstOrDefault(r => r.Name == speciality.Name && r.DoctorsCount == speciality.Doctors.Count);
-            Assert.NotNull(matchingResult);
+            Assert.That(matchingResult, Is.Not.EqualTo(null));
         }
     }
 
@@ -109,10 +109,10 @@ internal class SpecialityServiceTests
 
         var result = await specialityService.GetAllSpecialityNames();
 
-        Assert.NotNull(result);
+        Assert.That(result, Is.Not.EqualTo(null));
         for (int i = 0; i < specialities.Count; i++)
         {
-            Assert.AreEqual(specialities[i].Name, result[i]);
+            Assert.Equals(specialities[i].Name, result[i]);
         }
     }
 }

@@ -60,9 +60,9 @@ internal class PatientsServiceControllerTests
         var result = await controller.All(queryModel) as ViewResult;
         var model = result.Model as AllServicesPaginationModel;
 
-        Assert.IsInstanceOf<ViewResult>(result);
-        Assert.IsNotNull(model);
-        Assert.AreEqual(expectedTotalServicesCount, model!.TotalServicesCount);
-        Assert.AreEqual(expectedServices, model.Services);
+        Assert.That(result, Is.InstanceOf<ViewResult>());
+        Assert.That(model, Is.Not.EqualTo(null));
+        Assert.Equals(expectedTotalServicesCount, model!.TotalServicesCount);
+        Assert.Equals(expectedServices, model.Services);
     }
 }

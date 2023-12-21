@@ -42,7 +42,7 @@ internal class ScheduleServiceTests
     {
         serviceId = "TestServiceId";
         doctorId = "TestDoctorId";
-        day = new DateTime(2023, 10, 13);
+        day = DateTime.Today;
         listTimeSlots = new List<TimeSlotViewModel>()
         {
             new TimeSlotViewModel()
@@ -61,7 +61,7 @@ internal class ScheduleServiceTests
 
         serviceId1 = "TestServiceId1";
         doctorId1 = "TestDoctorId1";
-        day1 = new DateTime(2023, 11, 13);
+        day1 = DateTime.Today;
         listTimeSlots1 = new List<TimeSlotViewModel>()
         {
             new TimeSlotViewModel()
@@ -87,14 +87,14 @@ internal class ScheduleServiceTests
         await scheduleService.AddDoctorScheduleAsync(doctorId, day, listTimeSlots);
 
         var actualSchedule = await context.Schedules.FirstOrDefaultAsync();
-        Assert.IsNotNull(actualSchedule);
-        Assert.AreEqual(actualSchedule!.DoctorId, doctorId);
-        Assert.AreEqual(actualSchedule.Day, day);
+        Assert.That(actualSchedule, Is.Not.EqualTo(null));
+        Assert.That(actualSchedule!.DoctorId, Is.EqualTo(doctorId));
+        Assert.That(actualSchedule.Day, Is.EqualTo(day));
 
         var timeSlot = actualSchedule.TimeSlots.ToList();
-        Assert.AreEqual(timeSlot.Count, 2);
-        Assert.AreEqual(timeSlot[0].StartTime, new DateTime(2023, 10, 13, 8, 0, 0));
-        Assert.AreEqual(timeSlot[0].EndTime, new DateTime(2023, 10, 13, 9, 0, 0));
+        Assert.That(timeSlot.Count, Is.EqualTo(2));
+        Assert.That(timeSlot[0].StartTime, Is.EqualTo(new DateTime(2023, 10, 13, 8, 0, 0)));
+        Assert.That(timeSlot[0].EndTime, Is.EqualTo(new DateTime(2023, 10, 13, 9, 0, 0)));
     }
 
     [Test]
@@ -104,22 +104,41 @@ internal class ScheduleServiceTests
 
         var dates = await scheduleService.GetAvailableDates(doctorId1);
 
-        Assert.IsNotNull(dates);
-        Assert.AreEqual(dates.Count, 2);
-        Assert.AreEqual(dates[0].Date, day1);
+        Assert.That(dates, Is.Not.EqualTo(null));
+        Assert.That(dates.Count, Is.EqualTo(1));
+        Assert.That(dates[0].Date, Is.EqualTo(day1));
     }
 
     [Test]
     public async Task CheckSchedule_Returns_Correct_Collection()
     {
-        await scheduleService.AddDoctorScheduleAsync(doctorId1, day1, listTimeSlots1);
 
-        var scheduleDoctor1 = await scheduleService.CheckSchedule(doctorId1);
+        var doctorId = "TestDoctorId";
+        var day = DateTime.Today;
+        var listTimeSlots = new List<TimeSlotViewModel>()
+        {
+            new TimeSlotViewModel()
+            {
+                StartTime = new DateTime(2023, 10, 13, 8, 0, 0),
+                EndTime = new DateTime(2023, 10, 13, 9, 0, 0),
+                IsAvailable = true
+            },
+            new TimeSlotViewModel()
+            {
+                StartTime = new DateTime(2023, 10, 13, 9, 0, 0),
+                EndTime = new DateTime(2023, 10, 13, 10, 0, 0),
+                IsAvailable = true
+            }
+        };
 
-        Assert.IsNotNull(scheduleDoctor1);
-        Assert.AreEqual(scheduleDoctor1.Count, 1);
-        Assert.AreEqual(scheduleDoctor1[0].Day, day1);
-        Assert.AreEqual(scheduleDoctor1[0].TimeSlots.Count, listTimeSlots1.Count);
+        await scheduleService.AddDoctorScheduleAsync(doctorId, day, listTimeSlots);
+
+        var scheduleDoctor1 = await scheduleService.CheckSchedule(doctorId);
+
+        Assert.That(scheduleDoctor1, Is.Not.EqualTo(null));
+        Assert.That(scheduleDoctor1.Count, Is.EqualTo(2));
+        Assert.That(scheduleDoctor1[0].Day, Is.EqualTo(day));
+        Assert.That(scheduleDoctor1[0].TimeSlots.Count, Is.EqualTo(listTimeSlots.Count));
 
     }
 
@@ -128,9 +147,9 @@ internal class ScheduleServiceTests
     {
         var scheduleModel = await scheduleService.GetDoctorScheduleAsync(day, doctorId);
 
-        Assert.IsNotNull(scheduleModel);
-        Assert.AreEqual(scheduleModel.Day, day);
-        Assert.AreEqual(scheduleModel.TimeSlots.Count(), listTimeSlots.Count);
+        Assert.That(scheduleModel, Is.Not.EqualTo(null));
+        Assert.That(scheduleModel.Day, Is.EqualTo(day));
+        Assert.That(scheduleModel.TimeSlots.Count(), Is.EqualTo(listTimeSlots.Count));
     }
 
     [Test]
@@ -138,7 +157,7 @@ internal class ScheduleServiceTests
     {
         var exists = await scheduleService.IfDayScheduleExists(day, doctorId);
 
-        Assert.IsTrue(exists);
+        Assert.That(exists, Is.EqualTo(true));
     }
 
     [Test]
@@ -149,7 +168,7 @@ internal class ScheduleServiceTests
 
         var exists = await scheduleService.IfDayScheduleExists(day, doctorId);
 
-        Assert.IsFalse(exists);
+        Assert.That(exists, Is.EqualTo(false));
     }
 
     [Test]
@@ -158,14 +177,14 @@ internal class ScheduleServiceTests
         await scheduleService.AddServiceScheduleAsync(serviceId, day, listTimeSlots);
 
         var actualSchedule = await context.Schedules.FirstOrDefaultAsync(x => x.ServiceId == serviceId);
-        Assert.IsNotNull(actualSchedule);
-        Assert.AreEqual(actualSchedule!.ServiceId, serviceId);
-        Assert.AreEqual(actualSchedule.Day, day);
+        Assert.That(actualSchedule, Is.Not.EqualTo(null));
+        Assert.That(actualSchedule!.ServiceId, Is.EqualTo(serviceId));
+        Assert.That(actualSchedule.Day, Is.EqualTo(day));
 
         var timeSlot = actualSchedule.TimeSlots.ToList();
-        Assert.AreEqual(timeSlot.Count, 2);
-        Assert.AreEqual(timeSlot[0].StartTime, new DateTime(2023, 10, 13, 8, 0, 0));
-        Assert.AreEqual(timeSlot[0].EndTime, new DateTime(2023, 10, 13, 9, 0, 0));
+        Assert.That(timeSlot.Count, Is.EqualTo(2));
+        Assert.That(timeSlot[0].StartTime, Is.EqualTo(new DateTime(2023, 10, 13, 8, 0, 0)));
+        Assert.That(timeSlot[0].EndTime, Is.EqualTo(new DateTime(2023, 10, 13, 9, 0, 0)));
     }
 
     [Test]
@@ -173,7 +192,7 @@ internal class ScheduleServiceTests
     {
         var exists = await scheduleService.IfDayServiceScheduleExists(day, serviceId);
 
-        Assert.IsTrue(exists);
+        Assert.That(exists, Is.EqualTo(true));
     }
 
     [Test]
@@ -184,20 +203,38 @@ internal class ScheduleServiceTests
 
         var exists = await scheduleService.IfDayServiceScheduleExists(day, serviceId);
 
-        Assert.IsFalse(exists);
+        Assert.That(exists, Is.EqualTo(false));
     }
 
     [Test]
     public async Task CheckServiceSchedule_Returns_Correct_Collection()
     {
-        await scheduleService.AddServiceScheduleAsync(serviceId1, day1, listTimeSlots1);
+        var serviceId1 = "TestServiceId1";
+        var day = DateTime.Today;
+        var listTimeSlots1 = new List<TimeSlotViewModel>()
+        {
+            new TimeSlotViewModel()
+            {
+                StartTime = new DateTime(2023, 10, 13, 8, 0, 0),
+                EndTime = new DateTime(2023, 10, 13, 9, 0, 0),
+                IsAvailable = true
+            },
+            new TimeSlotViewModel()
+            {
+                StartTime = new DateTime(2023, 10, 13, 9, 0, 0),
+                EndTime = new DateTime(2023, 10, 13, 10, 0, 0),
+                IsAvailable = true
+            }
+        };
+
+        await scheduleService.AddServiceScheduleAsync(serviceId1, day, listTimeSlots1);
 
         var scheduleService1 = await scheduleService.CheckServiceSchedule(serviceId1);
 
-        Assert.IsNotNull(scheduleService1);
-        Assert.AreEqual(scheduleService1.Count, 1);
-        Assert.AreEqual(scheduleService1[0].Day, day1);
-        Assert.AreEqual(scheduleService1[0].TimeSlots.Count, listTimeSlots1.Count);
+        Assert.That(scheduleService1, Is.Not.EqualTo(null));
+        Assert.That(scheduleService1.Count, Is.EqualTo(1));
+        Assert.That(scheduleService1[0].Day, Is.EqualTo(day));
+        Assert.That(scheduleService1[0].TimeSlots.Count, Is.EqualTo(listTimeSlots1.Count));
     }
 
     [Test]
@@ -207,9 +244,9 @@ internal class ScheduleServiceTests
 
         var dates = await scheduleService.GetAvailableDatesService(serviceId1);
 
-        Assert.IsNotNull(dates);
-        Assert.AreEqual(dates.Count, 2);
-        Assert.AreEqual(dates[0].Date, day1);
+        Assert.That(dates, Is.Not.EqualTo(null));
+        Assert.That(dates.Count, Is.EqualTo(2));
+        Assert.That(dates[0].Date, Is.EqualTo(day1));
     }
 
     [Test]
@@ -217,8 +254,8 @@ internal class ScheduleServiceTests
     {
         var scheduleModel = await scheduleService.GetServiceScheduleAsync(day, serviceId);
 
-        Assert.IsNotNull(scheduleModel);
-        Assert.AreEqual(scheduleModel.Day, day);
-        Assert.AreEqual(scheduleModel.TimeSlots.Count(), listTimeSlots.Count);
+        Assert.That(scheduleModel, Is.Not.EqualTo(null));
+        Assert.That(scheduleModel.Day, Is.EqualTo(day));
+        Assert.That(scheduleModel.TimeSlots.Count(), Is.EqualTo(listTimeSlots.Count));
     }
 }
