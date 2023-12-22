@@ -29,6 +29,8 @@ internal class SpecialityServiceTests
 
         context.Database.EnsureCreated();
 
+        SeedDatabase(this.context);
+
         specialityService = new SpecialityService(context);
     }
 
@@ -44,7 +46,7 @@ internal class SpecialityServiceTests
             .FirstOrDefaultAsync(s => s.Name == specialityName);
 
         Assert.That(addedSpeciality, Is.Not.EqualTo(null));
-        Assert.Equals(specialityName, addedSpeciality!.Name);
+        Assert.That(specialityName, Is.EqualTo(addedSpeciality!.Name));
     }
 
     [Test]
@@ -55,7 +57,7 @@ internal class SpecialityServiceTests
         var result = await specialityService.GetAllSpecialities();
 
         Assert.That(result, Is.Not.EqualTo(null));
-        Assert.Equals(specialities.Count, result.Count());
+        Assert.That(specialities.Count, Is.EqualTo(result.Count()));
 
         foreach (var speciality in specialities)
         {
@@ -80,7 +82,7 @@ internal class SpecialityServiceTests
         var result = await specialityService.GetAllSpecialitiesWithDoctorsCount();
 
         Assert.That(result, Is.Not.EqualTo(null));
-        Assert.Equals(specialities.Count, result.Count());
+        Assert.That(specialities.Count, Is.EqualTo(result.Count()));
 
         foreach (var speciality in specialities)
         {
@@ -112,7 +114,7 @@ internal class SpecialityServiceTests
         Assert.That(result, Is.Not.EqualTo(null));
         for (int i = 0; i < specialities.Count; i++)
         {
-            Assert.Equals(specialities[i].Name, result[i]);
+            Assert.That(specialities[i].Name, Is.EqualTo(result[i]));
         }
     }
 }

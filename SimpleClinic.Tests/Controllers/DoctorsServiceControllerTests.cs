@@ -65,7 +65,7 @@ internal class DoctorsServiceControllerTests
 
         Assert.That(result, Is.Not.EqualTo(null));
         Assert.That(result, Is.InstanceOf<ViewResult>());
-        Assert.Equals(expectedModel, model);
+        Assert.That(expectedModel, Is.EqualTo(model));
     }
 
     [Test]
@@ -85,8 +85,8 @@ internal class DoctorsServiceControllerTests
 
         Assert.That(result, Is.Not.EqualTo(null));
         Assert.That(result, Is.InstanceOf<ViewResult>());
-        Assert.Equals(expectedModel.ServiceId, model!.ServiceId);
-        Assert.Equals(serviceName, tempDataValue);
+        Assert.That(expectedModel.ServiceId, Is.EqualTo(model!.ServiceId));
+        Assert.That(serviceName, Is.EqualTo(tempDataValue));
     }
 
     [Test]
@@ -99,10 +99,10 @@ internal class DoctorsServiceControllerTests
         var result = await controller.AddSchedule(doctorScheduleViewModel) as RedirectToActionResult;
 
         Assert.That(result, Is.InstanceOf<RedirectToActionResult>());
-        Assert.Equals("AddSchedule", result!.ActionName);
-        Assert.Equals("Service", result.ControllerName);
-        Assert.Equals(RoleNames.DoctorRoleName, result.RouteValues!["area"]);
-        Assert.Equals("Schedule for this day exists. Please, select different day.", controller.TempData["ErrorMessage"]);
+        Assert.That("AddSchedule", Is.EqualTo(result!.ActionName));
+        Assert.That("Service", Is.EqualTo(result.ControllerName));
+        Assert.That(RoleNames.DoctorRoleName, Is.EqualTo(result.RouteValues!["area"]));
+        Assert.That("Schedule for this day exists. Please, select different day.", Is.EqualTo(controller.TempData["ErrorMessage"]));
     }
 
     [Test]
@@ -113,7 +113,7 @@ internal class DoctorsServiceControllerTests
 
         var result = await controller.AddSchedule(doctorScheduleViewModel) as ViewResult;
 
-        Assert.Equals(doctorScheduleViewModel, result!.Model);
+        Assert.That(doctorScheduleViewModel, Is.EqualTo(result!.Model));
     }
 
     [Test]
@@ -125,10 +125,10 @@ internal class DoctorsServiceControllerTests
         var result = await controller.AddSchedule(doctorScheduleViewModel) as RedirectToActionResult;
 
         Assert.That(result, Is.InstanceOf<RedirectToActionResult>());
-        Assert.Equals("AddSchedule", result!.ActionName);
-        Assert.Equals("Service", result.ControllerName);
-        Assert.Equals(RoleNames.DoctorRoleName, result.RouteValues!["area"]);
-        Assert.Equals("Schedule added successfully!", controller.TempData["SuccessMessage"]);
+        Assert.That("AddSchedule", Is.EqualTo(result!.ActionName));
+        Assert.That("Service", Is.EqualTo(result.ControllerName));
+        Assert.That(RoleNames.DoctorRoleName, Is.EqualTo(result.RouteValues!["area"]));
+        Assert.That("Schedule added successfully!", Is.EqualTo(controller.TempData["SuccessMessage"]));
     }
     [Test]
     public async Task AddSchedule_Returns_RedirectToAction_When_Error_With_Success_Message() 
@@ -141,10 +141,10 @@ internal class DoctorsServiceControllerTests
         var result = await controller.AddSchedule(doctorScheduleViewModel) as RedirectToActionResult;
 
         Assert.That(result, Is.InstanceOf<RedirectToActionResult>());
-        Assert.Equals("Index", result!.ActionName);
-        Assert.Equals("Home", result.ControllerName);
-        Assert.Equals(RoleNames.DoctorRoleName, result.RouteValues!["area"]);
-        Assert.Equals("Something went wrong!", controller.TempData["ErrorMessage"]);
+        Assert.That("Index", Is.EqualTo(result!.ActionName));
+        Assert.That("Home", Is.EqualTo(result.ControllerName));
+        Assert.That(RoleNames.DoctorRoleName, Is.EqualTo(result.RouteValues!["area"]));
+        Assert.That("Something went wrong!", Is.EqualTo(controller.TempData["ErrorMessage"]));
     }
 
     [Test]
@@ -174,6 +174,6 @@ internal class DoctorsServiceControllerTests
 
         Assert.That(result, Is.Not.EqualTo(null));
         Assert.That(result, Is.InstanceOf<ViewResult>());
-        Assert.Equals(expectedModel, model);
+        Assert.That(expectedModel, Is.EqualTo(model));
     }
 }

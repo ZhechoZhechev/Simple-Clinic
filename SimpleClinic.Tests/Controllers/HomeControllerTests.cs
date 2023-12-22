@@ -87,7 +87,7 @@ internal class HomeControllerTests
         Assert.That(result, Is.InstanceOf<ViewResult>());
 
         var model = result.Model as List<FirstThreeServicesViewModel>;
-        Assert.Equals(expectedModel, model);
+        Assert.That(expectedModel, Is.EqualTo(model));
     }
 
     [Test]
@@ -100,8 +100,8 @@ internal class HomeControllerTests
 
         Assert.That(result, Is.Not.EqualTo(null));
         Assert.That(result, Is.InstanceOf<RedirectToActionResult>());
-        Assert.Equals("Home", result.ControllerName);
-        Assert.Equals("Error", result.ActionName);
+        Assert.That("Home", Is.EqualTo(result.ControllerName));
+        Assert.That("Error", Is.EqualTo(result.ActionName));
     }
 
     [Test]
@@ -123,7 +123,7 @@ internal class HomeControllerTests
         Assert.That(result, Is.InstanceOf<ViewResult>());
 
         var model = result.Model as List<FirstThreeDoctorsViewModel>;
-        Assert.Equals(expectedModel, model);
+        Assert.That(expectedModel, Is.EqualTo(model));
     }
 
     [Test]
@@ -136,8 +136,8 @@ internal class HomeControllerTests
         
         Assert.That(result, Is.Not.EqualTo(null));
         Assert.That(result, Is.InstanceOf<RedirectToActionResult>());
-        Assert.Equals("Home", result.ControllerName);
-        Assert.Equals("Error", result.ActionName);
+        Assert.That("Home", Is.EqualTo(result.ControllerName));
+        Assert.That("Error", Is.EqualTo(result.ActionName));
     }
 
     [Test]
@@ -163,7 +163,7 @@ internal class HomeControllerTests
 
         var model = result.Model as DoctorDetailsViewModel;
         Assert.That(model, Is.Not.EqualTo(null));
-        Assert.Equals(expectedModel, model);
+        Assert.That(expectedModel, Is.EqualTo(model));
     }
 
     [Test]
@@ -175,8 +175,8 @@ internal class HomeControllerTests
 
         Assert.That(result, Is.Not.EqualTo(null));
         Assert.That(result, Is.InstanceOf<RedirectToActionResult>());
-        Assert.Equals("Home", result.ControllerName);
-        Assert.Equals("Doctors", result.ActionName);
+        Assert.That("Home", Is.EqualTo(result.ControllerName));
+        Assert.That("Doctors", Is.EqualTo(result.ActionName));
     }
 
     [Test]
@@ -189,8 +189,8 @@ internal class HomeControllerTests
 
         Assert.That(result, Is.Not.EqualTo(null));
         Assert.That(result, Is.InstanceOf<RedirectToActionResult>());
-        Assert.Equals("Home", result.ControllerName);
-        Assert.Equals("Error", result.ActionName);
+        Assert.That("Home", Is.EqualTo(result.ControllerName));
+        Assert.That("Error", Is.EqualTo(result.ActionName));
     }
 
     [Test]
@@ -211,7 +211,7 @@ internal class HomeControllerTests
 
         var model = result.ViewData.Model as List<SpecialityViewModel>;
         Assert.That(model, Is.Not.EqualTo(null));
-        Assert.Equals(expectedModel, model);
+        Assert.That(expectedModel, Is.EqualTo(model));
     }
 
     [Test]
@@ -224,8 +224,8 @@ internal class HomeControllerTests
         
         Assert.That(result, Is.Not.EqualTo(null));
         Assert.That(result, Is.InstanceOf<RedirectToActionResult>());
-        Assert.Equals("Home", result.ControllerName);
-        Assert.Equals("Error", result.ActionName);
+        Assert.That("Home", Is.EqualTo(result.ControllerName));
+        Assert.That("Error", Is.EqualTo(result.ActionName));
     }
 
     [Test]
@@ -238,6 +238,6 @@ internal class HomeControllerTests
         var result = controller.Error(statusCode) as ViewResult;
 
         Assert.That(result, Is.Not.EqualTo(null));
-        Assert.Equals(expectedViewName, result.ViewName);
+        Assert.That(expectedViewName, Is.EqualTo(result.ViewName));
     }
 }

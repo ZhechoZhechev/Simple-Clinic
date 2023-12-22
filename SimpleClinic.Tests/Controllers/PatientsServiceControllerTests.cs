@@ -62,7 +62,7 @@ internal class PatientsServiceControllerTests
 
         Assert.That(result, Is.InstanceOf<ViewResult>());
         Assert.That(model, Is.Not.EqualTo(null));
-        Assert.Equals(expectedTotalServicesCount, model!.TotalServicesCount);
-        Assert.Equals(expectedServices, model.Services);
+        Assert.That(expectedTotalServicesCount, Is.EqualTo(model!.TotalServicesCount));
+        Assert.That(expectedServices, Is.EqualTo(model.Services));
     }
 }
