@@ -20,6 +20,14 @@ public class DoctorController : Controller
     private readonly IMedicamentService medicamentService;
     private readonly UserManager<ApplicationUser> userManager;
 
+    /// <summary>
+    /// Dealing with logic around a doctor role
+    /// </summary>
+    /// <param name="scheduleService"></param>
+    /// <param name="patientService"></param>
+    /// <param name="prescriptionService"></param>
+    /// <param name="medicamentService"></param>
+    /// <param name="userManager"></param>
     public DoctorController(
         IScheduleService scheduleService,
         IPatientService patientService,
@@ -34,12 +42,21 @@ public class DoctorController : Controller
         this.userManager = userManager;
     }
 
+    /// <summary>
+    /// Adding a schedule
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public IActionResult AddSchedule()
     {
         var model = new DoctorScheduleViewModel();
         return View(model);
     }
+
+    /// <summary>
+    /// Retreives currents schedule
+    /// </summary>
+    /// <returns></returns>
 
     [HttpGet]
     public async Task<IActionResult> CheckSchedule()
@@ -58,6 +75,11 @@ public class DoctorController : Controller
         return View(model);
     }
 
+    /// <summary>
+    /// Adds a new medicament
+    /// </summary>
+    /// <returns></returns>
+
     [HttpGet]
     public IActionResult AddMedicament() 
     {
@@ -65,6 +87,11 @@ public class DoctorController : Controller
 
         return View(model);
     }
+
+    /// <summary>
+    /// Adds a new medicament
+    /// </summary>
+    /// <returns></returns>
 
     [HttpPost]
     public async Task<IActionResult> AddMedicament(MedicamentViewModel viewModel) 
@@ -87,6 +114,11 @@ public class DoctorController : Controller
         }
     }
 
+    /// <summary>
+    /// Creating a schedule
+    /// </summary>
+    /// <param name="viewModel"></param>
+    /// <returns></returns>
     [HttpPost]
     public async Task<IActionResult> AddSchedule(DoctorScheduleViewModel viewModel)
     {
@@ -126,11 +158,21 @@ public class DoctorController : Controller
 
     }
 
+    /// <summary>
+    /// Write a new prescription
+    /// </summary>
+    /// <returns></returns>
+
     [HttpGet]
     public async Task<IActionResult> WritePrescription()
     {
         return View();
     }
+
+    /// <summary>
+    /// Write a new prescription
+    /// </summary>
+    /// <returns></returns>
 
     [HttpPost]
     public async Task<IActionResult> WritePrescription(PrescriptionViewModel viewModel)
@@ -156,6 +198,12 @@ public class DoctorController : Controller
         }
     }
 
+    /// <summary>
+    /// Get JSON with the patients on a given search term
+    /// </summary>
+    /// <param name="searchTerm">search term</param>
+    /// <returns></returns>
+
     public async Task<IActionResult> GetPatientsForSelect2(string searchTerm)
     {
         var patients = await patientService.GetAllPatients(searchTerm);
@@ -165,6 +213,11 @@ public class DoctorController : Controller
         return Json(patientData);
     }
 
+    /// <summary>
+    /// Get JSON with the medicaments on a given search term
+    /// </summary>
+    /// <param name="searchTerm">search term</param>
+    /// <returns></returns>
     public async Task<IActionResult> GetMedicamentsForSelect2(string searchTerm)
     {
         var medicaments = await medicamentService.GetAllMedicaments(searchTerm);

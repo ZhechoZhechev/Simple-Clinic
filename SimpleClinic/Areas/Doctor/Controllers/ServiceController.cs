@@ -8,14 +8,21 @@ using SimpleClinic.Core.Contracts;
 using SimpleClinic.Core.Models.DoctorModels;
 using static SimpleClinic.Common.ExceptionMessages.NotificationMessages;
 
-
+/// <summary>
+/// Controller for the services(IMR, PET scan etc.)
+/// </summary>
 [Area("Doctor")]
 [Authorize(Policy = "DoctorAdmin")]
 public class ServiceController : Controller
 {
     private readonly IServiceService serviceService;
     private readonly IScheduleService scheduleService;
-
+    
+    /// <summary>
+    /// Contructor with arguments
+    /// </summary>
+    /// <param name="serviceService"></param>
+    /// <param name="scheduleService"></param>
     public ServiceController(
         IServiceService serviceService,
         IScheduleService scheduleService)
@@ -25,6 +32,10 @@ public class ServiceController : Controller
 
     }
 
+    /// <summary>
+    /// Gets all service you can add a schedule for
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> AllServicesForSchedule() 
     {
@@ -34,6 +45,12 @@ public class ServiceController : Controller
         return View(model);
     }
 
+    /// <summary>
+    /// Create a schedule for a service
+    /// </summary>
+    /// <param name="serviceName"></param>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public IActionResult AddSchedule(string serviceName, string id)
     {
@@ -46,6 +63,11 @@ public class ServiceController : Controller
         return View(model);
     }
 
+    /// <summary>
+    /// Create a schedule for a service
+    /// </summary>
+    /// <param name="viewModel"></param>
+    /// <returns></returns>
     [HttpPost]
     public async Task<IActionResult> AddSchedule(DoctorScheduleViewModel viewModel) 
     {
@@ -77,6 +99,11 @@ public class ServiceController : Controller
 
     }
 
+    /// <summary>
+    /// Gets already created schedules
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> CheckSchedule(string id) 
     {

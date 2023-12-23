@@ -18,6 +18,12 @@ public class AppointmentController : Controller
     private readonly IAppointmentService appointmentService;
     private readonly EmailService emailService;
 
+    /// <summary>
+    /// Dealing with appointmets doctor side
+    /// </summary>
+    /// <param name="userManager">dependancy</param>
+    /// <param name="emailService">dependancy</param>
+    /// <param name="appointmentService">dependancy</param>
     public AppointmentController(
         UserManager<ApplicationUser> userManager,
         EmailService emailService,
@@ -28,6 +34,10 @@ public class AppointmentController : Controller
         this.appointmentService = appointmentService;
     }
 
+    /// <summary>
+    /// Get all appointments for given doctor
+    /// </summary>
+    /// <returns></returns>
     public async Task<IActionResult> GetPatientAppointments()
     {
         var doctor = await userManager.GetUserAsync(User);
@@ -36,12 +46,17 @@ public class AppointmentController : Controller
 
         return View(model);
     }
-
+    
+    /// <summary>
+    /// Cancel an appointment with a patient
+    /// </summary>
+    /// <param name="id">appointments id</param>
+    /// <returns></returns>
     public async Task<IActionResult> CancelPatientAppointment(string id)
     {
         var appointment = await appointmentService.GetAppointmentById(id);
         var email = appointment.Patient.Email;
-        var doctorName = $"{appointment.Doctor.FirstName} {appointment.Doctor.LastName}";
+        var doctorName = $"{appointment.Doctor!.FirstName} {appointment.Doctor.LastName}";
         var doctorPhone = appointment.Doctor.OfficePhoneNumber;
         var message = $"Appointment for {appointment.BookingDateTime.ToString("d.M.yyyy")} at {appointment.TimeSlot.StartTime.TimeOfDay} has been canceled.";
 
