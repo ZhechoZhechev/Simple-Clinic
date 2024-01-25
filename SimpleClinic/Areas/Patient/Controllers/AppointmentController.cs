@@ -13,6 +13,7 @@ using static SimpleClinic.Common.ExceptionMessages.NotificationMessages;
 
 [Authorize(Roles = RoleNames.PatientRoleName)]
 [Area("Patient")]
+
 public class AppointmentController : Controller
 {
     private readonly UserManager<ApplicationUser> userManager;
@@ -21,6 +22,14 @@ public class AppointmentController : Controller
     private readonly IAppointmentService appointmentService;
     private readonly IConfiguration configuration;
 
+    /// <summary>
+    /// Controls appointments patients side
+    /// </summary>
+    /// <param name="userManager"></param>
+    /// <param name="emailService"></param>
+    /// <param name="configuration"></param>
+    /// <param name="scheduleService"></param>
+    /// <param name="appointmentService"></param>
     public AppointmentController(
         UserManager<ApplicationUser> userManager,
         EmailService emailService,
@@ -35,6 +44,11 @@ public class AppointmentController : Controller
         this.appointmentService = appointmentService;
     }
 
+    /// <summary>
+    /// gets doctors ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public IActionResult ChooseDate(string id)
     {
@@ -43,6 +57,11 @@ public class AppointmentController : Controller
         return View();
     }
 
+    /// <summary>
+    /// gets service ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public IActionResult ChooseServiceDate(string id)
     {
@@ -51,6 +70,11 @@ public class AppointmentController : Controller
         return View();
     }
 
+    /// <summary>
+    /// gets availabe dates for certain doctor
+    /// </summary>
+    /// <param name="doctorId"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> GetAvailableDates(string doctorId)
     {
@@ -67,6 +91,11 @@ public class AppointmentController : Controller
         }
     }
 
+    /// <summary>
+    /// gets availabe dates for certain service
+    /// </summary>
+    /// <param name="serviceId"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> GetAvailableDatesService(string serviceId)
     {
@@ -83,6 +112,12 @@ public class AppointmentController : Controller
         }
     }
 
+    /// <summary>
+    /// get doctors schedule for a certain date
+    /// </summary>
+    /// <param name="selectedDate"></param>
+    /// <param name="doctorId"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> GetDoctorSchedule(DateTime selectedDate, string doctorId)
     {
@@ -99,6 +134,12 @@ public class AppointmentController : Controller
 
     }
 
+    /// <summary>
+    /// get service schedule for a certain date
+    /// </summary>
+    /// <param name="selectedDate"></param>
+    /// <param name="doctorId"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> GetServiceSchedule(DateTime selectedDate, string serviceId)
     {
@@ -115,6 +156,11 @@ public class AppointmentController : Controller
 
     }
 
+    /// <summary>
+    /// makes doctors appointment
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public async Task<IActionResult> MakeAppointment (string id)
     {
 
@@ -133,6 +179,11 @@ public class AppointmentController : Controller
         }
     }
 
+    /// <summary>
+    /// makes service appointment
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public async Task<IActionResult> MakeServiceAppointment(string id)
     {
 
@@ -151,6 +202,10 @@ public class AppointmentController : Controller
         }
     }
 
+    /// <summary>
+    /// get all doctors appointments for a certain patient
+    /// </summary>
+    /// <returns></returns>
     public async Task<IActionResult> GetDocBookings() 
     {
         var patient = await userManager.GetUserAsync(User);
@@ -159,6 +214,11 @@ public class AppointmentController : Controller
 
         return View(model);
     }
+
+    /// <summary>
+    /// get all service appointments for a certain patient
+    /// </summary>
+    /// <returns></returns>
     public async Task<IActionResult> GetServiceBookings()
     {
         var patient = await userManager.GetUserAsync(User);
@@ -168,6 +228,11 @@ public class AppointmentController : Controller
         return View(model);
     }
 
+    /// <summary>
+    /// cancel doctors booking
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public async Task<IActionResult> CancelDocBooking(string id) 
     {
         var apppointment = await appointmentService.GetAppointmentById(id);
