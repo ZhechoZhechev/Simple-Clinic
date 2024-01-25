@@ -254,7 +254,11 @@ public class AppointmentController : Controller
             return RedirectToAction("Index", "Home", new { area = RoleNames.PatientRoleName });
         }
     }
-
+    /// <summary>
+    /// cancel service booking
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public async Task<IActionResult> CancelServiceBooking(string id)
     {
         var smtpConfig = configuration.GetSection("Smtp");
