@@ -13,7 +13,6 @@ using static SimpleClinic.Common.ExceptionMessages.NotificationMessages;
 
 [Authorize(Roles = RoleNames.PatientRoleName)]
 [Area("Patient")]
-
 public class AppointmentController : Controller
 {
     private readonly UserManager<ApplicationUser> userManager;

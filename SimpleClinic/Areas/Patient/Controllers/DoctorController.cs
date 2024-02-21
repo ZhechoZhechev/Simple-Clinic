@@ -10,6 +10,10 @@ using SimpleClinic.Core.Models.PatientModels;
 using SimpleClinic.Infrastructure.Entities;
 using static SimpleClinic.Common.ExceptionMessages.NotificationMessages;
 
+
+/// <summary>
+/// Services conected with doctors - patient side
+/// </summary>
 [Authorize(Roles = RoleNames.PatientRoleName)]
 [Area("Patient")]
 public class DoctorController : Controller
@@ -19,7 +23,13 @@ public class DoctorController : Controller
     private readonly ISpecialityService specialityService;
     private readonly IPrescriptionService prescriptionService;
 
-
+    /// <summary>
+    /// constructor
+    /// </summary>
+    /// <param name="userManager"></param>
+    /// <param name="doctorService"></param>
+    /// <param name="specialityService"></param>
+    /// <param name="prescriptionService"></param>
     public DoctorController(
         UserManager<ApplicationUser> userManager,
         IDoctorService doctorService,
@@ -33,6 +43,11 @@ public class DoctorController : Controller
 
     }
 
+    /// <summary>
+    /// returning all registered doctors
+    /// </summary>
+    /// <param name="queryModel"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> All([FromQuery] AllDoctorsQueryModel queryModel)
     {
@@ -50,7 +65,11 @@ public class DoctorController : Controller
 
         return View(queryModel);
     }
-
+    /// <summary>
+    /// details for a certain doctor
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Details(string id)
     {
@@ -74,6 +93,10 @@ public class DoctorController : Controller
         }
     }
 
+    /// <summary>
+    /// returns all prescriptions for a certains patient
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> GetAllPrescrtiptionsForPatient() 
     {

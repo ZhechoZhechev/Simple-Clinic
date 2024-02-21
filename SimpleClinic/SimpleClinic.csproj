@@ -38,10 +38,4 @@
     <_ContentIncludedByDefault Remove="Views\Account\RegisterPatient.cshtml" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Areas\Doctor\Data\" />
-    <Folder Include="Areas\Doctor\Models\" />
-    <Folder Include="Areas\Patient\Data\" />
-  </ItemGroup>
-
 </Project>
