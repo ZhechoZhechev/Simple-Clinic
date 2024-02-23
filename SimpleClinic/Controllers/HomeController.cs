@@ -126,7 +126,18 @@ public class HomeController : Controller
 
         try
         {
-            var model = await doctorService.DoctorDetails(Id);
+            var model = memoryCache.Get<DoctorDetailsViewModel>(DoctorDetailsCacheKey);
+
+            if (model == null)
+            {
+                model = await doctorService.DoctorDetails(Id);
+                
+                var cacheOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromMinutes(DocDetailsCacheExpTime));
+
+                memoryCache.Set(DoctorDetailsCacheKey, model, cacheOptions);
+            }
+
             return View(model);
 
         }

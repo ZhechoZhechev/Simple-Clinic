@@ -11,8 +11,14 @@ public static class GeneralApplicationConstants
     public const int ReleaseYear = 2022;
     
     /// <summary>
-    /// Memory cache setting for home/allDepartments end point
+    /// Memory cache settings for home/AllDepartments endpoint
     /// </summary>
     public const string AllDepsMemoryCacheKey = "AllDepsKey";
     public const int AllDepsMemoryCacheExpTime = 10;
+
+    /// <summary>
+    /// Memory Cache settings for home/DoctorDetails endpoint
+    /// </summary>
+    public const string DoctorDetailsCacheKey = "DocDetailsKey";
+    public const int DocDetailsCacheExpTime = 15;
 }
