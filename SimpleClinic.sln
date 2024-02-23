@@ -3,15 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleClinic", "SimpleClinic\SimpleClinic.csproj", "{5C4C5D99-6543-47E9-92A2-79136830A317}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleClinic", "SimpleClinic\SimpleClinic.csproj", "{5C4C5D99-6543-47E9-92A2-79136830A317}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleClinic.Infrastructure", "SimpleClinic.Infrastructure\SimpleClinic.Infrastructure.csproj", "{180D0CEC-E7EB-47CF-BC22-CFB8BED8D6B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleClinic.Infrastructure", "SimpleClinic.Infrastructure\SimpleClinic.Infrastructure.csproj", "{180D0CEC-E7EB-47CF-BC22-CFB8BED8D6B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleClinic.Core", "SimpleClinic.Core\SimpleClinic.Core.csproj", "{2252BAAB-A0D5-4F94-934A-50BA2F7F680C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleClinic.Core", "SimpleClinic.Core\SimpleClinic.Core.csproj", "{2252BAAB-A0D5-4F94-934A-50BA2F7F680C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleClinic.Tests", "SimpleClinic.Tests\SimpleClinic.Tests.csproj", "{5A757161-BC04-40BD-9F9C-BC206C3FB3EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleClinic.Tests", "SimpleClinic.Tests\SimpleClinic.Tests.csproj", "{5A757161-BC04-40BD-9F9C-BC206C3FB3EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleClinic.Common", "SimpleClinic.Commn\SimpleClinic.Common.csproj", "{FF807021-2A37-47EE-B938-4F0B15EB469E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleClinic.Common", "SimpleClinic.Commn\SimpleClinic.Common.csproj", "{FF807021-2A37-47EE-B938-4F0B15EB469E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{57ABB331-0605-4858-9F6F-C7F9DDA8D3EE}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

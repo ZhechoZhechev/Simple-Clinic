@@ -48,6 +48,8 @@ public class Program
         builder.Services.AddApplicationServices(typeof(IAccountService));
         builder.Services.AddScoped(typeof(EmailService));
 
+        builder.Services.AddMemoryCache();
+
         builder.Services.AddControllersWithViews()
             .AddMvcOptions(options => 
             {

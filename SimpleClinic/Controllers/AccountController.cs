@@ -1,15 +1,17 @@
 ﻿namespace SimpleClinic.Controllers;
 
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Caching.Memory;
 
 using Newtonsoft.Json;
 
 using SimpleClinic.Common;
-using SimpleClinic.Core.Contracts;
 using SimpleClinic.Core.Models;
+using SimpleClinic.Core.Contracts;
 using SimpleClinic.Infrastructure.Entities;
+using static SimpleClinic.Common.Constants.GeneralApplicationConstants;
 
 /// <summary>
 /// Account controller
@@ -23,6 +25,7 @@ public class AccountController : BaseController
     private readonly IWebHostEnvironment webHostEnvironment;
     private readonly IAccountService accountService;
     private readonly ISpecialityService specialityService;
+    private readonly IMemoryCache memoryCache;
     private readonly string directoryPath;
 
     /// <summary>
@@ -38,11 +41,13 @@ public class AccountController : BaseController
         IConfiguration configuration,
         IWebHostEnvironment webHostEnvironment,
         IAccountService accountService,
-        ISpecialityService specialityService)
+        ISpecialityService specialityService,
+        IMemoryCache memoryCache)
     {
         this.userManager = userManager;
         this.signInManager = signInManager;
         this.roleManager = roleManager;
+        this.memoryCache = memoryCache;
         this.directoryPath = configuration["UpploadSettings:ImageDir"];
         this.webHostEnvironment = webHostEnvironment;
         this.accountService = accountService;
@@ -240,6 +245,7 @@ public class AccountController : BaseController
 
 
         var result = await userManager.CreateAsync(doctor, model.Password);
+        memoryCache.Remove(AllDepsMemoryCacheKey);
         if (result.Succeeded)
         {
             await userManager.AddToRoleAsync(doctor, RoleNames.DoctorRoleName);

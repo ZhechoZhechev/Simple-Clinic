@@ -3,10 +3,12 @@
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using MimeKit;
 using SimpleClinic.Core.Contracts;
-
+using SimpleClinic.Core.Models;
 using static SimpleClinic.Common.ExceptionMessages.NotificationMessages;
+using static SimpleClinic.Common.Constants.GeneralApplicationConstants;
 
 /// <summary>
 /// Responsible for home page for unregistrated users
@@ -17,6 +19,7 @@ public class HomeController : Controller
     private readonly IDoctorService doctorService;
     private readonly IServiceService serviceService;
     private readonly IConfiguration configuration;
+    private readonly IMemoryCache memoryCache;
 
     /// <summary>
     /// Constructor
@@ -28,12 +31,14 @@ public class HomeController : Controller
         ISpecialityService specialityService,
         IDoctorService doctorService,
         IServiceService serviceService,
-        IConfiguration configuration)
+        IConfiguration configuration,
+        IMemoryCache memoryCache)
     {
         this.specialityService = specialityService;
         this.doctorService = doctorService;
         this.serviceService = serviceService;
         this.configuration = configuration;
+        this.memoryCache = memoryCache;
     }
     /// <summary>
     /// Home page
@@ -70,7 +75,7 @@ public class HomeController : Controller
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public async Task<IActionResult> Services() 
+    public async Task<IActionResult> Services()
     {
         try
         {
@@ -139,11 +144,23 @@ public class HomeController : Controller
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public async Task<IActionResult> AllDepartments() 
+    public async Task<IActionResult> AllDepartments()
     {
         try
         {
-            var model = await specialityService.GetAllSpecialitiesWithDoctorsCount();
+            var model = memoryCache.Get<IEnumerable<SpecialityViewModel>>(AllDepsMemoryCacheKey);
+
+            if (model == null)
+            {
+                model = await specialityService.GetAllSpecialitiesWithDoctorsCount();
+
+                var cacheOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromMinutes(AllDepsMemoryCacheExpTime));
+
+                memoryCache.Set(AllDepsMemoryCacheKey, model, cacheOptions);
+            }
+
+            model = await specialityService.GetAllSpecialitiesWithDoctorsCount();
             return View(model);
         }
         catch (Exception)
