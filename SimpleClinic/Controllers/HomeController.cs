@@ -127,13 +127,13 @@ public class HomeController : Controller
         try
         {
             var model = memoryCache.Get<DoctorDetailsViewModel>(DoctorDetailsCacheKey);
-
+            //TODO: Add Edit docotor details functionality.
             if (model == null)
             {
                 model = await doctorService.DoctorDetails(Id);
                 
                 var cacheOptions = new MemoryCacheEntryOptions()
-                    .SetSlidingExpiration(TimeSpan.FromMinutes(DocDetailsCacheExpTime));
+                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(DocDetailsCacheExpTime));
 
                 memoryCache.Set(DoctorDetailsCacheKey, model, cacheOptions);
             }
@@ -166,7 +166,7 @@ public class HomeController : Controller
                 model = await specialityService.GetAllSpecialitiesWithDoctorsCount();
 
                 var cacheOptions = new MemoryCacheEntryOptions()
-                    .SetSlidingExpiration(TimeSpan.FromMinutes(AllDepsMemoryCacheExpTime));
+                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(AllDepsMemoryCacheExpTime));
 
                 memoryCache.Set(AllDepsMemoryCacheKey, model, cacheOptions);
             }

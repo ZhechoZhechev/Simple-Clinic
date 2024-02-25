@@ -3,12 +3,13 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.Extensions.Caching.Memory;
 using SimpleClinic.Common;
 using SimpleClinic.Core.Contracts;
 using SimpleClinic.Core.Models.PatientModels;
 using SimpleClinic.Infrastructure.Entities;
 using static SimpleClinic.Common.ExceptionMessages.NotificationMessages;
+using static SimpleClinic.Common.Constants.GeneralApplicationConstants;
 
 
 /// <summary>
@@ -22,6 +23,7 @@ public class DoctorController : Controller
     private readonly IDoctorService doctorService;
     private readonly ISpecialityService specialityService;
     private readonly IPrescriptionService prescriptionService;
+    private readonly IMemoryCache memoryCache;
 
     /// <summary>
     /// constructor
@@ -34,13 +36,14 @@ public class DoctorController : Controller
         UserManager<ApplicationUser> userManager,
         IDoctorService doctorService,
         ISpecialityService specialityService,
-        IPrescriptionService prescriptionService)
+        IPrescriptionService prescriptionService,
+        IMemoryCache memoryCache)
     {
         this.userManager = userManager;
         this.doctorService = doctorService;
         this.specialityService = specialityService;
         this.prescriptionService = prescriptionService;
-
+        this.memoryCache = memoryCache;
     }
 
     /// <summary>
@@ -102,8 +105,26 @@ public class DoctorController : Controller
     {
         var patient = await userManager.GetUserAsync(User);
 
-        var model = await prescriptionService.GetAllPrescriptionsForPatient(patient.Id);
+        try
+        {
+            var model = memoryCache.Get<List<PatientAllPrescriptionsViewModel>>(PatientPrescriptionsCacheKey);
+            if (model == null)
+            {
+                model = await prescriptionService.GetAllPrescriptionsForPatient(patient.Id);
 
-        return View(model);
+                var cacheOptions = new MemoryCacheEntryOptions()
+                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(PatientPrescriptionsExpTime));
+
+                memoryCache.Set(AllDepsMemoryCacheKey , model, cacheOptions);
+            }
+            model = await prescriptionService.GetAllPrescriptionsForPatient(patient.Id);
+            return View(model);
+        }
+        catch (Exception)
+        {
+            TempData[ErrorMessage] = "Something went wrong!";
+            return RedirectToAction("Error", "Home");
+        }
+
     }
 }

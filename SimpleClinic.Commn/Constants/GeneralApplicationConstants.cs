@@ -21,4 +21,7 @@ public static class GeneralApplicationConstants
     /// </summary>
     public const string DoctorDetailsCacheKey = "DocDetailsKey";
     public const int DocDetailsCacheExpTime = 15;
+
+    public const string PatientPrescriptionsCacheKey = "PatientPrescriptions";
+    public const int PatientPrescriptionsExpTime = 15;
 }
