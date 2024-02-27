@@ -111,5 +111,11 @@ public class ServiceController : Controller
 
         return View(model);
     }
+
     //TODO: Add add a service functionality!
+    [HttpGet]
+    public async Task<IActionResult> AddService()
+    {
+        return View();
+    }
 }
