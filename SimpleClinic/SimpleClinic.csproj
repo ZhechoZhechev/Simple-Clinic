@@ -36,6 +36,35 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Views\Account\RegisterPatient.cshtml" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\bootstrap.css.map" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\bootstrap.min.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\bootstrap.min.css.map" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\bootstrap.rtl.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\bootstrap.rtl.css.map" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\bootstrap.rtl.min.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\bootstrap.rtl.min.css.map" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\bootstrap.bundle.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\bootstrap.bundle.js.map" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\bootstrap.bundle.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\bootstrap.bundle.min.js.map" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\bootstrap.esm.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\bootstrap.esm.js.map" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\bootstrap.esm.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\bootstrap.esm.min.js.map" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\bootstrap.js.map" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\bootstrap.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\bootstrap.min.js.map" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\css\bootstrap.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\bootstrap.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
