@@ -11,6 +11,9 @@ using SimpleClinic.Infrastructure.Entities;
 using SimpleClinic.Core.Models.PatientModels;
 using static SimpleClinic.Common.ExceptionMessages.NotificationMessages;
 
+/// <summary>
+/// Represents the home page for the patient area
+/// </summary>
 [Authorize(Roles = RoleNames.PatientRoleName)]
 [Area("Patient")]
 public class HomeController : BaseController
@@ -26,6 +29,10 @@ public class HomeController : BaseController
         this.userManager = userManager;
     }
 
+    /// <summary>
+    /// Starting page
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Index()
     {
@@ -43,6 +50,11 @@ public class HomeController : BaseController
         return View(model);
     }
 
+    /// <summary>
+    /// Patients must fill Next of kin form
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
     [HttpPost]
     public async Task<IActionResult> Index(NextOfKinViewModel model)
     { 
@@ -73,6 +85,11 @@ public class HomeController : BaseController
         return View(model);
     }
 
+    /// <summary>
+    /// Patients must fill medical histor form
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
     [HttpPost]
     public async Task<IActionResult> AddMedicalHistory(MedicalHistoryViewModel model) 
     {
