@@ -34,5 +34,5 @@ public class Medicament
     /// Quantity per day in milligrams
     /// </summary>
     [Required]
-    public int QuantityPerDayMilligrams { get; set; }
+    public int? QuantityPerDayMilligrams { get; set; }
 }

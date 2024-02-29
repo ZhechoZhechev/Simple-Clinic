@@ -6,6 +6,7 @@ using static SimpleClinic.Common.Constants.DataConstants.MedicamentConstants;
 
 public class MedicamentViewModel
 {
+
     public string? Id { get; set; }
 
     /// <summary>
@@ -19,5 +20,5 @@ public class MedicamentViewModel
     /// Quantity per day in milligrams
     /// </summary>
     [Required]
-    public int QuantityPerDayMilligrams { get; set; }
+    public int? QuantityPerDayMilligrams { get; set; }
 }

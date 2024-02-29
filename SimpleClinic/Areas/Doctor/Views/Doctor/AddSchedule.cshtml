@@ -9,7 +9,7 @@
             <form asp-action="AddSchedule" asp-controller="Doctor" asp-area="Doctor" method="post">
                 <div class="form-group">
                     <label asp-for="Day">Select Day:</label>
-                    <input asp-for="Day" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                    <input asp-for="Day" style="margin-bottom: 1.5em" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
                     <span asp-validation-for="Day" class="text-danger"></span>
                 </div>
 
