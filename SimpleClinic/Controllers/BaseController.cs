@@ -3,7 +3,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
-
+/// <summary>
+/// extends Controller with method that returns user Id
+/// </summary>
 public class BaseController : Controller
 {
     protected string GetCurrnetUserId(ITempDataDictionary tempdata) 
