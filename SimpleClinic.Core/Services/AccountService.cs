@@ -9,7 +9,9 @@ using SimpleClinic.Core.Models.PatientModels;
 using SimpleClinic.Infrastructure;
 using SimpleClinic.Infrastructure.Entities;
 
-
+/// <summary>
+/// Services used for creating account controller
+/// </summary>
 public class AccountService : IAccountService
 {
     private readonly SimpleClinicDbContext context;
@@ -19,6 +21,12 @@ public class AccountService : IAccountService
         this.context = context;
     }
 
+    /// <summary>
+    /// Add medical history for patients
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="userId"></param>
+    /// <returns></returns>
     public async Task AddMedicalHistory(MedicalHistoryViewModel model, string userId)
     {
         var medicalHistory = new MedicalHistory()
@@ -42,6 +50,12 @@ public class AccountService : IAccountService
         await context.SaveChangesAsync();
     }
 
+    /// <summary>
+    /// Adds next of kin information to patients
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="userId"></param>
+    /// <returns></returns>
     public async Task AddNextOfKin(NextOfKinViewModel model, string userId)
     {
         var patient = await context.Patients
@@ -64,6 +78,11 @@ public class AccountService : IAccountService
         await context.SaveChangesAsync();
     }
 
+    /// <summary>
+    /// Checks if form for next of kin and medical history been filled previously
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <returns></returns>
     public async Task<bool> GetIsFormFilled(string userId)
     {
         var isFormfilled = await context.Patients
@@ -74,6 +93,11 @@ public class AccountService : IAccountService
         return isFormfilled;
     }
 
+    /// <summary>
+    /// Gets a rolle ID for a certain user ID
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <returns></returns>
     public async Task<string> GetRoleId(string userId)
     {
         var roleId = await context.UserRoles

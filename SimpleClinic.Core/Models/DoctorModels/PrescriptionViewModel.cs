@@ -6,6 +6,12 @@ using static SimpleClinic.Common.Constants.DataConstants.PrescriptionConstants;
 
 public class PrescriptionViewModel
 {
+
+    public PrescriptionViewModel()
+    {
+        this.PrescriptionDate = DateTime.MinValue;
+    }
+
     /// <summary>
     /// Identifier
     /// </summary>
