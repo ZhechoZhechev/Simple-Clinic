@@ -3,8 +3,17 @@
 @{
     ViewData["Title"] = "Create Prescription";
 }
-
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+<style>
+    .select2-container .select2-selection--single {
+        height: 45px !important;
+    }
+
+    .justify-content-center {
+        height: 51vh;
+        align-items: center;
+    }
+</style>
 
 <div class="container mt-4 mb-4 text-center">
     <div class="row justify-content-center">
@@ -13,29 +22,29 @@
 
             <form asp-area="Doctor" asp-controller="Doctor" asp-action="WritePrescription" class="needs-validation" method="post" novalidate>
 
-                <div class="form-group">
+                <div class="form-floating mb-3">
+                    <input asp-for="PrescriptionDate" type="text" placeholder="Prescription Date:" class="form-control" />
                     <label asp-for="PrescriptionDate">Prescription Date:</label>
-                    <input asp-for="PrescriptionDate" class="form-control" />
                     <span asp-validation-for="PrescriptionDate" class="text-danger"></span>
                 </div>
 
-                <div class="form-group">
-                    <label asp-for="PatientId">Patient:</label>
-                    <select asp-for="PatientId" class="form-control" id="selectPatient"
+                <div class="form-floating mb-3">
+                    <select asp-for="PatientId" class="form-select" id="selectPatient"
                             data-url="@Url.Action("GetPatientsForSelect2", "Doctor", new { area = "Doctor" })"></select>
+                    <label asp-for="PatientId" for="selectPatient">Patient:</label>
                     <span asp-validation-for="PatientId" class="text-danger"></span>
                 </div>
 
-                <div class="form-group">
-                    <label asp-for="MedicamentId">Medicament:</label>
-                    <select asp-for="MedicamentId" class="form-control" id="selectMedicament"
+                <div class="form-floating mb-3">
+                    <select asp-for="MedicamentId" class="form-select" id="selectMedicament"
                             data-url="@Url.Action("GetMedicamentsForSelect2", "Doctor", new { area = "Doctor" })"></select>
+                    <label asp-for="MedicamentId" for="selectMedicament">Medicament:</label>
                     <span asp-validation-for="MedicamentId" class="text-danger"></span>
                 </div>
 
-                <div class="form-group">
-                    <label asp-for="Instructions">Instructions:</label>
-                    <textarea asp-for="Instructions" class="form-control"></textarea>
+                <div class="form-floating mb-3">
+                    <textarea asp-for="Instructions" placeholder="Instructions:" class="form-control" id="floatingTextarea"></textarea>
+                    <label for="floatingTextarea" asp-for="Instructions">Instructions:</label>
                     <span asp-validation-for="Instructions" class="text-danger"></span>
                 </div>
 
@@ -48,8 +57,13 @@
 
 
 @section Scripts {
-
+    <script>
+        const dateInput = document.querySelector("input[name='PrescriptionDate']");
+        dateInput.addEventListener("click", () => {
+            dateInput.type = "date";
+        })
+    </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script src="~/js/prescription.js" asp-append-version="true"></script>
-        }
+}
