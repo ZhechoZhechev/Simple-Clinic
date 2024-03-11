@@ -1,11 +1,13 @@
 ﻿namespace SimpleClinic.Core.Services;
 
 using Microsoft.EntityFrameworkCore;
-using SimpleClinic.Core.Contracts;
+
 using SimpleClinic.Core.Models;
+using SimpleClinic.Infrastructure;
+using SimpleClinic.Core.Contracts;
+using SimpleClinic.Infrastructure.Entities;
 using SimpleClinic.Core.Models.DoctorModels;
 using SimpleClinic.Core.Models.PatientModels;
-using SimpleClinic.Infrastructure;
 
 public class ServiceService : IServiceService
 {
@@ -14,6 +16,19 @@ public class ServiceService : IServiceService
     public ServiceService(SimpleClinicDbContext context)
     {
         this.context = context;
+    }
+
+    public async Task AddServiceAsync(ServiceViewModel serviceModel)
+    {
+        var service = new Service()
+        {
+            Name = serviceModel.Name,
+            EquipmentPicture = serviceModel.EquipmentPicture,
+            Price = serviceModel.Price,
+        };
+
+        await context.Services.AddAsync(service);
+        await context.SaveChangesAsync();
     }
 
     public async Task<ServiceQueryServiceModel> All(int currentPage = 1, int servicesPerPage = 1)

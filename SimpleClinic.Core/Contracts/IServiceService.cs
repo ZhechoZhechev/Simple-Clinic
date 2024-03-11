@@ -11,4 +11,6 @@ public interface IServiceService
     Task<ServiceQueryServiceModel> All(int currentPage = 1, int servicesPerPage = 1);
 
     Task<List<AllServicesForScheduleViewModel>> GetAllServicesForSchedule();
+
+    Task AddServiceAsync(ServiceViewModel service);
 }

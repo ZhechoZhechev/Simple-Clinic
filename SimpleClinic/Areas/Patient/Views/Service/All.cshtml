@@ -34,7 +34,7 @@
     <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
         <a class="btn btn-primary
            @(shouldNextPageBeDisabled ? "disabled" : string.Empty)"
-           asp-controller="Doctor"
+           asp-controller="Service"
            asp-action="All"
            asp-route-currentPage="@(Model.CurrentPage + 1)">>></a>
     </div>

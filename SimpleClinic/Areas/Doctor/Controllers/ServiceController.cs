@@ -121,6 +121,21 @@ public class ServiceController : Controller
     [HttpPost]
     public async Task<IActionResult> AddService(ServiceViewModel serviceModel)
     {
-        throw new NotImplementedException();
+        if (!ModelState.IsValid)
+        {
+            return View(serviceModel);
+        }
+
+        try
+        {
+            await serviceService.AddServiceAsync(serviceModel);
+            TempData[SuccessMessage] = "Service added successfully!";
+            return RedirectToAction("AllServicesForSchedule", "Service", new { area = RoleNames.DoctorRoleName });
+        }
+        catch (Exception)
+        {
+            TempData[ErrorMessage] = "Something went wrong!";
+            return RedirectToAction("Index", "Home", new { area = RoleNames.DoctorRoleName });
+        }
     }
 }
