@@ -8,7 +8,7 @@
             <h2 class="text-center">Create @TempData["CurrServiceName"] Schedule</h2>
             <form asp-action="AddSchedule" asp-controller="Service" asp-area="Doctor" method="post">
                 <input type="hidden" asp-for="ServiceId" />
-                <div class="form-group">
+                <div style="margin-bottom: 1.5rem;" class="form-group">
                     <label asp-for="Day">Select Day:</label>
                     <input asp-for="Day" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
                     <span asp-validation-for="Day" class="text-danger"></span>
@@ -45,13 +45,13 @@
                 </table>
 
                 <button type="submit" class="btn btn-primary">Save Schedule</button>
-                <a class="btn btn-outline-info" asp-area="Doctor" asp-controller="Service" asp-action="CheckSchedule" asp-route-id="@Model.ServiceId" >Check Schedule</a>
+                <a class="btn btn-outline-info" asp-area="Doctor" asp-controller="Service" asp-action="CheckSchedule" asp-route-id="@Model.ServiceId">Check Schedule</a>
             </form>
         </div>
     </div>
 </div>
 
-@section Scripts{
+@section Scripts {
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             var selectAllCheckbox = document.getElementById("selectAllCheckboxes");
@@ -61,7 +61,7 @@
                 checkboxes.forEach(function (checkbox) {
                     checkbox.checked = selectAllCheckbox.checked;
                     var startTimeInput = checkbox.nextElementSibling;
-                    startTimeInput.disabled = !checkbox.checked; 
+                    startTimeInput.disabled = !checkbox.checked;
                 });
             });
         });
