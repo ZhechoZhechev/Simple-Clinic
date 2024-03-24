@@ -12,6 +12,7 @@ using SimpleClinic.Core.Models;
 using SimpleClinic.Core.Contracts;
 using SimpleClinic.Infrastructure.Entities;
 using static SimpleClinic.Common.Constants.GeneralApplicationConstants;
+using static SimpleClinic.Common.ExceptionMessages.NotificationMessages;
 
 /// <summary>
 /// Account controller
@@ -312,10 +313,12 @@ public class AccountController : BaseController
 
                 return await RedirectToRoleSpecificArea();
             }
+
+            TempData[ErrorMessage] = "Invalid login credentials!";
+            return View(model);
         }
 
-        ModelState.AddModelError("", "Invalid login");
-
+        TempData[ErrorMessage] = "Invalid login credentials!";
         return View(model);
     }
 
