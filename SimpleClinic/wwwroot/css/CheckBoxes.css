@@ -1,24 +1,24 @@
-﻿:root {
+﻿/*:root {
     --form-control-color: rebeccapurple;
     --form-control-disabled: #959495;
 }
-
-*,
+*/
+/**,
 *:before,
 *:after {
     box-sizing: border-box;
-}
+}*/
 
-body {
+/*body {
     margin: 0;
-}
+}*/
 
-form {
+/*form {
     display: grid;
     place-content: center;
     min-height: 100vh;
-}
-
+}*/
+/*
 .form-control {
     font-family: system-ui, sans-serif;
     font-size: 2rem;
@@ -27,16 +27,16 @@ form {
     display: grid;
     grid-template-columns: 1em auto;
     gap: 0.5em;
-}
-
+}*/
+/*
     .form-control + .form-control {
         margin-top: 1em;
-    }
+    }*/
 
-.form-control--disabled {
+/*.form-control--disabled {
     color: var(--form-control-disabled);
     cursor: not-allowed;
-}
+}*/
 
 input[type=checkbox] {
     /* Add if not using autoprefixer */
