@@ -51,6 +51,7 @@ public class DoctorService : IDoctorService
                 Id = doctor.Id,
                 FirstName = doctor.FirstName,
                 LastName = doctor.LastName,
+                Address = doctor.Address,
                 ProfilePictureFilename = doctor.ProfilePictureFilename,
                 Speciality = doctor.Speciality.Name,
                 PricePerHour = doctor.PricePerAppointment.ToString(),
@@ -107,6 +108,7 @@ public class DoctorService : IDoctorService
             {
                 Id = d.Id,
                 Fullname = $"{d.FirstName} {d.LastName}",
+                Address = d.Address,
                 OfficePhoneNumber = d.OfficePhoneNumber,
                 ProfilePictureFilename = d.ProfilePictureFilename,
                 PricePerHour = d.PricePerAppointment.ToString(),
@@ -131,6 +133,7 @@ public class DoctorService : IDoctorService
             {
                 Id = d.Id,
                 Fullname = $"{d.FirstName} {d.LastName}",
+                Address = d.Address,
                 OfficePhoneNumber = d.OfficePhoneNumber,
                 ProfilePictureFilename = d.ProfilePictureFilename,
                 PricePerHour = d.PricePerAppointment.ToString(),

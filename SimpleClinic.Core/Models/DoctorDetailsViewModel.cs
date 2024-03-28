@@ -2,8 +2,10 @@
 
 public class DoctorDetailsViewModel : FirstThreeDoctorsViewModel
 {
-    public string ShortBio { get; set; }
+    public string ShortBio { get; set; } = null!;
 
-    public string PricePerHour { get; set; }
+    public string Address { get; set; } = null!;
+
+    public string PricePerHour { get; set; } = null!;
 
 }

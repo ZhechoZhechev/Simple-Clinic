@@ -30,5 +30,6 @@ public class ApplicationUser : IdentityUser
     /// </summary>
     [Required]
     [StringLength(AddressMaxLength)]
+    [Display(Name ="Address/Working Place")]
     public string Address { get; set; } = null!;
 }

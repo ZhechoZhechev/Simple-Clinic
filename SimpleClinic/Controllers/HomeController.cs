@@ -126,8 +126,8 @@ public class HomeController : Controller
 
         try
         {
-            var model = memoryCache.Get<DoctorDetailsViewModel>(DoctorDetailsCacheKey);
-            //TODO: Add Edit docotor details functionality.
+            var cacheKey = $"{DoctorDetailsCacheKey}_{Id}";
+            var model = memoryCache.Get<DoctorDetailsViewModel>(cacheKey);
             if (model == null)
             {
                 model = await doctorService.DoctorDetails(Id);
@@ -135,7 +135,7 @@ public class HomeController : Controller
                 var cacheOptions = new MemoryCacheEntryOptions()
                     .SetAbsoluteExpiration(TimeSpan.FromMinutes(DocDetailsCacheExpTime));
 
-                memoryCache.Set(DoctorDetailsCacheKey, model, cacheOptions);
+                memoryCache.Set(cacheKey, model, cacheOptions);
             }
 
             return View(model);

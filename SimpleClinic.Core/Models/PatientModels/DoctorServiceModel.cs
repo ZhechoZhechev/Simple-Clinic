@@ -2,9 +2,11 @@
 {
     public class DoctorServiceModel
     {
-        public string Id { get; set; }
+        public string Id { get; set; } = null!;
 
         public string Fullname { get; set; } = null!;
+
+        public string Address { get; set; } = null!;
 
         public string OfficePhoneNumber { get; set; } = null!;
 
