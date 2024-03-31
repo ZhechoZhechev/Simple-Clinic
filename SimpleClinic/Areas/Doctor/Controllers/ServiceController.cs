@@ -138,4 +138,10 @@ public class ServiceController : Controller
             return RedirectToAction("Index", "Home", new { area = RoleNames.DoctorRoleName });
         }
     }
+
+    [HttpGet]
+    public async Task<IActionResult> EditService()
+    {
+        return View();
+    }
 }
