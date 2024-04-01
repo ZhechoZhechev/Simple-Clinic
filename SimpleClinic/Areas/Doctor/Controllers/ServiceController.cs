@@ -146,4 +146,25 @@ public class ServiceController : Controller
 
         return View(model);
     }
+
+    [HttpPost]
+    public async Task<IActionResult> EditService(string id, ServiceViewModel serviceModel)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(serviceModel);
+        }
+
+        try
+        {
+            await serviceService.SaveEditedService(serviceModel, id);
+            TempData[SuccessMessage] = "Service edited successfully!";
+            return RedirectToAction("AllServicesForSchedule", "Service", new { area = RoleNames.DoctorRoleName });
+        }
+        catch (Exception)
+        {
+            TempData[ErrorMessage] = "Something went wrong!";
+            return RedirectToAction("Index", "Home", new { area = RoleNames.DoctorRoleName });
+        }
+    }
 }

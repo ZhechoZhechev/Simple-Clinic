@@ -15,4 +15,6 @@ public interface IServiceService
     Task AddServiceAsync(ServiceViewModel service);
 
     Task<ServiceViewModel> GetServiceForEditing(string id);
+    
+    Task SaveEditedService(ServiceViewModel service, string id);
 }

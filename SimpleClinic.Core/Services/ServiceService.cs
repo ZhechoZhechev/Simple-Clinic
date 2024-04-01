@@ -31,6 +31,19 @@ public class ServiceService : IServiceService
             .FirstAsync();
     }
 
+
+    public async Task SaveEditedService(ServiceViewModel serviceModel, string id)
+    {
+        var service = await context.Services
+            .FirstAsync(x => x.Id == id);
+
+        service.Name = serviceModel.Name;
+        service.EquipmentPicture = serviceModel.EquipmentPicture;
+        service.Price = serviceModel.Price;
+
+        await context.SaveChangesAsync();
+    }
+
     public async Task AddServiceAsync(ServiceViewModel serviceModel)
     {
         var service = new Service()
