@@ -18,6 +18,19 @@ public class ServiceService : IServiceService
         this.context = context;
     }
 
+    public async Task<ServiceViewModel> GetServiceForEditing(string id)
+    {
+        return await context.Services
+            .Where(s => s.Id == id)
+            .Select(s => new ServiceViewModel
+            {
+                Name = s.Name,
+                EquipmentPicture = s.EquipmentPicture,
+                Price = s.Price,
+            })
+            .FirstAsync();
+    }
+
     public async Task AddServiceAsync(ServiceViewModel serviceModel)
     {
         var service = new Service()

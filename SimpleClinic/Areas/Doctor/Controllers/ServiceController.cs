@@ -140,8 +140,8 @@ public class ServiceController : Controller
     }
 
     [HttpGet]
-    public IActionResult EditService(string id)
+    public IActionResult EditService(ServiceViewModel model)
     {
-        return View();
+        return View(model);
     }
 }
