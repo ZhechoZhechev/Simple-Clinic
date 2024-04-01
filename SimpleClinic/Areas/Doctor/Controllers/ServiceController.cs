@@ -112,6 +112,10 @@ public class ServiceController : Controller
         return View(model);
     }
 
+    /// <summary>
+    /// Add new service as an admin
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public IActionResult AddService()
     {
@@ -139,6 +143,11 @@ public class ServiceController : Controller
         }
     }
 
+    /// <summary>
+    /// Edit services as an admin
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> EditService(string id)
     {
