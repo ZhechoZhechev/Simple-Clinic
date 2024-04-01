@@ -13,4 +13,6 @@ public interface IServiceService
     Task<List<AllServicesForScheduleViewModel>> GetAllServicesForSchedule();
 
     Task AddServiceAsync(ServiceViewModel service);
+
+    Task<ServiceViewModel> GetServiceForEditing(string id);
 }

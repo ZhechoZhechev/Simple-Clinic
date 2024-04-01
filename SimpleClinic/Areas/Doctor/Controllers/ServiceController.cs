@@ -140,8 +140,10 @@ public class ServiceController : Controller
     }
 
     [HttpGet]
-    public IActionResult EditService(ServiceViewModel model)
+    public async Task<IActionResult> EditService(string id)
     {
+        var model = await serviceService.GetServiceForEditing(id);
+
         return View(model);
     }
 }
