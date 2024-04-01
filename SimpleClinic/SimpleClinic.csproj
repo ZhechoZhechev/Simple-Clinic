@@ -9,11 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Areas\Doctor\Views\Service\EditService.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Areas\Doctor\Views\Service\EditService.cshtml" />
     <None Include="wwwroot\fonts\fontawesome-webfont.woff2" />
     <None Include="wwwroot\js\site.js" />
   </ItemGroup>
@@ -63,6 +58,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Areas\Doctor\Views\Service\EditService.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
     <Content Update="wwwroot\css\bootstrap.css">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>

@@ -113,7 +113,7 @@ public class ServiceController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> AddService()
+    public IActionResult AddService()
     {
         return View();
     }
@@ -140,7 +140,7 @@ public class ServiceController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> EditService()
+    public IActionResult EditService(string id)
     {
         return View();
     }

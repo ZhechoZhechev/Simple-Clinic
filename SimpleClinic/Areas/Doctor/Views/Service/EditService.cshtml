@@ -15,7 +15,7 @@
         <div class="col-lg-4">
             <h2>@ViewData["Title"]</h2>
 
-            <form asp-area="Doctor" asp-controller="Service" asp-action="AddService" class="needs-validation" method="post" novalidate>
+            <form asp-area="Doctor" asp-controller="Service" asp-action="EditService" class="needs-validation" method="post" novalidate>
 
                 <div class="form-floating mb-3">
                     <input asp-for="Name" class="form-control" placeholder="" />
@@ -34,7 +34,7 @@
                     <label asp-for="Price">Price</label>
                     <span asp-validation-for="Price" class="text-danger"></span>
                 </div>
-                <button type="submit" class="btn btn-primary">Save New Service</button>
+                <button type="submit" class="btn btn-primary">Save Edited</button>
             </form>
         </div>
     </div>
