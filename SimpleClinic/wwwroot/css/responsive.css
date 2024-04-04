@@ -21,6 +21,7 @@
     .custom_nav-container .navbar-nav {
         padding-top: 15px;
         align-items: center;
+        margin-left: unset;
     }
 
         .custom_nav-container .navbar-nav .nav-item .nav-link {
@@ -31,6 +32,10 @@
     .footer_section .footer_bg_box img {
         -o-object-position: 10% top;
         object-position: 10% top;
+    }
+
+    .flex-row {
+        flex-direction: column !important;
     }
 }
 
